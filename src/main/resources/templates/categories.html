@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>Categorias</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css"></link>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+</head>
+<body>
+
+
+<!-- Mostrar las categorias -->
+<div class="container">
+    <h1>Categorias</h1>
+    <table class="responsive-table highlight centered">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Editar</th>
+            <th>Borrar</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cat : ${categories}">
+            <td th:text="${cat.id}"></td>
+            <td th:text="${cat.name}"></td>
+            <!--CAMBIAR EL + POR UN LAPIZ-->
+            <td><a th:href="@{'/categories/edit' + ${cat.id}}" th:method="PUT" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">+</i></a>
+            </td>
+            <td><a th:href="@{'/categories/del' + ${cat.id}}" th:method="DELETE"  class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">-</i></a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Registrar una nueva categoria -->
+<div class="container">
+    <form th:action="@{/categories}" th:object="${category}" method="post">
+            
+        <div class="container">
+            <h1>Agregar Categoria</h1>
+        </div>
+        <div class="container">
+                   Ingrese Id     <label for="id" />
+                        <input id="id" type="number" th:field="*{id}" ></input>
+               
+        </div>               
+               
+        <div class="container">
+             Ingrese Nombre   <label for="name" />
+                      <input id="name" type="text" th:field="*{name}" ></input>
+        </div>  
+               
+
+         <div class="container">
+                  <input type="submit" value="Registrar" />
+          </div>
+
+     </form>
+</div>
+
+<!-- Eliminar nueva categoria -->
+
+<!--
+<div class="container">
+    <form th:action="@{/categories}" th:method="delete">
+            
+        <div class="container">
+            <h1>Eliminar Categoria</h1>
+        </div>
+        <div class="container">
+                        
+               <input type="number" >
+        </div>               
+               
+         <div class="container">
+                  <input type="submit" value="Eliminar" />
+    </div>
+
+    </form>
+</div>
+
+-->
+
+</body>
+
+</html>
