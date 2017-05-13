@@ -127,7 +127,7 @@
     <div class="panel-body">
     <div class="row">
                 <div class="col-lg-12">
-                <button type="button" class="btn btn-success margin-inline pull-right">New</button>
+                <button type="button" class="btn btn-success margin-inline pull-right" data-toggle="modal" data-target="#example1">New</button>
                     <h4>Usuarios</h4>
 
                     <br />
@@ -166,7 +166,59 @@
 </section>
 </div>
 </section>
-
+<div class="modal fade" id="example1" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">Nuevo Usuario</h4>
+                            </div>
+                            <div class="modal-body">
+                            <form action="">
+                            <p>De momento no hace nada, lo implementaremos cuando tengamos el registrar Nuevo Usuario</p>
+                                <div class="form-group row">
+                                <div class="col-md-3">
+                                    <label class="form-control-label" for="l0">Nombre</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" placeholder="Nombre" id="l0"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <label class="form-control-label" for="l0">Apellido</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" placeholder="Apellido" id="l0"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <label class="form-control-label" for="l0">Email</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" placeholder="Email" id="l0"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <label class="form-control-label" for="l0">Password</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="password" class="form-control" placeholder="Password" id="l0"/>
+                                </div>
+                            </div>
+                            </form>   
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 <!-- Page Scripts -->
 <script>
     $(function(){

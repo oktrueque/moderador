@@ -49,14 +49,6 @@
     <!-- Clean UI Scripts -->
     <script src="../static/common/js/common.js" th:src="@{/common/js/common.js}"></script>
     <script src="../static/common/js/demo.temp.js" th:src="@{/common/js/demo.temp.js}"></script>
-
-
-
-
-
-    
-
-
 </head>
 <body class="theme-default">
 <nav class="left-menu" left-menu="true">
@@ -69,13 +61,13 @@
     <div class="left-menu-inner scroll-pane">
         <ul class="left-menu-list left-menu-list-root list-unstyled">
             <li>
-                <a class="left-menu-link" href="#">
+                <a class="left-menu-link" href="/users">
                     <i class="left-menu-link-icon icmn-home2"><!-- --></i>
                     <span class="menu-top-hidden">Usuarios</span>
                 </a>
             </li>
             <li>
-                <a class="left-menu-link" href="#">
+                <a class="left-menu-link" href="/categories">
                     <i class="left-menu-link-icon icmn-home2"><!-- --></i>
                     <span class="menu-top-hidden">Categorias</span>
                 </a>
@@ -135,8 +127,9 @@
     <div class="panel-body">
     <div class="row">
                 <div class="col-lg-12">
-                    <h4>Fixed Columns</h4>
-                    <p>Modifier: see documentation</p>
+                <button type="button" class="btn btn-success margin-inline pull-right" data-toggle="modal" data-target="#example1">New</button>
+                    <h4>Usuarios</h4>
+
                     <br />
                     <div class="margin-bottom-50">
                         <table class="table table-hover nowrap" id="example2" width="100%">
@@ -173,22 +166,63 @@
 </section>
 </div>
 </section>
-
+<div class="modal fade" id="example1" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">Nuevo Usuario</h4>
+                            </div>
+                            <div class="modal-body">
+                            <form action="">
+                            <p>De momento no hace nada, lo implementaremos cuando tengamos el registrar Nuevo Usuario</p>
+                                <div class="form-group row">
+                                <div class="col-md-3">
+                                    <label class="form-control-label" for="l0">Nombre</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" placeholder="Nombre" id="l0"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <label class="form-control-label" for="l0">Apellido</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" placeholder="Apellido" id="l0"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <label class="form-control-label" for="l0">Email</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" placeholder="Email" id="l0"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <label class="form-control-label" for="l0">Password</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="password" class="form-control" placeholder="Password" id="l0"/>
+                                </div>
+                            </div>
+                            </form>   
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 <!-- Page Scripts -->
 <script>
     $(function(){
-
-        $('#example1').DataTable({
-            responsive: true
-        });
-
         $('#example2').DataTable({
-            autoWidth: true,
-            scrollX: true,
-            fixedColumns: true
-        });
-
-        $('#example3').DataTable({
             autoWidth: true,
             scrollX: true,
             fixedColumns: true
