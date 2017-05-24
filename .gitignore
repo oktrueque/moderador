@@ -2,6 +2,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
+
 .apt_generated
 .classpath
 .factorypath
@@ -10,26 +11,18 @@ target/
 .springBeans
 
 ### IntelliJ IDEA ###
+
+.idea/
 .idea
 *.iws
 *.iml
 *.ipr
-
-### NetBeans ###
-nbproject/private/
-build/
-nbbuild/
-nbdist/
-.nb-gradle/
 
 # Compiled class file
 *.class
 
 # Log file
 *.log
-
-# BlueJ files
-*.ctxt
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -46,4 +39,5 @@ nbdist/
 hs_err_pid*
 
 #Application Properties
+
 application.properties
