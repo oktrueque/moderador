@@ -3,6 +3,7 @@ package com.oktrueque.controller;
 import com.oktrueque.model.User;
 import com.oktrueque.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import com.oktrueque.service.ItemService;
 /**
  * Created by Tomas on 21-May-17.
  */
+@Controller
 public class ItemController {
 
     @Autowired
@@ -24,54 +26,20 @@ public class ItemController {
     private User user = new User();
     private List<Item> items = null;
 
-    @RequestMapping(method = RequestMethod.GET , value="/itemsListModerator")
-    @Valid
-    public String getItems(@RequestParam(value = "id_category", required = false) Integer id_category, Model model){
-        if(id_category == null) items = itemService.getItems();
-        else{
-            try{
-                items = itemService.getItemsByCategory(id_category);
-            }
-            catch(Exception e){}
-        }
-        model.addAttribute("items", items);
-        model.addAttribute("categories",categoryService.getAllCategories()); //Esto debería ser reemplazado, sirve para probar nada mas.
-        model.addAttribute("item", new Item());
-        user = items.get(0).getUser();
-        return "itemsListModerator";
+
+
+    @RequestMapping(method = RequestMethod.GET , value="/items")
+    public String getItems(Model model){
+        List<Item> list = itemService.getItems();
+        model.addAttribute("items", list);
+    //    model.addAttribute("categories",categoryService.getCategories());
+     //   model.addAttribute("item", new Item());
+     //   user = list.get(0).getUser();
+        return "items";
     }
 
 
-    @RequestMapping(method = RequestMethod.POST , value="/items")
-    public String createItem(@ModelAttribute Item item, BindingResult result) {
-        if(result.hasErrors()) {
-            return "items";
-        }
-        item.setUser(user);
-        itemService.addItem(item);
-        return "redirect:/itemsListModerator";
-    }
 
-    @RequestMapping(method = RequestMethod.GET, value="/items/{id}")
-    public String updateItem(@PathVariable Long id, Model model){
-        if (items == null){
-            items = itemService.getItems();
-        }
-        //Expresion Lambda para buscar el item q queremos editar
-        Item itemForUpdate =  items.stream()
-                .filter(item -> item.getId() == id)
-                .findFirst()
-                .orElse(null);
-        model.addAttribute("item" , itemForUpdate);
-        model.addAttribute("items", items);
-        model.addAttribute("categories",categoryService.getAllCategories());
-        return "itemsListModerator";
-    }
 
-    @RequestMapping(method = RequestMethod.DELETE , value="/items/{id}")
-    public String deleteItems(@PathVariable long id){
-        itemService.deleteItemAlone(id);
-        return "redirect:/itemsListModerator";
-    }
 
 }

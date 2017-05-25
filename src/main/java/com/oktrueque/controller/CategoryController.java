@@ -20,8 +20,6 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-
-
     @RequestMapping("/categories")
     public String getAllCategories(Model model){
         model.addAttribute("category" , new Category());
