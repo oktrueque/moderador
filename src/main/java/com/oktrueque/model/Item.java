@@ -5,6 +5,9 @@ import javax.persistence.*;
 /**
  * Created by Tomas on 21-May-17.
  */
+@Entity
+@Table(name = "Items")
+
 public class Item {
 
     //Definicion de Atributos

@@ -24,7 +24,7 @@ public class ItemController {
     private User user = new User();
     private List<Item> items = null;
 
-    @RequestMapping(method = RequestMethod.GET , value="/items")
+    @RequestMapping(method = RequestMethod.GET , value="/itemsListModerator")
     @Valid
     public String getItems(@RequestParam(value = "id_category", required = false) Integer id_category, Model model){
         if(id_category == null) items = itemService.getItems();
