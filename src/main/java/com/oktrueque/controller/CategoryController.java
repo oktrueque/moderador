@@ -20,38 +20,25 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-
-
-    @RequestMapping("/categories")
+    @RequestMapping(method = RequestMethod.GET, value = "/categories")
     public String getAllCategories(Model model){
-        model.addAttribute("category" , new Category());
         model.addAttribute("categories" , categoryService.getAllCategories());
         return "categories";
     }
 
     @RequestMapping(method = RequestMethod.POST,value = "/categories")
-    public String addCategory(@ModelAttribute Category category,Model model){
+    public String addCategory(@ModelAttribute Category category){
         categoryService.addCategory(category);
         return "redirect:/categories";
     }
 
-    // Obtengo la categoria para poder upgradiarla
-    @RequestMapping("/categories/edit{id}")
-    public String getCategory(@PathVariable int id, Model model){
-            model.addAttribute("category" , categoryService.getCategory(id));
-            return "updateCategory";
-
-    }
-
-    @RequestMapping(method = RequestMethod.PUT, value = "/updateCategory")
-    public String updateCategory(@ModelAttribute Category category,Model model){
+    @RequestMapping(method = RequestMethod.PUT, value = "/categories/{id}")
+    public String updateCategory(@ModelAttribute Category category){
         categoryService.updateCategory(category);
         return "redirect:/categories";
     }
 
-
-
-    @RequestMapping("/categories/del{id}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "categories/{id}")
     public String deleteCategory(@PathVariable int id){
          categoryService.deleteCategory(id);
          return "redirect:/categories";
