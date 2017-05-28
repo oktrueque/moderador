@@ -10,24 +10,24 @@ import javax.persistence.*;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
+    @Column(name = "name")
     private String name;
-    private String last_name;
+    @Column(name = "last_name")
+    private String lastName;
+    @Column(name = "email")
     private String email;
+    @Column(name = "password")
     private String password;
+    @Column(name = "status")
     private Integer status;
+    @Column(name = "photo1")
     private String photo1;
 
 
     public User() {
-    }
-
-    public User(Long id, String name, String last_name, String email, String password, int status, String photo1) {
-        this.id = id;
-        this.name = name;
-        this.last_name = last_name;
-        this.email = email;
-        this.password = password;
     }
 
     public Integer getStatus() {
@@ -54,14 +54,6 @@ public class User {
         this.name = name;
     }
 
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -84,5 +76,13 @@ public class User {
 
     public void setPhoto1(String photo1) {
         this.photo1 = photo1;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }
