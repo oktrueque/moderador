@@ -3,6 +3,7 @@ package com.oktrueque.service;
 import com.oktrueque.model.Item;
 import com.oktrueque.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 /**
  * Created by Tomas on 21-May-17.
  */
+@Service
 public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
@@ -28,5 +30,10 @@ public class ItemService {
 
     public List<Item> getItemsByCategory(int id_category) {
         return itemRepository.findByCategory_Id(id_category);
+    }
+
+    public List<Item> getItemsByStatus(int status){
+
+        return itemRepository.findByStatus(status);
     }
 }
