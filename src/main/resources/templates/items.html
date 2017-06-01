@@ -201,7 +201,7 @@
                             <td th:text="${item.user.name} +' ' + ${item.user.last_name}">userName</td>
                             <td th:text="${item.status}"></td>
                             <td>
-                                <button href="javascript: void(0) " type="button" class="btn btn-info btn-sm">Ver</button>
+                                <button id="verItem" href="javascript: void(0) " type="button" class="btn btn-info btn-sm">Ver</button>
 
                                 <!--<form th:action="@{'/items/' + ${item.id}}" th:method="GET" role="button">-->
                                     <!--<button class="btn btn-info btn-sm" type="submit">Editar</button>-->
@@ -248,6 +248,94 @@
         </div>
     </div>
 
+    <div class="modal fade" id="edit-item" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Editar Item</h4>
+                </div>
+                <form th:method="PUT" name="user" id="edit-item-form">
+                    <div class="modal-body">
+
+                        <input type="hidden" class="form-control" id="edit-item-id" name="id"/>
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <label class="form-control-label" for="l0">Nombre</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" placeholder="Nombre" id="edit-item-name" name="name"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <label class="form-control-label" for="l0">Descripcion</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" placeholder="Descripción" id="edit-item-description" name="description"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <label class="form-control-label" for="l0">Categoría</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" placeholder="Categoría" id="edit-item-category" name="category"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <label class="form-control-label" for="l0">Usuario</label>
+                            </div>
+                            <div class="col-md-9">
+                                <!--<input type="text" class="form-control"  id="edit-item-user" name="user" placeholder=""/>-->
+                                <h3>Nombre usuario</h3>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <label class="form-control-label" for="l0">Status</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" placeholder="Status" id="edit-item-status" name="status"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <label class="form-control-label" for="l0">Imagen 1</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" placeholder="Imagen 1 url" id="edit-item-photo1" name="photo1"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <label class="form-control-label" for="l0">Imagen 2</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" placeholder="Imagen 2 url" id="edit-item-photo2" name="photo2"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <label class="form-control-label" for="l0">Imagen 3</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" placeholder="Imagen 3 url" id="edit-item-photo3" name="photo3"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Dialog show event handler -->
     <script type="text/javascript">
         $(function () {
@@ -276,16 +364,28 @@
         })
     </script>
     <script>
-        $(function () {
+        $(".verItem").click(function(e){
+            e.preventDefault();
+            var td = $(this).parents('tr').find('td:lt(7)');
+            var itemId = $(td[0]).text()
+            $('#edit-item-id').val(itemId);
+            $('#edit-item-name').val($(td[1]).text());
+            $('#edit-item-description').val($(td[2]).text());
+            $('#edit-item-category').val($(td[3]).text());
+            $('#edit-item-status').val($(td[5]).text());
+            $('#edit-item-photo1').val($('#item-img-' + itemId).attr('src'));
+            $('#edit-item-photo2').val($('#item-img-' + itemId).attr('src'));
+            $('#edit-item-photo3').val($('#item-img-' + itemId).attr('src'));
+            $('#edit-item-form').attr('action', "/items/" + itemId);
+        });
 
-
-
-
-        })
-
-
-
-
+        $(function(){
+            $('#example2').DataTable({
+                autoWidth: true,
+                scrollX: true,
+                fixedColumns: true
+            });
+        });
     </script>
     <!-- End Page Scripts -->
 </section>
