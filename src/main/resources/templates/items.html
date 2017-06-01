@@ -205,12 +205,10 @@
                             <td th:text="${item.user.name} +' ' + ${item.user.last_name}">userName</td>
                             <td th:text="${item.status}"></td>
                             <td>
-                                <button id="verItem" href="javascript: void(0) " type="button" class="btn btn-info btn-sm">Editar</button>
                                 <form th:method="DELETE" th:action="@{'/items/' + ${item.id}}">
                                     <a href="javascript:void(0)" data-toggle="modal" data-target="#edit-item" class="btn btn-success btn-xs btn-edit edit-user">Editar</a>
                                     <button id="btn-delete-user" type="submit" class="btn btn-danger btn-xs">Delete</button>
                                 </form>
-
                             </td>
                         </tr>
                     </th:block>
