@@ -179,6 +179,7 @@
                         <th>ID</th>
                         <th>Foto</th>
                         <th>Nombre</th>
+                        <th>Descripción</th>
                         <th>Categoría</th>
                         <th>Usuario</th>
                         <th>Estado</th>
@@ -194,24 +195,21 @@
                             <td><div class="cui-ecommerce--catalog--item--img">
                                 <a th:href="@{'/items/' + ${item.id}}">
                                     <img th:src="${item.photo1}"/>
+                                    <img th:src="${item.photo2}"/>
+                                    <img th:src="${item.photo3}"/>
                                 </a>
                             </div></td>
                             <td th:text="${item.name}">name</td>
+                            <td th:text="${item.description}">descripcion</td>
                             <td th:text="${item.category.name}">category</td>
                             <td th:text="${item.user.name} +' ' + ${item.user.last_name}">userName</td>
                             <td th:text="${item.status}"></td>
                             <td>
-                                <button id="verItem" href="javascript: void(0) " type="button" class="btn btn-info btn-sm">Ver</button>
-
-                                <!--<form th:action="@{'/items/' + ${item.id}}" th:method="GET" role="button">-->
-                                    <!--<button class="btn btn-info btn-sm" type="submit">Editar</button>-->
-                                <!--</form>-->
-
-                                <!--<button href="javascript: void(0) " type="button" class="btn btn-success btn-sm">Activar</button>-->
-
-                                <!--<button href="javascript: void(0) " type="button" class="btn btn-warning btn-sm">Bloquear</button>-->
-
-                                <!--<button class="btn btn-danger btn-sm" type="submit" th:attr="data-id=${item.id}">Eliminar</button>-->
+                                <button id="verItem" href="javascript: void(0) " type="button" class="btn btn-info btn-sm">Editar</button>
+                                <form th:method="DELETE" th:action="@{'/items/' + ${item.id}}">
+                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#edit-item" class="btn btn-success btn-xs btn-edit edit-user">Editar</a>
+                                    <button id="btn-delete-user" type="submit" class="btn btn-danger btn-xs">Delete</button>
+                                </form>
 
                             </td>
                         </tr>
@@ -223,7 +221,7 @@
         <!-- End Ecommerce Products List -->
     </div>
 
-    <!-- Modal Dialog -->
+    <!-- Modal Dialog de eliminar-->
     <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -247,7 +245,7 @@
             </div>
         </div>
     </div>
-
+<!--Modal dialog para editar un item-->
     <div class="modal fade" id="edit-item" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -263,7 +261,7 @@
                         <input type="hidden" class="form-control" id="edit-item-id" name="id"/>
                         <div class="form-group row">
                             <div class="col-md-3">
-                                <label class="form-control-label" for="l0">Nombre</label>
+                                <label class="form-control-label" for="edit-item-name">Nombre</label>
                             </div>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" placeholder="Nombre" id="edit-item-name" name="name"/>
@@ -271,7 +269,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-3">
-                                <label class="form-control-label" for="l0">Descripcion</label>
+                                <label class="form-control-label" for="edit-item-description">Descripcion</label>
                             </div>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" placeholder="Descripción" id="edit-item-description" name="description"/>
@@ -279,7 +277,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-3">
-                                <label class="form-control-label" for="l0">Categoría</label>
+                                <label class="form-control-label" for="edit-item-category">Categoría</label>
                             </div>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" placeholder="Categoría" id="edit-item-category" name="category"/>
@@ -287,16 +285,16 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-3">
-                                <label class="form-control-label" for="l0">Usuario</label>
+                                <label class="form-control-label" for="edit-item-user">Usuario</label>
                             </div>
                             <div class="col-md-9">
                                 <!--<input type="text" class="form-control"  id="edit-item-user" name="user" placeholder=""/>-->
-                                <h3>Nombre usuario</h3>
+                                <h3 id="edit-item-user">Nombre usuario</h3>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-3">
-                                <label class="form-control-label" for="l0">Status</label>
+                                <label class="form-control-label" for="edit-item-status">Status</label>
                             </div>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" placeholder="Status" id="edit-item-status" name="status"/>
@@ -304,7 +302,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-3">
-                                <label class="form-control-label" for="l0">Imagen 1</label>
+                                <label class="form-control-label" for="edit-item-photo1">Imagen 1</label>
                             </div>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" placeholder="Imagen 1 url" id="edit-item-photo1" name="photo1"/>
@@ -312,7 +310,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-3">
-                                <label class="form-control-label" for="l0">Imagen 2</label>
+                                <label class="form-control-label" for="edit-item-photo2">Imagen 2</label>
                             </div>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" placeholder="Imagen 2 url" id="edit-item-photo2" name="photo2"/>
@@ -320,7 +318,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-3">
-                                <label class="form-control-label" for="l0">Imagen 3</label>
+                                <label class="form-control-label" for="edit-item-photo3">Imagen 3</label>
                             </div>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" placeholder="Imagen 3 url" id="edit-item-photo3" name="photo3"/>
@@ -369,10 +367,10 @@
             var td = $(this).parents('tr').find('td:lt(7)');
             var itemId = $(td[0]).text()
             $('#edit-item-id').val(itemId);
-            $('#edit-item-name').val($(td[1]).text());
+            $('#edit-item-name').val($(td[2]).text());
             $('#edit-item-description').val($(td[2]).text());
             $('#edit-item-category').val($(td[3]).text());
-            $('#edit-item-status').val($(td[5]).text());
+            $('#edit-item-status').val($(td[4]).text());
             $('#edit-item-photo1').val($('#item-img-' + itemId).attr('src'));
             $('#edit-item-photo2').val($('#item-img-' + itemId).attr('src'));
             $('#edit-item-photo3').val($('#item-img-' + itemId).attr('src'));
