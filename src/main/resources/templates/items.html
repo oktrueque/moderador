@@ -193,20 +193,22 @@
                         <tr class="items-table">
                             <td th:text="${item.id}">id</td>
                             <td th:text="${item.name}">name</td>
-                            <td><div >
+                            <td>
+                                <div class="cui-ecommerce--product--photos" >
                                 <a th:href="@{'/items/' + ${item.id}}">
                                     <img th:src="${item.photo1}"/>
                                     <img th:src="${item.photo2}"/>
                                     <img th:src="${item.photo3}"/>
                                 </a>
-                            </div></td>
+                                </div>
+                            </td>
                             <td th:text="${item.description}">descripcion</td>
                             <td th:text="${item.category.name}">category</td>
                             <td th:text="${item.user.name} +' ' + ${item.user.last_name}">userName</td>
                             <td th:text="${item.status}"></td>
                             <td>
                                 <form th:method="DELETE" th:action="@{'/items/' + ${item.id}}">
-                                    <a id="123" href="javascript:void(0)" data-toggle="modal" data-target="#edit-item" class="btn btn-success btn-xs btn-edit edit-item">Editar</a>
+                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#edit-item" class="btn btn-success btn-xs btn-edit edit-item">Editar</a>
                                     <button id="btn-delete-user" type="submit" class="btn btn-danger btn-xs">Delete</button>
                                 </form>
                             </td>
