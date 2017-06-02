@@ -131,7 +131,7 @@
             <div class="dropdown dropdown-avatar">
                 <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <span class="avatar" href="javascript:void(0)">
-                        <img src="../static/common/img/temp/avatars/1.jpg" alt="Alternative text to the image"/>
+                        <img  th:src="@{/common/img/temp/avatars/1.jpg}" src="../static/common/img/temp/avatars/1.jpg" alt="Alternative text to the image"/>
                     </span>
                 </a>
                 <!--PROFILE-->
@@ -177,8 +177,8 @@
                     <thead class="thead-default">
                     <tr>
                         <th>ID</th>
-                        <th>Foto</th>
                         <th>Nombre</th>
+                        <th>Fotos</th>
                         <th>Descripción</th>
                         <th>Categoría</th>
                         <th>Usuario</th>
@@ -192,21 +192,21 @@
                     <th:block th:each="item : ${items}">
                         <tr class="items-table">
                             <td th:text="${item.id}">id</td>
-                            <td><div class="cui-ecommerce--catalog--item--img">
+                            <td th:text="${item.name}">name</td>
+                            <td><div >
                                 <a th:href="@{'/items/' + ${item.id}}">
                                     <img th:src="${item.photo1}"/>
                                     <img th:src="${item.photo2}"/>
                                     <img th:src="${item.photo3}"/>
                                 </a>
                             </div></td>
-                            <td th:text="${item.name}">name</td>
                             <td th:text="${item.description}">descripcion</td>
                             <td th:text="${item.category.name}">category</td>
                             <td th:text="${item.user.name} +' ' + ${item.user.last_name}">userName</td>
                             <td th:text="${item.status}"></td>
                             <td>
                                 <form th:method="DELETE" th:action="@{'/items/' + ${item.id}}">
-                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#edit-item" class="btn btn-success btn-xs btn-edit edit-user">Editar</a>
+                                    <a id="editItem" href="javascript:void(0)" data-toggle="modal" data-target="#edit-item" class="btn btn-success btn-xs btn-edit edit-user">Editar</a>
                                     <button id="btn-delete-user" type="submit" class="btn btn-danger btn-xs">Delete</button>
                                 </form>
                             </td>
@@ -287,7 +287,7 @@
                             </div>
                             <div class="col-md-9">
                                 <!--<input type="text" class="form-control"  id="edit-item-user" name="user" placeholder=""/>-->
-                                <h3 id="edit-item-user">Nombre usuario</h3>
+                                <h4 id="edit-item-user">Nombre usuario</h4>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -360,7 +360,7 @@
         })
     </script>
     <script>
-        $(".verItem").click(function(e){
+        $(".editItem").click(function(e){
             e.preventDefault();
             var td = $(this).parents('tr').find('td:lt(7)');
             var itemId = $(td[0]).text()
