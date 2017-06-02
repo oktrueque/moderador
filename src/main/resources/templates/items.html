@@ -206,7 +206,7 @@
                             <td th:text="${item.status}"></td>
                             <td>
                                 <form th:method="DELETE" th:action="@{'/items/' + ${item.id}}">
-                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#edit-item" class="btn btn-success btn-xs btn-edit edit-user">Editar</a>
+                                    <a id="123" href="javascript:void(0)" data-toggle="modal" data-target="#edit-item" class="btn btn-success btn-xs btn-edit edit-item">Editar</a>
                                     <button id="btn-delete-user" type="submit" class="btn btn-danger btn-xs">Delete</button>
                                 </form>
                             </td>
@@ -267,7 +267,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-3">
-                                <label class="form-control-label" for="edit-item-description">Descripcion</label>
+                                <label class="form-control-label" for="edit-item-description">Descripción</label>
                             </div>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" placeholder="Descripción" id="edit-item-description" name="description"/>
@@ -361,11 +361,13 @@
     </script>
     <script>
         $(".edit-item").click(function(e){
+            console.log("entro");
             e.preventDefault();
             var td = $(this).parents('tr').find('td:lt(9)');
             var itemId = $(td[0]).text();
+            console.log(itemId);
             $('#edit-item-id').val(itemId);
-            $('#edit-item-name').val($(td[2]).text());
+            $('#edit-item-name').val($(td[1]).text());
             $('#edit-item-description').val($(td[4]).text());
             $('#edit-item-category').val($(td[5]).text());
             $('#edit-item-status').val($(td[6]).text());
