@@ -161,24 +161,38 @@
     <script th:src="@{/common/js/demo.temp.js}" src="../static/common/js/demo.temp.js"></script>
 </head>
 <body class="theme-default">
-<nav class="left-menu">
+
+<nav class="left-menu" >
     <div class="logo-container">
         <a href="index.html" class="logo">
-            <img src="../static/common/img/logo.png" alt="Clean UI Admin Template"/>
-            <img class="logo-inverse" src="../static/common/img/logo-inverse.png" alt="Clean UI Admin Template"/>
+            <img src="../static/common/img/logo-v2.png" th:src="@{/common/img/logo-v2.png}" alt="Clean UI Admin Template" />
+            <img class="logo-inverse" src="../static/common/img/logo-inverse.png" th:src="@{/common/img/logo-inverse.png}" alt="Clean UI Admin Template" />
         </a>
     </div>
-    <div class="left-menu-inner scroll-pane">
+    <div class="left-menu-inner">
         <ul class="left-menu-list left-menu-list-root list-unstyled">
-            <li class="left-menu-list-active">
-                <a class="left-menu-link" href="items.html">
+            <li>
+                <a class="left-menu-link" href="/users">
                     <i class="left-menu-link-icon icmn-home2"><!-- --></i>
-                    <span class="menu-top-hidden">Items List</span>
+                    <span class="menu-top-hidden">Usuarios</span>
+                </a>
+            </li>
+            <li>
+                <a class="left-menu-link" href="/categories">
+                    <i class="left-menu-link-icon icmn-home2"><!-- --></i>
+                    <span class="menu-top-hidden">Categorias</span>
+                </a>
+            </li>
+            <li>
+                <a class="left-menu-link" href="/items">
+                    <i class="left-menu-link-icon icmn-home2"><!-- --></i>
+                    <span class="menu-top-hidden">Items</span>
                 </a>
             </li>
         </ul>
     </div>
 </nav>
+
 <nav class="top-menu">
     <div class="menu-icon-container hidden-md-up">
         <div class="animate-menu-button left-menu-toggle">
@@ -268,7 +282,7 @@
                             <td th:text="${item.status}"></td>
                             <td>
                                 <form th:method="DELETE" th:action="@{'/items/' + ${item.id}}">
-                                    <a href="javascript: void(0)" class="btn btn-success btn-xs btn-edit edit-item-btn">Edit</a>
+                                    <a th:href="@{'/items/' + ${item.id}}" class="btn btn-success btn-xs btn-edit edit-item-btn">Edit</a>
                                     <button id="btn-delete-user" type="submit" class="btn btn-danger btn-xs">Delete</button>
                                 </form>
                             </td>

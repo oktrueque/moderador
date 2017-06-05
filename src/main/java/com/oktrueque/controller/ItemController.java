@@ -33,6 +33,12 @@ public class ItemController {
 //        return "items";
 //    }
 
+    @RequestMapping(method = RequestMethod.GET, value="/editItem/{id}")
+    public String getItemById(@PathVariable Long id, Model model){
+        model.addAttribute("item" , itemService.getItemById(id));
+        return "editItem";
+    }
+
 
 
 
