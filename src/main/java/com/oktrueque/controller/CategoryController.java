@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 /**
  * Created by Fabrizio SPOSETTI on 01/05/2017.
  */
@@ -17,8 +19,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class CategoryController {
 
+
     @Autowired
     private CategoryService categoryService;
+
+
+//    @RequestMapping("/items/edit{id}")
+//    public String getAllCategoriesDropDownList(Model model){ //PARA ARMAR LA LISTA DESPLEGABLE EN EDITITEM
+//        model.addAttribute("categories" , categoryService.getAllCategories());
+//        return "editItem";
+//    }
 
     @RequestMapping("/categories")
     public String getAllCategories(Model model){

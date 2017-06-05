@@ -101,9 +101,13 @@
     <script th:src="@{/common/js/common.js}" src="../assets/common/js/common.js"></script>
     <script th:src="@{/common/js/demo.temp.js}" src="../assets/common/js/demo.temp.js"></script>
 </head>
+
+
+
 <body class="theme-default">
 
-<nav class="left-menu" left-menu="true">
+
+<nav class="left-menu" >
     <div class="logo-container">
         <a href="index.html" class="logo">
             <img src="../static/common/img/logo-v2.png" th:src="@{/common/img/logo-v2.png}" alt="Clean UI Admin Template" />
@@ -133,237 +137,127 @@
         </ul>
     </div>
 </nav>
+<nav class="top-menu">
+    <div class="menu-icon-container hidden-md-up">
+        <div class="animate-menu-button left-menu-toggle">
+            <div><!-- --></div>
+        </div>
+    </div>
+    <div class="menu">
+        <div class="menu-user-block">
+            <div class="dropdown dropdown-avatar">
+                <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="avatar" href="javascript:void(0)">
+                        <img th:src="@{/common/img/temp/avatars/1.jpg}" src="../static/common/img/temp/avatars/1.jpg"
+                             alt="Alternative text to the image"/>
+                    </span>
+                </a>
+                <!--PROFILE-->
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
+                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-user"></i>
+                        Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-header">Home</div>
+                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i>
+                        System Dashboard</a>
+                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i>
+                        User Boards</a>
+                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i>
+                        Issue Navigator (35 New)</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-exit"></i>
+                        Logout</a>
+                </ul>
+
+            </div>
+
+        </div>
+    </div>
+</nav>
 
 
-<div class="page-content-inner">
 
+<div class="page-content">
     <!-- Ecommerce Product Edit -->
-    <section class="panel panel-with-borders">
+    <section class="panel panel-with-borders page-content-inner">
         <div class="panel-heading">
             <h2>
-                Product Edit
+                Editar Item
             </h2>
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-lg-8">
-
-                    <h4>Main Parameters</h4>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label for="l301">Title</label>
-                                <input type="text" class="form-control" id="l301"/>
+                <form action="#" th:action="@{'/items/' + ${item.id}}" th:object="${item}" th:method="PUT">
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="nombre-item">Nombre</label>
+                                    <label th:value="@{item.id}" for="nombre-item"></label>
+                                    <input th:value="@{item.name}" type="text" class="form-control" id="nombre-item"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="userName">Usuario</label>
+                                    <input th:value="@{item.id_user}" class="form-control" id="userName"/>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="form-control-label" for="category">Categoría</label>
+                                <!--<select  th:field="*{categories}" class="form-control" id="category">-->
+                                    <!--<option value="0" th:text="Undefined" ></option>-->
+                                    <!--<option th:each="catList : ${categories}" th:value="${catList.id}" th:text="${catList.name}"></option>-->
+                                <!--</select>-->
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="l15">Descripción</label>
+                            <textarea th:value="@{item.description}" class="form-control" rows="5" id="l15"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <!--ACA IRIAN LOS ESTADOS-->
+                            <!--<label class="form-control-label" for="status">Categoría</label>-->
+                            <!--<select  th:field="*{}" class="form-control" id="status">-->
+                                <!--<option value="0" th:text="0" ></option>-->
+                                <!--<option th:each="status : ${}" th:value="${}" th:text="${}"></option>-->
+                            <!--</select>-->
+                        </div>
+                        <br />
+                        <!--FOTOS-->
+                        <div class="col-lg-4">
+                            <h4>Fotos del Item</h4>
+                            <div class="cui-ecommerce--catalog--item">
+                                <div class="cui-ecommerce--catalog--item--img">
+                                    <a >
+                                        <img th:src="@{/common/img/temp/ecommerce/ecommerce-empty.jpg}" src="../assets/common/img/temp/ecommerce/ecommerce-empty.jpg" />
+                                    </a>
+                                    <a class="link-underlined cui-ecommerce--catalog--item--img-remove">
+                                        <i class="icmn-cross2"><!-- --></i> Remove
+                                    </a>
+                                </div>
+                            </div>
                             <div class="form-group">
-                                <label for="l302">SKU</label>
-                                <input type="text" class="form-control" id="l302"/>
+                                <input type="file" id="l16"/>
+
+                                <small>Technical information for user</small>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label" for="l20">Category</label>
-                        <select multiple="" class="form-control height-150" id="l20">
-                            <option value="Option 1">— Furniture</option>
-                            <option value="Option 2">&nbsp; &nbsp; — Tables</option>
-                            <option value="Option 3">&nbsp;&nbsp;  — Chairs</option>
-                            <option value="Option 4">&nbsp; &nbsp; &nbsp; &nbsp; — Rounded Chairs</option>
-                            <option value="Option 4">&nbsp; &nbsp; &nbsp; &nbsp; — Squared Chairs</option>
-                            <option value="Option 5">— Electronics</option>
-                            <option value="Option 2">&nbsp; &nbsp; — TV-set</option>
-                            <option value="Option 2">&nbsp; &nbsp; — Monitors</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label" for="l15">Short Description</label>
-                        <textarea class="form-control" rows="3" id="l15"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label" for="l151">Full Description</label>
-                        <textarea class="form-control" rows="3" id="l151"></textarea>
-                    </div>
-                    <br />
-
-                    <h4>Pricing</h4>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label for="l30">Total Price</label>
-                                <input type="text" class="form-control" id="l30"/>
-                            </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-primary width-150">Guardar Item</button>
+                            <button type="button" class="btn btn-default">Cancelar</button>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label for="l31">Discount Price</label>
-                                <input type="text" class="form-control" id="l31"/>
-                            </div>
-                        </div>
-                    </div>
-                    <br />
 
-                    <h4>Attributes</h4>
-                    <div class="form-group">
-                        <label class="form-control-label" for="l14">Colors</label>
-                        <select multiple="" class="form-control" id="l14">
-                            <option value="Option 1">Option 1</option>
-                            <option value="Option 2">Option 2</option>
-                            <option value="Option 3">Option 3</option>
-                            <option value="Option 4">Option 4</option>
-                            <option value="Option 5">Option 5</option>
-                        </select>
                     </div>
-                    <div class="form-group">
-                        <label for="l13">Size</label>
-                        <select class="form-control" id="l13">
-                            <option value="Option 1">Option 1</option>
-                            <option value="Option 2">Option 2</option>
-                            <option value="Option 3">Option 3</option>
-                            <option value="Option 4">Option 4</option>
-                            <option value="Option 5">Option 5</option>
-                        </select>
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-primary width-150">Save Product</button>
-                        <button type="button" class="btn btn-default">Cancel</button>
-                    </div>
+                </form>
 
-                </div>
-
-                <div class="col-lg-4">
-                    <h4>Product Image</h4>
-                    <div class="cui-ecommerce--catalog--item">
-                        <div class="cui-ecommerce--catalog--item--img">
-                            <a href="javascript: void(0);">
-                                <img src="../assets/common/img/temp/ecommerce/ecommerce-empty.jpg" />
-                            </a>
-                            <a href="javascript: void(0);" class="link-underlined cui-ecommerce--catalog--item--img-remove">
-                                <i class="icmn-cross2"><!-- --></i> Remove
-                            </a>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <input type="file" id="l16"/>
-
-                        <small>Technical information for user</small>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
     <!-- End Ecommerce Product Edit -->
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-lg-8">
-
-                <h4>Main Parameters</h4>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label for="l301">Title</label>
-                            <input type="text" class="form-control" id="l301"/>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label for="l302">SKU</label>
-                            <input type="text" class="form-control" id="l302"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="l20">Category</label>
-                    <select multiple="" class="form-control height-150" id="l20">
-                        <option value="Option 1">— Furniture</option>
-                        <option value="Option 2">&nbsp; &nbsp; — Tables</option>
-                        <option value="Option 3">&nbsp;&nbsp;  — Chairs</option>
-                        <option value="Option 4">&nbsp; &nbsp; &nbsp; &nbsp; — Rounded Chairs</option>
-                        <option value="Option 4">&nbsp; &nbsp; &nbsp; &nbsp; — Squared Chairs</option>
-                        <option value="Option 5">— Electronics</option>
-                        <option value="Option 2">&nbsp; &nbsp; — TV-set</option>
-                        <option value="Option 2">&nbsp; &nbsp; — Monitors</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="l15">Short Description</label>
-                    <textarea class="form-control" rows="3" id="l15"></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="l151">Full Description</label>
-                    <textarea class="form-control" rows="3" id="l151"></textarea>
-                </div>
-                <br />
-
-                <h4>Pricing</h4>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label for="l30">Total Price</label>
-                            <input type="text" class="form-control" id="l30"/>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label for="l31">Discount Price</label>
-                            <input type="text" class="form-control" id="l31"/>
-                        </div>
-                    </div>
-                </div>
-                <br />
-
-                <h4>Attributes</h4>
-                <div class="form-group">
-                    <label class="form-control-label" for="l14">Colors</label>
-                    <select multiple="" class="form-control" id="l14">
-                        <option value="Option 1">Option 1</option>
-                        <option value="Option 2">Option 2</option>
-                        <option value="Option 3">Option 3</option>
-                        <option value="Option 4">Option 4</option>
-                        <option value="Option 5">Option 5</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="l13">Size</label>
-                    <select class="form-control" id="l13">
-                        <option value="Option 1">Option 1</option>
-                        <option value="Option 2">Option 2</option>
-                        <option value="Option 3">Option 3</option>
-                        <option value="Option 4">Option 4</option>
-                        <option value="Option 5">Option 5</option>
-                    </select>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn btn-primary width-150">Save Product</button>
-                    <button type="button" class="btn btn-default">Cancel</button>
-                </div>
-
-            </div>
-
-            <div class="col-lg-4">
-                <h4>Product Image</h4>
-                <div class="cui-ecommerce--catalog--item">
-                    <div class="cui-ecommerce--catalog--item--img">
-                        <a href="javascript: void(0);">
-                            <img src="../assets/common/img/temp/ecommerce/ecommerce-empty.jpg" />
-                        </a>
-                        <a href="javascript: void(0);" class="link-underlined cui-ecommerce--catalog--item--img-remove">
-                            <i class="icmn-cross2"><!-- --></i> Remove
-                        </a>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="file" id="l16"/>
-
-                    <small>Technical information for user</small>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </div>
-
-
-
 </body>
+
+
+
 </html>
