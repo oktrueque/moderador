@@ -270,15 +270,16 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group">
+                            <div class="form-group col-lg-6">
                                 <label class="form-control-label">Categoría</label>
-                                <select th:field="*{categories}" class="form-control">
-                                    <option value="0" th:field="${item.id_category}"></option>
-                                    <option th:each="catList : ${categories}" th:value="${catList.id}"
-                                            th:text="${catList.name}"></option>
+                                <!--<input th:field="*{category.name}" class="form-control"/>-->
+                                <select th:field="*{category}" class="form-control">
+                                    <!--<option value="0" th:field="${category.name}"></option>-->
+                                    <option th:each="category : ${catList}" th:value="${catList.id}"
+                                            th:text="${catList.name}" th:field="*{category}"></option>
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-lg-6">
                                 <label class="form-control-label">Estado</label>
                                 <!--<select th:field="*{item}" class="form-control">-->
                                 <!--<option value="0" th:text="Undefined"></option>-->
