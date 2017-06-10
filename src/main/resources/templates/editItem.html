@@ -247,43 +247,53 @@
         <div class="panel-body">
             <div class="row">
                 <form action="#" th:action="@{'/items/' + ${item.id}}" th:object="${item}" th:method="PUT">
+                    <!--INPUTS ESCONDIDOS PARA TENER EL ATRIBUTO DISPONIBLE-->
                     <input hidden="true" th:field="*{id}"/>
                     <input hidden="true" th:field="*{user.id}"/>
                     <div class="col-lg">
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="form-group">
+                                    <!--NOMBRE DEL ITEM-->
                                     <label class="control-label">Nombre</label>
                                     <input th:field="*{name}" type="text" class="form-control"/>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
+                                    <!--ID DEL ITEM-->
                                     <label class="control-label">ID</label>
                                     <input readonly="true" th:field="*{id}" type="text" class="form-control"/>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
+                                    <!--NOMBRE DE USUARIO-->
                                     <label class="control-label">Usuario</label>
-                                    <input th:field="*{user.name}" class="form-control"/>
+                                    <input readonly="true" th:field="*{user.name}" class="form-control"/>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-lg-6">
+                                <!--DROP DOWN LIST DE CATEGORIA-->
                                 <label class="form-control-label">Categoría</label>
                                 <select th:field="*{category}" class="form-control">
                                     <option th:each="cat : ${categories}" th:value="${cat.id}"
                                             th:text="${cat.name}" th:field="*{category}"></option>
                                 </select>
                             </div>
-                            <div class="form-group col-lg-6">
+                            <div class="form-group col-lg-2">
+                                <!--DROP DOWN LIST DE ESTADOS-->
                                 <label class="form-control-label">Estado</label>
-                                <select th:field="*{item}" class="form-control">
-                                    <option th:each="statList : ${item}" th:value="${statList}"
-                                            th:text="#{${'item.statList' + statList}}" th:field="*{category}"></option>
-                                </select>
+                                <input th:field="*{status}" class="form-control"/>
+                                <!--<select   class="form-control">-->
+                                    <!--<option  ></option>-->
+                                    <!--<option                      value="0"> Registrado </option>-->
+                                    <!--<option                     value="1"> Confirmado </option>-->
+                                    <!--<option                      value="2"> Eliminado </option>-->
+                                    <!--<option                        value="3"> Baneado </option>-->
+                                <!--</select>-->
                             </div>
                         </div>
                         <div class="form-group">
@@ -339,16 +349,12 @@
                                     <input type="file"/>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary width-150">Guardar Item</button>
                     </div>
-
                 </form>
-
             </div>
         </div>
     </section>

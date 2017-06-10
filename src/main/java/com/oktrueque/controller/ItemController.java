@@ -51,6 +51,11 @@ public class ItemController {
         return "redirect:/items/" + id;
     }
 
+    @RequestMapping(method= RequestMethod.DELETE, value="/items/{id}")
+    public String deleteItem(@PathVariable Long id, Model model){
+        itemService.deleteItemAlone(id);
+        return "redirect:/items";
+    }
 
 
 

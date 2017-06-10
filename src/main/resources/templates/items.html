@@ -265,6 +265,18 @@
                     </tr>
                     </thead>
 
+                    <tfoot class="tfoot-default">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Foto</th>
+                        <th>Categoría</th>
+                        <th>Usuario</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                    </tfoot>
+
 
                     <tbody>
 
@@ -282,8 +294,8 @@
                             <td th:text="${item.status}"></td>
                             <td>
                                 <form th:method="DELETE" th:action="@{'/items/' + ${item.id}}">
-                                    <a th:href="@{'/items/' + ${item.id}}" class="btn btn-success btn-xs btn-edit edit-item-btn">Edit</a>
-                                    <button id="btn-delete-user" type="submit" class="btn btn-danger btn-xs">Delete</button>
+                                    <a th:href="@{'/items/' + ${item.id}}" class="btn btn-success btn-xs btn-edit edit-item-btn">Editar</a>
+                                    <button id="btn-delete-user" type="submit" data-target="modal" data-toggle=".confirmDelete" class="btn btn-danger btn-xs">Borrar</button>
                                 </form>
                             </td>
                         </tr>
@@ -302,15 +314,15 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Delete Parmanently</h4>
+                    <h4 class="modal-title">Borrar permanentemente</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure about this?</p>
+                    <p>Estas seguro de esto?</p>
                 </div>
                 <div class="modal-footer">
                     <form id="confirm_form" th:action="@{'/items/' + id}" th:method="DELETE" role="button">
                         <button type="button" class="btn btn-default" data-dismiss="modal">
-                            Cancel
+                            Cancelar
                         </button>
                         <button type="submit" class="btn btn-danger" data-dismiss="modal" id="btn_confirm_delete">
                             Eliminar
@@ -325,7 +337,7 @@
     <!-- Dialog show event handler -->
     <script type="text/javascript">
         $(function () {
-            $(".btn_delete").on("click", function (e) {
+            $(".btn-delete-user").on("click", function (e) {
                 e.preventDefault();
                 var id = $(this).data("id");
                 console.log(id);
