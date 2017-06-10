@@ -37,4 +37,8 @@ public class ItemService {
         return itemRepository.findByStatus(status);
     }
     public Item getItemById(Long id){ return itemRepository.findOne(id);}
+
+    public Item setItem(Item item){
+        return itemRepository.save(item);
+    }
 }

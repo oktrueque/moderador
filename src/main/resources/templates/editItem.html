@@ -248,6 +248,7 @@
             <div class="row">
                 <form action="#" th:action="@{'/items/' + ${item.id}}" th:object="${item}" th:method="PUT">
                     <input hidden="true" th:field="*{id}"/>
+                    <input hidden="true" th:field="*{user.id}"/>
                     <div class="col-lg">
                         <div class="row">
                             <div class="col-lg-4">
@@ -272,20 +273,17 @@
                         <div class="row">
                             <div class="form-group col-lg-6">
                                 <label class="form-control-label">Categoría</label>
-                                <!--<input th:field="*{category.name}" class="form-control"/>-->
                                 <select th:field="*{category}" class="form-control">
-                                    <!--<option value="0" th:field="${category.name}"></option>-->
-                                    <option th:each="category : ${catList}" th:value="${catList.id}"
-                                            th:text="${catList.name}" th:field="*{category}"></option>
+                                    <option th:each="cat : ${categories}" th:value="${cat.id}"
+                                            th:text="${cat.name}" th:field="*{category}"></option>
                                 </select>
                             </div>
                             <div class="form-group col-lg-6">
                                 <label class="form-control-label">Estado</label>
-                                <!--<select th:field="*{item}" class="form-control">-->
-                                <!--<option value="0" th:text="Undefined"></option>-->
-                                <!--<option th:each="statList : ${item.id_category}" th:value="${statList}"-->
-                                <!--th:text="#{${'item.statList' + statList}}"></option>-->
-                                <!--</select>-->
+                                <select th:field="*{item}" class="form-control">
+                                    <option th:each="statList : ${item}" th:value="${statList}"
+                                            th:text="#{${'item.statList' + statList}}" th:field="*{category}"></option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -346,8 +344,7 @@
                     </div>
 
                     <div class="form-actions">
-                        <button type="button" class="btn btn-primary width-150">Guardar Item</button>
-                        <button type="button" class="btn btn-default">Cancelar</button>
+                        <button type="submit" class="btn btn-primary width-150">Guardar Item</button>
                     </div>
 
                 </form>

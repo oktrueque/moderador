@@ -1,5 +1,7 @@
 package com.oktrueque.controller;
 
+import com.oktrueque.model.Category;
+import com.oktrueque.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,9 @@ public class ItemController {
     @Autowired
     private ItemService itemService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     @RequestMapping(method = RequestMethod.GET , value="/items")
     public String getItems(Model model){
         List<Item> items = itemService.getItems();
@@ -36,7 +41,14 @@ public class ItemController {
     @RequestMapping(method = RequestMethod.GET, value="/items/{id}")
     public String getItemById(@PathVariable Long id, Model model){
         model.addAttribute("item" , itemService.getItemById(id));
+        model.addAttribute("categories", categoryService.getAllCategories());
         return "editItem";
+    }
+
+    @RequestMapping(method= RequestMethod.PUT, value="/items/{id}")
+    public String setItem(@ModelAttribute Item item, @PathVariable Long id, Model model) {
+        model.addAttribute("item", itemService.setItem(item));
+        return "redirect:/items/" + id;
     }
 
 
