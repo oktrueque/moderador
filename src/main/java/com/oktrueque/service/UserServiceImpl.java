@@ -28,4 +28,12 @@ public class UserServiceImpl implements UserService {
         return users;
     }
 
+    public List<User> getUserById(Long id) {
+        List<User> user = userRepository.findUserById(id);
+        return user;
+    }
+
+
+
+
 }

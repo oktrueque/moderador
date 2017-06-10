@@ -58,7 +58,7 @@ public class CategoryController {
          return "redirect:/categories";
     }
 
-    @RequestMapping("/items/{id}") //Esto se usa para la lista desplegable del FORM de edit Items
+    @RequestMapping(method = RequestMethod.GET, value="/items/{id}") //Esto se usa para la lista desplegable del FORM de edit Items
     public String getAllCategoriesForList(Model model){
         model.addAttribute("categories" , categoryService.getAllCategories());
         return "editItem";
