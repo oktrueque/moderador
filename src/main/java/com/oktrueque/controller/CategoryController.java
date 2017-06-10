@@ -23,13 +23,6 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-
-//    @RequestMapping("/items/edit{id}")
-//    public String getAllCategoriesDropDownList(Model model){ //PARA ARMAR LA LISTA DESPLEGABLE EN EDITITEM
-//        model.addAttribute("categories" , categoryService.getAllCategories());
-//        return "editItem";
-//    }
-
     @RequestMapping("/categories")
     public String getAllCategories(Model model){
         model.addAttribute("category" , new Category());
@@ -65,5 +58,9 @@ public class CategoryController {
          return "redirect:/categories";
     }
 
-
+    @RequestMapping("/items/{id}") //Esto se usa para la lista desplegable del FORM de edit Items
+    public String getAllCategoriesForList(Model model){
+        model.addAttribute("categories" , categoryService.getAllCategories());
+        return "editItem";
+    }
 }
