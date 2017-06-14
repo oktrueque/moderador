@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
-    <title>Clean UI Admin Template</title>
+    <title>Moderador - Uuarios</title>
 
     <link href="../static/common/img/favicon.144x144.png" th:href="@{/common/img/favicon.144x144.png}" rel="apple-touch-icon" type="image/png" sizes="144x144"/>
     <link href="../static/common/img/favicon.114x114.png" th:href="@{/common/img/favicon.114x114.png}" rel="apple-touch-icon" type="image/png" sizes="114x114"/>
@@ -127,7 +127,7 @@
     <div class="panel-body">
     <div class="row">
                 <div class="col-lg-12">
-                <button type="button" class="btn btn-success margin-inline pull-right" data-toggle="modal" data-target="#example1">New</button>
+                <button type="button" class="btn btn-success margin-inline pull-right" data-toggle="modal" data-target="#new-user">Nuevo</button>
                     <h4>Usuarios</h4>
 
                     <br />
@@ -135,26 +135,47 @@
                         <table class="table table-hover nowrap" id="example2" width="100%">
                             <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Last Name</th>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
                                 <th>Email</th>
+                                <th>Clave</th>
                                 <th>Status</th>
+                                <th>Imagen</th>
+                                <th>Acciones</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
-                                <th>Name</th>
-                                <th>Last Name</th>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
                                 <th>Email</th>
+                                <th>Clave</th>
                                 <th>Status</th>
+                                <th>Imagen</th>
+                                <th>Acciones</th>
                             </tr>
                             </tfoot>
                             <tbody>
                             <tr th:each="user : ${users}">
-                                <td th:text="${user.name}">Name</td>
-                                <td th:text="${user.last_name}">Last Name</td>
+                                <td th:text="${user.id}">Id</td>
+                                <td th:text="${user.name}">Nombre</td>
+                                <td th:text="${user.lastName}">Apellido</td>
                                 <td th:text="${user.email}">Email</td>
+                                <td th:text="${user.password}">Clave</td>
                                 <td th:text="${user.status}">Status</td>
+                                <td>
+                                    <div class="cui-ecommerce--dashboard--list--img">
+                                        <img th:id="'user-img-' + ${user.id}" th:src="${user.photo1}" alt="Imagen"/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <form th:method="DELETE" th:action="@{'/users/' + ${user.id}}">
+                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#edit-user" class="btn btn-success btn-xs btn-edit edit-user">Editar</a>
+                                        <button id="btn-delete-user" type="submit" class="btn btn-danger btn-xs">Delete</button>
+                                    </form>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -166,7 +187,7 @@
 </section>
 </div>
 </section>
-<div class="modal fade" id="example1" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+<div class="modal fade" id="new-user" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -175,15 +196,16 @@
                                 </button>
                                 <h4 class="modal-title" id="myModalLabel">Nuevo Usuario</h4>
                             </div>
+                            <form action="/users" method="POST" name="user">
                             <div class="modal-body">
-                            <form action="">
-                            <p>De momento no hace nada, lo implementaremos cuando tengamos el registrar Nuevo Usuario</p>
-                                <div class="form-group row">
+
+                            <p>Agregar una nuevo usuario</p>
+                            <div class="form-group row">
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="l0">Nombre</label>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" placeholder="Nombre" id="l0"/>
+                                    <input type="text" class="form-control" placeholder="Nombre" id="l0" name="name"/>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -191,7 +213,7 @@
                                     <label class="form-control-label" for="l0">Apellido</label>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" placeholder="Apellido" id="l0"/>
+                                    <input type="text" class="form-control" placeholder="Apellido" id="l0" name="lastName"/>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -199,28 +221,129 @@
                                     <label class="form-control-label" for="l0">Email</label>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" placeholder="Email" id="l0"/>
+                                    <input type="text" class="form-control" placeholder="Email" id="l0" name="email"/>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-3">
-                                    <label class="form-control-label" for="l0">Password</label>
+                                    <label class="form-control-label" for="l0">Clave</label>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="password" class="form-control" placeholder="Password" id="l0"/>
+                                    <input type="text" class="form-control" placeholder="Clave" id="l0" name="password"/>
                                 </div>
                             </div>
-                            </form>   
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <label class="form-control-label" for="l0">Status</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" placeholder="Status" id="l0" name="status"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <label class="form-control-label" for="l0">Imagen</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" placeholder="Imagen" id="l0" name="photo1"/>
+                                </div>
+                            </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary">Guardar</button>
+                                <button type="submit" class="btn btn-primary">Guardar</button>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
+
+<div class="modal fade" id="edit-user" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Editar Usuario</h4>
+            </div>
+            <form th:method="PUT" name="user" id="edit-user-form">
+            <div class="modal-body">
+
+                    <input type="hidden" class="form-control" id="edit-user-id" name="id"/>
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <label class="form-control-label" for="l0">Nombre</label>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" placeholder="Nombre" id="edit-user-name" name="name"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <label class="form-control-label" for="l0">Apellido</label>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" placeholder="Apellido" id="edit-user-lastName" name="lastName"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <label class="form-control-label" for="l0">Email</label>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" placeholder="Email" id="edit-user-email" name="email"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <label class="form-control-label" for="l0">Clave</label>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" placeholder="Clave" id="edit-user-password" name="password"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <label class="form-control-label" for="l0">Status</label>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" placeholder="Status" id="edit-user-status" name="status"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <label class="form-control-label" for="l0">Imagen</label>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" placeholder="Imagen" id="edit-user-photo1" name="photo1"/>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
 <!-- Page Scripts -->
 <script>
+    $(".edit-user").click(function(e){
+        e.preventDefault();
+        var td = $(this).parents('tr').find('td:lt(7)');
+        var userId = $(td[0]).text()
+        $('#edit-user-id').val(userId);
+        $('#edit-user-name').val($(td[1]).text());
+        $('#edit-user-lastName').val($(td[2]).text());
+        $('#edit-user-email').val($(td[3]).text());
+        $('#edit-user-password').val($(td[4]).text());
+        $('#edit-user-status').val($(td[5]).text());
+        $('#edit-user-photo1').val($('#user-img-' + userId).attr('src'));
+        $('#edit-user-form').attr('action', "/users/" + userId);
+    });
+
     $(function(){
         $('#example2').DataTable({
             autoWidth: true,

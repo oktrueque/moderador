@@ -21,18 +21,22 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-
     public List<User> getUsers() {
         List<User> users = new ArrayList<>();
         userRepository.findAll().forEach(users :: add);
         return users;
     }
 
-    public List<User> getUserById(Long id) {
-        return userRepository.findUserById(id);
+    public void addUser(User user){
+        userRepository.save(user);
     }
 
+    public void updateUser(User user){
+        userRepository.save(user);
+    }
 
-
+    public void deleteUser(Long id){
+        userRepository.delete(id);
+    }
 
 }
