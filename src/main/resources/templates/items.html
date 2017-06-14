@@ -290,7 +290,7 @@
                                 </div>
                             </td>
                             <td th:text="${item.category.name}">category</td>
-                            <td th:text="${item.user.name} +' ' + ${item.user.last_name}">userName</td>
+                            <td th:text="${item.user.name} +' ' + ${item.user.lastName}">userName</td>
                             <td th:text="${item.status}"></td>
                             <td>
                                 <form th:method="DELETE" th:action="@{'/items/' + ${item.id}}">
