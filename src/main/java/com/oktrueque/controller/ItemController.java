@@ -31,13 +31,6 @@ public class ItemController {
         return "items";
     }
 
-//    @RequestMapping(method = RequestMethod.GET , value="/items") //Revisar este metodo con el team.
-//    public String getItems(@RequestParam(value = "status") Integer status, Model model){
-//        List<Item> items = itemService.getItemsByStatus(status);
-//        model.addAttribute("items", items);
-//        return "items";
-//    }
-
     @RequestMapping(method = RequestMethod.GET, value="/items/{id}")
     public String getItemById(@PathVariable Long id, Model model){
         model.addAttribute("item" , itemService.getItemById(id));
