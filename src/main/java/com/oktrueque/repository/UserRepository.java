@@ -10,8 +10,6 @@ import java.util.List;
  * Created by Felipe on 7/5/2017.
  */
 public interface UserRepository extends CrudRepository<User, Long> {
-
     List<User> findUserById(Long id);
-
-
+    User findByEmail(String email);
 }
