@@ -9,17 +9,33 @@
         </div>
         <div class="left-menu-inner scroll-pane">
             <ul class="left-menu-list left-menu-list-root list-unstyled">
-                <li>
-                    <a class="left-menu-link" href="/users">
+                <li class="left-menu-list-submenu">
+                    <a class="left-menu-link" href="javascript: void(0);">
                         <i class="left-menu-link-icon icmn-home2"><!-- --></i>
                         <span class="menu-top-hidden">Usuarios</span>
                     </a>
-                </li>
-                <li>
-                    <a class="left-menu-link" href="/categories">
-                        <i class="left-menu-link-icon icmn-home2"><!-- --></i>
-                        <span class="menu-top-hidden">Categorias</span>
-                    </a>
+                    <ul class="left-menu-list list-unstyled">
+                        <li>
+                            <a class="left-menu-link" th:href="@{/users(status=0)}">
+                                Nuevos
+                            </a>
+                        </li>
+                        <li>
+                            <a class="left-menu-link" th:href="@{/users(status=1)}">
+                                Activos
+                            </a>
+                        </li>
+                        <li>
+                            <a class="left-menu-link" th:href="@{/users(status=2)}">
+                                Eliminados
+                            </a>
+                        </li>
+                        <li>
+                            <a class="left-menu-link" th:href="@{/users(status=3)}">
+                                Banneados
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="left-menu-list-submenu">
                     <a class="left-menu-link" href="javascript: void(0);">
@@ -48,6 +64,12 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li>
+                    <a class="left-menu-link" href="/categories">
+                        <i class="left-menu-link-icon icmn-home2"><!-- --></i>
+                        <span class="menu-top-hidden">Categorias</span>
+                    </a>
                 </li>
                 <li>
                     <a class="left-menu-link" href="/trueques">

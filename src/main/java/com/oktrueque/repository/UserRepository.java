@@ -12,4 +12,5 @@ import java.util.List;
 public interface UserRepository extends CrudRepository<User, Long> {
     List<User> findUserById(Long id);
     User findByEmail(String email);
+    List<User> findByStatus(Integer status);
 }

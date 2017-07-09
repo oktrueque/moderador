@@ -18,19 +18,15 @@ public class UserService {
 
     private UserRepository userRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Autowired
-    public void setBCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder){
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder){
         this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public List<User> getUsers() {
-        List<User> users = new ArrayList<>();
-        userRepository.findAll().forEach(users :: add);
-        return users;
+        return (List<User>) userRepository.findAll();
     }
 
     public void addUser(User user){
@@ -47,4 +43,7 @@ public class UserService {
         userRepository.delete(id);
     }
 
+    public List<User> findUsersByStatus(Integer status) {
+        return userRepository.findByStatus(status);
+    }
 }
