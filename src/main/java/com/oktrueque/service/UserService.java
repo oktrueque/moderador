@@ -40,7 +40,9 @@ public class UserService {
     }
 
     public void deleteUser(Long id){
-        userRepository.delete(id);
+        User user = userRepository.findOne(id);
+        user.setStatus(3);
+        userRepository.save(user);
     }
 
     public List<User> findUsersByStatus(Integer status) {

@@ -27,7 +27,8 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/users")
-    public String getUsers(@RequestParam Integer status, Model model){
+    public String getUsers(@RequestParam(required = false) Integer status, Model model){
+        if(status == null) status = 0;
         model.addAttribute("users", userService.findUsersByStatus(status));
         return "users";
     }
