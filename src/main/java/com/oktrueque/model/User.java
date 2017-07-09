@@ -25,6 +25,12 @@ public class User {
     private Integer status;
     @Column(name = "photo1")
     private String photo1;
+    @Column(name = "items_amount")
+    private Integer itemsAmount;
+    @Column(name = "username")
+    private String username;
+    @Column(name = "score")
+    private String score;
 
 
     public User() {
@@ -84,5 +90,29 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Integer getItemsAmount() {
+        return itemsAmount;
+    }
+
+    public void setItemsAmount(Integer itemsAmount) {
+        this.itemsAmount = itemsAmount;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
     }
 }

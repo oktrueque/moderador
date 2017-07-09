@@ -13,13 +13,12 @@ import java.util.List;
  */
 @Service
 public class ItemService {
-    @Autowired
+
     private ItemRepository itemRepository;
 
-    public List<Item> getItems(){
-        List<Item> items = new ArrayList<Item>();
-        itemRepository.findAll().forEach(items :: add);
-        return items;
+    @Autowired
+    public ItemService(ItemRepository itemRepository){
+        this.itemRepository = itemRepository;
     }
 
     public void addItem(Item item){
@@ -40,5 +39,15 @@ public class ItemService {
 
     public Item setItem(Item item){
         return itemRepository.save(item);
+    }
+
+    public void approveItem(Long id) {
+        Item item = itemRepository.findOne(id);
+        item.setStatus(1);
+        itemRepository.save(item);
+    }
+
+    public List<Item> findItemsByStatus(Integer status) {
+        return itemRepository.findByStatus(status);
     }
 }

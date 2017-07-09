@@ -3,6 +3,8 @@ package com.oktrueque.controller;
 import com.oktrueque.model.Category;
 import com.oktrueque.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,16 +20,18 @@ import com.oktrueque.service.ItemService;
 @Controller
 public class ItemController {
 
-    @Autowired
     private ItemService itemService;
-
-    @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    public ItemController(ItemService itemService, CategoryService categoryService){
+        this.itemService = itemService;
+        this.categoryService = categoryService;
+    }
+
     @RequestMapping(method = RequestMethod.GET , value="/items")
-    public String getItems(Model model){
-        List<Item> items = itemService.getItems();
-        model.addAttribute("items", items);
+    public String getItems(@RequestParam Integer status, Model model){
+        model.addAttribute("items", itemService.findItemsByStatus(status));
         return "items";
     }
 
@@ -50,14 +54,9 @@ public class ItemController {
         return "redirect:/items";
     }
 
-
-
-
-
-
-
-
-
-
-
+    @RequestMapping(method = RequestMethod.GET, value = "/items/{id}/approve")
+    public ResponseEntity approveItem(@PathVariable Long id){
+        itemService.approveItem(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

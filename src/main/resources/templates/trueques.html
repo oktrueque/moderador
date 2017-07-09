@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
+<head>
+
+</head>
+<th:block layout:fragment="content">
+    <section class="page-content">
+        <div class="page-content-inner">
+            <section class="panel">
+                <div class="page-content-inner">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4>Trueques</h4>
+
+                                <br />
+                                <div class="margin-bottom-50">
+                                    <table class="table table-hover nowrap" id="table-trueques" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Offerer</th>
+                                            <th>Demandant</th>
+                                            <th>Status</th>
+                                            <th>Proposal</th>
+                                        </tr>
+                                        </thead>
+                                        <tfoot>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Offerer</th>
+                                            <th>Demandant</th>
+                                            <th>Status</th>
+                                            <th>Proposal</th>
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
+                                        <tr th:each="trueque : ${trueques}">
+                                            <td th:text="${trueque.id}"></td>
+                                            <td>
+                                                <label th:text="${trueque.userOfferer.id}"></label>
+                                                <div class="cui-ecommerce--dashboard--list--img">
+                                                    <img th:src="${trueque.userOfferer.photo1}"
+                                                         alt="User Offerer Profile Photo"/>
+                                                </div>
+                                                <label th:text="${trueque.userOfferer.username}"></label>
+                                            </td>
+                                            <td>
+                                                <label th:text="${trueque.userDemandant.id}"></label>
+                                                <div class="cui-ecommerce--dashboard--list--img">
+                                                    <img th:src="${trueque.userDemandant.photo1}"
+                                                         alt="User Demandant Profile Photo"/>
+                                                </div>
+                                                <label th:text="${trueque.userDemandant.username}"></label>
+                                            </td>
+                                            <td th:text="${trueque.status}"></td>
+                                            <td th:text="${trueque.proposalDate}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <script>
+        $(function () {
+            $('#table-trueques').DataTable({
+                autoWidth: true,
+                scrollX: true,
+                fixedColumns: true
+            });
+        });
+    </script>
+</th:block>
+</html>

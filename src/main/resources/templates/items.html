@@ -1,260 +1,23 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head lang="en">
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
-    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
-    <title>Moderator</title>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
+<head>
 
-    <link th:href="@{/common/img/favicon.144x144.png}" href="../static/common/img/favicon.144x144.png"
-          rel="apple-touch-icon" type="image/png" sizes="144x144"/>
-    <link th:href="@{/common/img/favicon.114x114.png}" href="../static/common/img/favicon.114x114.png"
-          rel="apple-touch-icon" type="image/png" sizes="114x114"/>
-    <link th:href="@{/common/img/favicon.72x72.png}" href="../static/common/img/favicon.72x72.png"
-          rel="apple-touch-icon" type="image/png" sizes="72x72"/>
-    <link th:href="@{/common/img/favicon.57x57.png}" href="../static/common/img/favicon.57x57.png"
-          rel="apple-touch-icon" type="image/png"/>
-    <link th:href="@{/common/img/favicon.png}" href="../static/common/img/favicon.png" rel="icon" type="image/png"/>
-    <link th:href="@{favicon.ico}" href="favicon.ico" rel="shortcut icon"/>
-
-    <!-- HTML5 shim and Respond.js for < IE9 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script th:src="@{https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js}"
-            src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script th:src="@{https://oss.maxcdn.com/respond/1.4.2/respond.min.js}"
-            src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- Vendors Styles -->
-    <!-- v1.0.0 -->
-    <link rel="stylesheet" type="text/css" th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}"
-          href="../static/vendors/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/vendors/jscrollpane/style/jquery.jscrollpane.css}"
-          href="../static/vendors/jscrollpane/style/jquery.jscrollpane.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/vendors/ladda/dist/ladda-themeless.min.css}"
-          href="../static/vendors/ladda/dist/ladda-themeless.min.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/vendors/select2/dist/css/select2.min.css}"
-          href="../static/vendors/select2/dist/css/select2.min.css"/>
-    <link rel="stylesheet" type="text/css"
-          th:href="@{/vendors/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css}"
-          href="../static/vendors/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/vendors/fullcalendar/dist/fullcalendar.min.css}"
-          href="../static/vendors/fullcalendar/dist/fullcalendar.min.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/vendors/cleanhtmlaudioplayer/src/player.css}"
-          href="../static/vendors/cleanhtmlaudioplayer/src/player.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/vendors/cleanhtmlvideoplayer/src/player.css}"
-          href="../static/vendors/cleanhtmlvideoplayer/src/player.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/vendors/bootstrap-sweetalert/dist/sweetalert.css}"
-          href="../static/vendors/bootstrap-sweetalert/dist/sweetalert.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/vendors/summernote/dist/summernote.css}"
-          href="../static/vendors/summernote/dist/summernote.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/vendors/owl.carousel/dist/static/owl.carousel.min.css}"
-          href="../static/vendors/owl.carousel/dist/static/owl.carousel.min.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/vendors/ionrangeslider/css/ion.rangeSlider.css}"
-          href="../static/vendors/ionrangeslider/css/ion.rangeSlider.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/vendors/datatables/media/css/dataTables.bootstrap4.min.css}"
-          href="../static/vendors/datatables/media/css/dataTables.bootstrap4.min.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/vendors/c3/c3.min.css}" href="../static/vendors/c3/c3.min.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/vendors/chartist/dist/chartist.min.css}"
-          href="../static/vendors/chartist/dist/chartist.min.css"/>
-    <!-- v1.4.0 -->
-    <link rel="stylesheet" type="text/css" th:href="@{/vendors/nprogress/nprogress.css}"
-          href="../static/vendors/nprogress/nprogress.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/vendors/jquery-steps/demo/css/jquery.steps.css}"
-          href="../static/vendors/jquery-steps/demo/css/jquery.steps.css"/>
-    <!-- v1.4.2 -->
-    <link rel="stylesheet" type="text/css" th:href="@{/vendors/bootstrap-select/dist/css/bootstrap-select.min.css}"
-          href="../static/vendors/bootstrap-select/dist/css/bootstrap-select.min.css"/>
-    <!-- v1.7.0 -->
-    <link rel="stylesheet" type="text/css" th:href="@{/vendors/dropify/dist/css/dropify.min.css}"
-          href="../static/vendors/dropify/dist/css/dropify.min.css"/>
-
-    <!-- Clean UI Styles -->
-    <link rel="stylesheet" type="text/css" th:href="@{/common/css/source/main.css}"
-          href="../static/common/css/source/main.css"/>
-
-    <!-- Vendors Scripts -->
-    <!-- v1.0.0 -->
-    <script th:src="@{/vendors/jquery/jquery.min.js}" src="../static/vendors/jquery/jquery.min.js"></script>
-    <script th:src="@{/vendors/tether/dist/js/tether.min.js}"
-            src="../static/vendors/tether/dist/js/tether.min.js"></script>
-    <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"
-            src="../static/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script th:src="@{/vendors/jquery-mousewheel/jquery.mousewheel.min.js}"
-            src="../static/vendors/jquery-mousewheel/jquery.mousewheel.min.js"></script>
-    <script th:src="@{/vendors/jscrollpane/script/jquery.jscrollpane.min.js}"
-            src="../static/vendors/jscrollpane/script/jquery.jscrollpane.min.js"></script>
-    <script th:src="@{/vendors/spin.js/spin.js}" src="../static/vendors/spin.js/spin.js"></script>
-    <script th:src="@{/vendors/ladda/dist/ladda.min.js}" src="../static/vendors/ladda/dist/ladda.min.js"></script>
-    <script th:src="@{/vendors/select2/dist/js/select2.full.min.js}"
-            src="../static/vendors/select2/dist/js/select2.full.min.js"></script>
-    <script th:src="@{/vendors/html5-form-validation/dist/jquery.validation.min.js}"
-            src="../static/vendors/html5-form-validation/dist/jquery.validation.min.js"></script>
-    <script th:src="@{/vendors/jquery-typeahead/dist/jquery.typeahead.min.js}"
-            src="../static/vendors/jquery-typeahead/dist/jquery.typeahead.min.js"></script>
-    <script th:src="@{/vendors/jquery-mask-plugin/dist/jquery.mask.min.js}"
-            src="../static/vendors/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
-    <script th:src="@{/vendors/autosize/dist/autosize.min.js}"
-            src="../static/vendors/autosize/dist/autosize.min.js"></script>
-    <script th:src="@{/vendors/bootstrap-show-password/bootstrap-show-password.min.js}"
-            src="../static/vendors/bootstrap-show-password/bootstrap-show-password.min.js"></script>
-    <script th:src="@{/vendors/moment/min/moment.min.js}" src="../static/vendors/moment/min/moment.min.js"></script>
-    <script th:src="@{/vendors/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js}"
-            src="../static/vendors/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-    <script th:src="@{/vendors/fullcalendar/dist/fullcalendar.min.js}"
-            src="../static/vendors/fullcalendar/dist/fullcalendar.min.js"></script>
-    <script th:src="@{/vendors/cleanhtmlaudioplayer/src/jquery.cleanaudioplayer.js}"
-            src="../static/vendors/cleanhtmlaudioplayer/src/jquery.cleanaudioplayer.js"></script>
-    <script th:src="@{/vendors/cleanhtmlvideoplayer/src/jquery.cleanvideoplayer.js}"
-            src="../static/vendors/cleanhtmlvideoplayer/src/jquery.cleanvideoplayer.js"></script>
-    <script th:src="@{/vendors/bootstrap-sweetalert/dist/sweetalert.min.js}"
-            src="../static/vendors/bootstrap-sweetalert/dist/sweetalert.min.js"></script>
-    <script th:src="@{/vendors/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js}"
-            src="../static/vendors/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js"></script>
-    <script th:src="@{/vendors/summernote/dist/summernote.min.js}"
-            src="../static/vendors/summernote/dist/summernote.min.js"></script>
-    <script th:src="@{/vendors/owl.carousel/dist/owl.carousel.min.js}"
-            src="../static/vendors/owl.carousel/dist/owl.carousel.min.js"></script>
-    <script th:src="@{/vendors/ionrangeslider/js/ion.rangeSlider.min.js}"
-            src="../static/vendors/ionrangeslider/js/ion.rangeSlider.min.js"></script>
-    <script th:src="@{/vendors/nestable/jquery.nestable.js}"
-            src="../static/vendors/nestable/jquery.nestable.js"></script>
-    <script th:src="@{/vendors/datatables/media/js/jquery.dataTables.min.js}"
-            src="../static/vendors/datatables/media/js/jquery.dataTables.min.js"></script>
-    <script th:src="@{/vendors/datatables/media/js/dataTables.bootstrap4.min.js}"
-            src="../static/vendors/datatables/media/js/dataTables.bootstrap4.min.js"></script>
-    <script th:src="@{/vendors/datatables-fixedcolumns/js/dataTables.fixedColumns.js}"
-            src="../static/vendors/datatables-fixedcolumns/js/dataTables.fixedColumns.js"></script>
-    <script th:src="@{/vendors/datatables-responsive/js/dataTables.responsive.js}"
-            src="../static/vendors/datatables-responsive/js/dataTables.responsive.js"></script>
-    <script th:src="@{/vendors/editable-table/mindmup-editabletable.js}"
-            src="../static/vendors/editable-table/mindmup-editabletable.js"></script>
-    <script th:src="@{/vendors/d3/d3.min.js}" src="../static/vendors/d3/d3.min.js"></script>
-    <script th:src="@{/vendors/c3/c3.min.js}" src="../static/vendors/c3/c3.min.js"></script>
-    <script th:src="@{/vendors/chartist/dist/chartist.min.js}"
-            src="../static/vendors/chartist/dist/chartist.min.js"></script>
-    <script th:src="@{/vendors/peity/jquery.peity.min.js}" src="../static/vendors/peity/jquery.peity.min.js"></script>
-    <!-- v1.0.1 -->
-    <script th:src="@{/vendors/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.min.js}"
-            src="../static/vendors/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.min.js"></script>
-    <!-- v1.1.1 -->
-    <script th:src="@{/vendors/gsap/src/minified/TweenMax.min.js}"
-            src="../static/vendors/gsap/src/minified/TweenMax.min.js"></script>
-    <script th:src="@{/vendors/hackertyper/hackertyper.js}" src="../static/vendors/hackertyper/hackertyper.js"></script>
-    <script th:src="@{/vendors/jquery-countTo/jquery.countTo.js}"
-            src="../static/vendors/jquery-countTo/jquery.countTo.js"></script>
-    <!-- v1.4.0 -->
-    <script th:src="@{/vendors/nprogress/nprogress.js}" src="../static/vendors/nprogress/nprogress.js"></script>
-    <script th:src="@{/vendors/jquery-steps/build/jquery.steps.min.js}"
-            src="../static/vendors/jquery-steps/build/jquery.steps.min.js"></script>
-    <!-- v1.4.2 -->
-    <script th:src="@{/vendors/bootstrap-select/dist/js/bootstrap-select.min.js}"
-            src="../static/vendors/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-    <script th:src="@{/vendors/chart.js/src/Chart.bundle.min.js}"
-            src="../static/vendors/chart.js/src/Chart.bundle.min.js"></script>
-    <!-- v1.7.0 -->
-    <script th:src="@{/vendors/dropify/dist/js/dropify.min.js}"
-            src="../static/vendors/dropify/dist/js/dropify.min.js"></script>
-
-    <!-- Clean UI Scripts -->
-    <script th:src="@{/common/js/common.js}" src="../static/common/js/common.js"></script>
-    <script th:src="@{/common/js/demo.temp.js}" src="../static/common/js/demo.temp.js"></script>
 </head>
-<body class="theme-default">
-
-<nav class="left-menu" >
-    <div class="logo-container">
-        <a href="index.html" class="logo">
-            <img src="../static/common/img/logo-v2.png" th:src="@{/common/img/logo-v2.png}" alt="Clean UI Admin Template" />
-            <img class="logo-inverse" src="../static/common/img/logo-inverse.png" th:src="@{/common/img/logo-inverse.png}" alt="Clean UI Admin Template" />
-        </a>
-    </div>
-    <div class="left-menu-inner">
-        <ul class="left-menu-list left-menu-list-root list-unstyled">
-            <li>
-                <a class="left-menu-link" href="/users">
-                    <i class="left-menu-link-icon icmn-home2"><!-- --></i>
-                    <span class="menu-top-hidden">Usuarios</span>
-                </a>
-            </li>
-            <li>
-                <a class="left-menu-link" href="/categories">
-                    <i class="left-menu-link-icon icmn-home2"><!-- --></i>
-                    <span class="menu-top-hidden">Categorias</span>
-                </a>
-            </li>
-            <li>
-                <a class="left-menu-link" href="/items">
-                    <i class="left-menu-link-icon icmn-home2"><!-- --></i>
-                    <span class="menu-top-hidden">Items</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-<nav class="top-menu">
-    <div class="menu-icon-container hidden-md-up">
-        <div class="animate-menu-button left-menu-toggle">
-            <div><!-- --></div>
-        </div>
-    </div>
-    <div class="menu">
-        <div class="menu-user-block">
-            <div class="dropdown dropdown-avatar">
-                <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class="avatar" href="javascript:void(0)">
-                        <img th:src="@{/common/img/temp/avatars/1.jpg}" src="../static/common/img/temp/avatars/1.jpg"
-                             alt="Alternative text to the image"/>
-                    </span>
-                </a>
-                <!--PROFILE-->
-                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
-                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-user"></i>
-                        Profile</a>
-                    <div class="dropdown-divider"></div>
-                    <div class="dropdown-header">Home</div>
-                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i>
-                        System Dashboard</a>
-                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i>
-                        User Boards</a>
-                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i>
-                        Issue Navigator (35 New)</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/logout"><i class="dropdown-icon icmn-exit"></i>
-                        Logout</a>
-                </ul>
-
-            </div>
-
-        </div>
-    </div>
-</nav>
-
+<th:block layout:fragment="content">
 <section class="page-content">
     <div class="page-content-inner">
 
         <!-- Ecommerce Products List -->
         <section class="panel panel-with-borders">
-            <div class="panel-heading">
-
-                <div class="dropdown pull-right">
-                    <ul class="dropdown-menu" aria-labelledby="" role="menu">
-                        <a class="dropdown-item" href="javascript: void(0)">Simple Product</a>
-                        <a class="dropdown-item" href="javascript: void(0)">Configurable Product</a>
-                        <a class="dropdown-item" href="javascript: void(0)">Grouped Product</a>
-                        <a class="dropdown-item" href="javascript: void(0)">Virtual Product</a>
-                        <a class="dropdown-item" href="javascript: void(0)">Bundle Product</a>
-                        <a class="dropdown-item" href="javascript: void(0)">Downloadable Product</a>
-                    </ul>
-                </div>
-
-            </div>
             <div class="panel-body">
-                <table class="table table-hover nowrap" id="example1" width="100%">
+                <h4>Items</h4>
+
+                <br/>
+                <table class="table table-hover nowrap" id="table-items" width="100%">
 
                     <thead class="thead-default">
                     <tr>
+                        <th>Moderar</th>
                         <th>ID</th>
                         <th>Nombre</th>
                         <th>Foto</th>
@@ -267,6 +30,7 @@
 
                     <tfoot class="tfoot-default">
                     <tr>
+                        <th>Moderar</th>
                         <th>ID</th>
                         <th>Nombre</th>
                         <th>Foto</th>
@@ -282,6 +46,9 @@
 
                     <th:block th:each="item : ${items}">
                         <tr class="items-table">
+                            <td>
+                                <button class="btn btn-success btn-xs btn-edit edit-item-btn" th:onclick="'approveItem(' + ${__${item.id}__} + ');'">Activar</button>
+                            </td>
                             <td th:text="${item.id}">id</td>
                             <td th:text="${item.name}">name</td>
                             <td>
@@ -294,8 +61,9 @@
                             <td th:text="${item.status}"></td>
                             <td>
                                 <form th:method="DELETE" th:action="@{'/items/' + ${item.id}}">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                                     <a th:href="@{'/items/' + ${item.id}}" class="btn btn-success btn-xs btn-edit edit-item-btn">Editar</a>
-                                    <button id="btn-delete-user" type="submit" data-target="modal" data-toggle=".confirmDelete" class="btn btn-danger btn-xs">Borrar</button>
+                                    <button type="button" data-target="modal" data-toggle=".confirmDelete" class="btn btn-danger btn-xs btn-delete-item" th:attr="data-id=${item.id}">Borrar</button>
                                 </form>
                             </td>
                         </tr>
@@ -321,6 +89,7 @@
                 </div>
                 <div class="modal-footer">
                     <form id="confirm_form" th:action="@{'/items/' + id}" th:method="DELETE" role="button">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                         <button type="button" class="btn btn-default" data-dismiss="modal">
                             Cancelar
                         </button>
@@ -332,12 +101,12 @@
             </div>
         </div>
     </div>
-
+</section>
 
     <!-- Dialog show event handler -->
     <script type="text/javascript">
         $(function () {
-            $(".btn-delete-user").on("click", function (e) {
+            $(".btn-delete-item").on("click", function (e) {
                 e.preventDefault();
                 var id = $(this).data("id");
                 console.log(id);
@@ -349,21 +118,31 @@
         $("#btn_confirm_delete").on('click', function () {
             $('#confirm_form').submit();
         });
+
+        function approveItem(itemId){
+            $.ajax({
+                type : "GET",
+                url : "items/"+ itemId + "/approve",
+                success : function(data) {
+                    console.log('Moderado');
+                },
+                error : function(e) {
+                    console.log("ERROR: ", e);
+                }
+            });
+        }
     </script>
     <!-- Page Scripts -->
     <script>
         $(function () {
-            // Datatables
-            $('#example1').DataTable({
-                "lengthMenu": [[50, 100, 200, -1], [50, 100, 200, "All"]],
-                responsive: true,
-                "autoWidth": false
+            $('#table-items').DataTable({
+                autoWidth: true,
+                scrollX: true,
+                fixedColumns: true
             });
-        })
+        });
     </script>
 
     <!-- End Page Scripts -->
-</section>
-
-</body>
+</th:block>
 </html>
