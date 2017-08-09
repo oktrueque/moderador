@@ -30,7 +30,7 @@ public class User {
     @Column(name = "username")
     private String username;
     @Column(name = "score")
-    private String score;
+    private Integer score;
 
 
     public User() {
@@ -108,11 +108,11 @@ public class User {
         this.username = username;
     }
 
-    public String getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(String score) {
+    public void setScore(Integer score) {
         this.score = score;
     }
 }
