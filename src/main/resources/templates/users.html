@@ -164,7 +164,7 @@
                             <label class="form-control-label">Imagen</label>
                         </div>
                         <div class="col-md-9">
-                            <input type="file" class="dropify" name="image" />
+                            <input type="file" class="dropify" name="image" data-allowed-file-extensions="png jpg"/>
                         </div>
                     </div>
                 </div>
@@ -268,7 +268,7 @@
                             <label class="form-control-label">Imagen</label>
                         </div>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" placeholder="Imagen" name="photo1"/>
+                            <input id="edit-user-photo1" type="file" class="dropify" name="image" data-allowed-file-extensions="png jpg" />
                         </div>
                     </div>
                 </div>
@@ -296,7 +296,7 @@
             $('#edit-user-itemsAmount').val($(td[6]).text());
             $('#edit-user-score').val($(td[7]).text());
             $('#edit-user-status').val($(td[8]).text());
-            $('#edit-user-photo1').val($('#user-img-' + userId).attr('src'));
+            $('#edit-user-photo1').attr('data-default-file', $('#user-img-' + userId).attr('src'))
             $('#edit-user-password').val($(td[9]).text());
             $('#edit-user-form').attr('action', "/users/" + userId);
         });

@@ -19,12 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController {
 
     private UserService userService;
-    private StorageService storageService;
 
     @Autowired
-    public UserController(UserService userService, StorageService storageService){
+    public UserController(UserService userService){
         this.userService = userService;
-        this.storageService = storageService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/users")
@@ -36,16 +34,9 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/users")
     public String addUser(@ModelAttribute User user, @RequestParam("image") MultipartFile image){
-        String imageUrl = "";
-        try {
-            imageUrl = storageService.store(image, user);
-//            model.addAttribute("message", "You successfully uploaded " + image.getOriginalimagename() + "!");
-//            images.add(image.getOriginalimagename());
-        } catch (Exception e) {
-            //model.addAttribute("message", "FAIL to upload " + image.getOriginalimagename() + "!");
+        if(!userService.checkIfUserExists(user.getEmail(), user.getUsername())){
+            userService.addUser(user, image);
         }
-        user.setPhoto1(imageUrl);
-        User userResponse = userService.addUser(user);
         return "redirect:/users";
     }
 

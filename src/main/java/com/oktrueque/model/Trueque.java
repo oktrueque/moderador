@@ -14,12 +14,6 @@ public class Trueque {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "id_user_offerer")
-    private User userOfferer;
-    @ManyToOne
-    @JoinColumn(name = "id_user_demandant")
-    private User userDemandant;
     @Column(name = "status")
     private Integer status;
     @Column(name = "proposal_date")
@@ -34,15 +28,10 @@ public class Trueque {
     @Column(name = "ending_date")
     @Temporal(TemporalType.DATE)
     private Date endingDate;
+    @Column(name = "cantidad_personas")
+    private Long peopleAmount;
 
     public Trueque(){}
-
-    public Trueque(User userOfferer, User userDemandant, Integer status) {
-        this.userOfferer = userOfferer;
-        this.userDemandant = userDemandant;
-        this.status = status;
-        this.proposalDate = new Date();
-    }
 
     public Long getId() {
         return id;
@@ -50,22 +39,6 @@ public class Trueque {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public User getUserOfferer() {
-        return userOfferer;
-    }
-
-    public void setUserOfferer(User userOfferer) {
-        this.userOfferer = userOfferer;
-    }
-
-    public User getUserDemandant() {
-        return userDemandant;
-    }
-
-    public void setUserDemandant(User userDemandant) {
-        this.userDemandant = userDemandant;
     }
 
     public Integer getStatus() {
@@ -106,5 +79,13 @@ public class Trueque {
 
     public void setEndingDate(Date endingDate) {
         this.endingDate = endingDate;
+    }
+
+    public Long getPeopleAmount() {
+        return peopleAmount;
+    }
+
+    public void setPeopleAmount(Long peopleAmount) {
+        this.peopleAmount = peopleAmount;
     }
 }
