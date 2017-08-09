@@ -90,7 +90,7 @@
                 </button>
                 <h4 class="modal-title" id="myModalLabel">Nuevo Usuario</h4>
             </div>
-            <form action="/users" method="POST" name="user">
+            <form action="/users" method="POST" name="user" enctype="multipart/form-data">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                 <div class="modal-body">
 
@@ -164,7 +164,7 @@
                             <label class="form-control-label">Imagen</label>
                         </div>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" placeholder="Imagen" name="photo1"/>
+                            <input type="file" class="dropify" name="image" />
                         </div>
                     </div>
                 </div>
@@ -268,8 +268,7 @@
                             <label class="form-control-label">Imagen</label>
                         </div>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" placeholder="Imagen" id="edit-user-photo1"
-                                   name="photo1"/>
+                            <input type="text" class="form-control" placeholder="Imagen" name="photo1"/>
                         </div>
                     </div>
                 </div>
@@ -284,6 +283,8 @@
 <!-- Page Scripts -->
 <script>
     $(document).ready(function(){
+        $('.dropify').dropify();
+
         $(".edit-user").click(function () {
             var td = $(this).closest('tr').find('td:lt(10)');
             var userId = $(td[0]).text()

@@ -1,6 +1,7 @@
 package com.oktrueque.controller;
 
 import com.oktrueque.model.User;
+import com.oktrueque.service.StorageService;
 import com.oktrueque.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -9,21 +10,21 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Created by Felipe on 7/5/2017.
- */
 @Controller
 public class UserController {
 
     private UserService userService;
+    private StorageService storageService;
 
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService, StorageService storageService){
         this.userService = userService;
+        this.storageService = storageService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/users")
@@ -34,8 +35,17 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/users")
-    public String addUser(@ModelAttribute User user){
-        userService.addUser(user);
+    public String addUser(@ModelAttribute User user, @RequestParam("image") MultipartFile image){
+        String imageUrl = "";
+        try {
+            imageUrl = storageService.store(image, user);
+//            model.addAttribute("message", "You successfully uploaded " + image.getOriginalimagename() + "!");
+//            images.add(image.getOriginalimagename());
+        } catch (Exception e) {
+            //model.addAttribute("message", "FAIL to upload " + image.getOriginalimagename() + "!");
+        }
+        user.setPhoto1(imageUrl);
+        User userResponse = userService.addUser(user);
         return "redirect:/users";
     }
 

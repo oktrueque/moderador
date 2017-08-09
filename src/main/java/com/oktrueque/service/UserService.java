@@ -29,9 +29,9 @@ public class UserService {
         return (List<User>) userRepository.findAll();
     }
 
-    public void addUser(User user){
+    public User addUser(User user){
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     public void updateUser(User user){
