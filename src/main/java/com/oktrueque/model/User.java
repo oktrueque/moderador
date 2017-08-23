@@ -3,7 +3,7 @@ package com.oktrueque.model;
 import javax.persistence.*;
 
 /**
- * Created by Felipe on 7/5/2017.
+ * Created by OkTrueque on 7/5/2017.
  */
 @Entity
 @Table(name = "users")
