@@ -19,6 +19,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private AdminRepository adminRepository;
+    
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
