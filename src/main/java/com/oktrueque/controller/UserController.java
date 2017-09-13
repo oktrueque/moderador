@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.LinkedList;
 import java.util.List;
 
 @Controller
@@ -24,14 +25,16 @@ public class UserController {
     private ItemService itemService;
     private UserTagService userTagService;
     private ComplaintService complaintService;
+    private TruequeService truequeService;
 
 
     @Autowired
-    public UserController(UserService userService, ItemService itemService, UserTagService userTagService, ComplaintService complaintService){
+    public UserController(UserService userService, ItemService itemService, UserTagService userTagService, ComplaintService complaintService, TruequeService truequeService){
         this.userService = userService;
         this.itemService = itemService;
         this.userTagService = userTagService;
         this.complaintService = complaintService;
+        this.truequeService = truequeService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/users")
@@ -83,9 +86,18 @@ public class UserController {
         List<Comment> comments = user.getComments();
         List<Complaint> complaints = complaintService.getComplaintsByUserTarget(user.getId());
         List<User> usersComplainers = userService.findUsersByIds(complaints);
+        List<UserTrueque> userTrueques= truequeService.getUserTruequeById_UserId(user.getId());
+        Trueque TruequeNuevo;
+        LinkedList<Trueque> trueques = new LinkedList<>();
+        for (UserTrueque trueque: userTrueques){
+            TruequeNuevo = truequeService.getTruequeById(trueque.getId().getTruequeId());
+            trueques.add(TruequeNuevo);
+        }
         model.addAttribute("user", user);
         model.addAttribute("hasItems", items.size() != 0 ? true : false);
         model.addAttribute("items", items);
+        model.addAttribute("hasTrueques", trueques.size() != 0 ? true : false);
+        model.addAttribute("trueques", trueques);
         model.addAttribute("hasComments", comments.size() != 0 ? true : false);
         model.addAttribute("comments", comments);
         model.addAttribute("hasTags", tags.size() != 0 ? true : false);

@@ -8,4 +8,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface TruequeRepository extends CrudRepository<Trueque, Long> {
 
+    Trueque findTruequeById(long id);
+
 }
