@@ -13,4 +13,14 @@ public interface TagService {
     List<Tag> findAll();
 
     void saveTags(List<Tag> tags);
+
+    List<Tag> getAllTags();
+
+    void addTag(Tag Category);
+
+    Tag getTag(Long id);
+
+    void updateTag(Tag tag);
+
+    void deleteTag(Long id);
 }

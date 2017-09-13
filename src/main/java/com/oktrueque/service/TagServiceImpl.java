@@ -3,6 +3,7 @@ package com.oktrueque.service;
 import com.oktrueque.model.Tag;
 import com.oktrueque.repository.TagRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,4 +29,30 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public void saveTags(List<Tag> tags){tagRepository.save(tags);}
+
+    @Override
+    public List<Tag> getAllTags(){
+        List<Tag> tags = new ArrayList<>();
+        tagRepository.findAll()
+                .forEach(tags::add);
+        return tags;
+
+    }
+    @Override
+    public void addTag(Tag Category){
+        tagRepository.save(Category);
+    }
+
+    @Override
+    public Tag getTag(Long id){
+        return tagRepository.findOne(id);
+    }
+    @Override
+    public void updateTag(Tag tag){
+        tagRepository.save(tag);
+    }
+    @Override
+    public void deleteTag(Long id){
+        tagRepository.delete(id);
+    }
 }
