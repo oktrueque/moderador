@@ -11,4 +11,6 @@ public interface ComplaintService {
 
     List<Complaint> getAllComplaints();
 
+    List<Complaint> getComplaintsByUserTarget(Long Id);
+
 }

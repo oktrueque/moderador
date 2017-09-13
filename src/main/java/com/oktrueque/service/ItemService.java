@@ -3,6 +3,7 @@ package com.oktrueque.service;
 import com.oktrueque.model.Item;
 import com.oktrueque.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -45,6 +46,10 @@ public class ItemService {
         Item item = itemRepository.findOne(id);
         item.setStatus(1);
         itemRepository.save(item);
+    }
+
+    public List<Item> getItemsByUserUsername(String username, Pageable pageable) {
+        return itemRepository.findByUser_Username(username, pageable);
     }
 
     public List<Item> findItemsByStatus(Integer status) {

@@ -26,4 +26,9 @@ public class ComplaintServiceImpl implements ComplaintService{
         complaintRepository.findAll().forEach(complaints::add);
         return complaints;
     }
+
+    @Override
+    public List<Complaint> getComplaintsByUserTarget(Long Id){
+        return complaintRepository.findAllByUserTargetId(Id);
+    }
 }

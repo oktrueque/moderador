@@ -1,13 +1,15 @@
 package com.oktrueque.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Created by Envy on 14/6/2017.
  */
 @Entity
-@Table(name = "trueque")
+@Table(name = "trueques")
 public class Trueque {
 
     @Id
@@ -17,21 +19,24 @@ public class Trueque {
     @Column(name = "status")
     private Integer status;
     @Column(name = "proposal_date")
-    @Temporal(TemporalType.DATE)
-    private Date proposalDate;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDateTime proposalDate;
     @Column(name = "acceptance_date")
-    @Temporal(TemporalType.DATE)
-    private Date acceptanceDate;
+    private LocalDateTime acceptanceDate;
     @Column(name = "rejection_date")
-    @Temporal(TemporalType.DATE)
-    private Date rejectionDate;
+    private LocalDateTime rejectionDate;
     @Column(name = "ending_date")
-    @Temporal(TemporalType.DATE)
-    private Date endingDate;
-    @Column(name = "cantidad_personas")
-    private Long peopleAmount;
+    private LocalDateTime endingDate;
+    @Column(name = "peopleCount")
+    private Integer peopleCount;
 
-    public Trueque(){}
+    public Trueque() {
+    }
+
+    public Trueque(Integer status) {
+        this.status = status;
+        this.proposalDate = LocalDateTime.now();
+    }
 
     public Long getId() {
         return id;
@@ -41,51 +46,62 @@ public class Trueque {
         this.id = id;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
+    public String getStatus() {
+        switch (this.status){
+            case 0: return "Pendiente";
+            case 1: return "Activo";
+            case 2: return "Eliminado";
+            case 3: return "Baneado";
+            default: return "Sin definir";
+        }}
+
+    public boolean isPendiente(){return this.status==0;}
+
+    public boolean isActivo(){return this.status==1;}
+
+    public boolean isEliminado(){return this.status==2;}
 
     public void setStatus(Integer status) {
         this.status = status;
     }
 
-    public Date getProposalDate() {
+    public LocalDateTime getProposalDate() {
         return proposalDate;
     }
 
-    public void setProposalDate(Date proposalDate) {
+    public void setProposalDate(LocalDateTime proposalDate) {
         this.proposalDate = proposalDate;
     }
 
-    public Date getAcceptanceDate() {
+    public LocalDateTime getAcceptanceDate() {
         return acceptanceDate;
     }
 
-    public void setAcceptanceDate(Date acceptanceDate) {
+    public void setAcceptanceDate(LocalDateTime acceptanceDate) {
         this.acceptanceDate = acceptanceDate;
     }
 
-    public Date getRejectionDate() {
+    public LocalDateTime getRejectionDate() {
         return rejectionDate;
     }
 
-    public void setRejectionDate(Date rejectionDate) {
+    public void setRejectionDate(LocalDateTime rejectionDate) {
         this.rejectionDate = rejectionDate;
     }
 
-    public Date getEndingDate() {
+    public LocalDateTime getEndingDate() {
         return endingDate;
     }
 
-    public void setEndingDate(Date endingDate) {
+    public void setEndingDate(LocalDateTime endingDate) {
         this.endingDate = endingDate;
     }
 
-    public Long getPeopleAmount() {
-        return peopleAmount;
+    public Integer getPeopleCount() {
+        return peopleCount;
     }
 
-    public void setPeopleAmount(Long peopleAmount) {
-        this.peopleAmount = peopleAmount;
+    public void setPeopleCount(Integer peopleCount) {
+        this.peopleCount = peopleCount;
     }
 }

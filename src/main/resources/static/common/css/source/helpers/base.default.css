@@ -2326,3 +2326,8 @@ body.theme-blue .cwt__footer {
 .notification-block .item .inner .label {
     font-size: 12px;
 }
+
+#profilePhoto{
+    width: 60%;
+    height: auto;
+}

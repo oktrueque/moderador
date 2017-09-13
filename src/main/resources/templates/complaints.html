@@ -31,15 +31,15 @@
                             <tr th:each="complaint : ${complaints}">
                                 <td th:text="${complaint.id}"></td>
                                 <td th:text="${complaint.user_origin.name + ' ' +complaint.user_origin.lastName}"></td>
-                                <td th:text="${complaint.user_target.name+ ' '+complaint.user_target.lastName}"></td>
+                                <td th:text="${complaint.userTarget.name+ ' '+complaint.userTarget.lastName}"></td>
                                 <td>
                                 <p th:text="${complaint.description}"></p>
                                 </td>
                                 <td th:text="${complaint.complaintType.name}"></td>
                                 <td th:text="${complaint.date}"></td>
 
-                                <td><a th:href="'/users/' + ${complaint.user_target.id}">
-                                    <img width="100px" th:src="${complaint.user_target.photo1}"/>
+                                <td><a th:href="'/users/' + ${complaint.userTarget.id}">
+                                    <img width="100px" th:src="${complaint.userTarget.photo1}"/>
                                     </a>
                                 </td>
                             </tr>

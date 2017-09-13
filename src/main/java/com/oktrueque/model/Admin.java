@@ -10,7 +10,7 @@ import java.util.Collection;
  * Created by Envy on 5/7/2017.
  */
 @Entity
-@Table(name = "admins")
+@Table(name = "admin")
 public class Admin implements UserDetails{
 
     @Id

@@ -1,5 +1,6 @@
 package com.oktrueque.service;
 
+import com.oktrueque.model.Complaint;
 import com.oktrueque.model.User;
 import com.oktrueque.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,8 +56,20 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public User getUserByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
+
     public List<User> findUsersByStatus(Integer status) {
         return userRepository.findByStatus(status);
+    }
+
+    public List<User> findUsersByIds(List<Complaint> complaints){
+        List<Long> usersIds = new ArrayList<Long>();
+        for (Complaint queja : complaints) {
+            usersIds.add(queja.getUser_origin().getId());
+        }
+        return userRepository.findAllByIdIn(usersIds);
     }
 
     public Boolean checkIfUserExists(String email, String username){

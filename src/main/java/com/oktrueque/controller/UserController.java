@@ -1,9 +1,10 @@
 package com.oktrueque.controller;
 
-import com.oktrueque.model.User;
-import com.oktrueque.service.StorageService;
-import com.oktrueque.service.UserService;
+import com.oktrueque.model.*;
+import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -14,15 +15,23 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 public class UserController {
 
     private UserService userService;
+    private ItemService itemService;
+    private UserTagService userTagService;
+    private ComplaintService complaintService;
+
 
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService, ItemService itemService, UserTagService userTagService, ComplaintService complaintService){
         this.userService = userService;
+        this.itemService = itemService;
+        this.userTagService = userTagService;
+        this.complaintService = complaintService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/users")
@@ -64,6 +73,26 @@ public class UserController {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/login?logout";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/users/{username}")
+    public String getUserProfile(Model model, @PathVariable String username, @PageableDefault(value = 2) Pageable pageable) {
+        User user = userService.getUserByUsername(username);
+        List<Item> items = itemService.getItemsByUserUsername(user.getUsername(), pageable);
+        List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
+        List<Comment> comments = user.getComments();
+        List<Complaint> complaints = complaintService.getComplaintsByUserTarget(user.getId());
+        List<User> usersComplainers = userService.findUsersByIds(complaints);
+        model.addAttribute("user", user);
+        model.addAttribute("hasItems", items.size() != 0 ? true : false);
+        model.addAttribute("items", items);
+        model.addAttribute("hasComments", comments.size() != 0 ? true : false);
+        model.addAttribute("comments", comments);
+        model.addAttribute("hasTags", tags.size() != 0 ? true : false);
+        model.addAttribute("tags", tags);
+        model.addAttribute("hasComplaints", complaints.size() != 0 ? true : false);
+        model.addAttribute("complaints", complaints);
+        return "user";
     }
 
 }

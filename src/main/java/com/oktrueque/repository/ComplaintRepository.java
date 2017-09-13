@@ -1,11 +1,14 @@
 package com.oktrueque.repository;
 
 import com.oktrueque.model.Complaint;
+import com.oktrueque.model.Item;
 import org.springframework.data.repository.CrudRepository;
 
-/**
- * Created by Fabrizio SPOSETTI on 31/08/2017.
- */
+import java.util.List;
+
+
 public interface ComplaintRepository extends CrudRepository<Complaint, Integer> {
+
+        List<Complaint> findAllByUserTargetId(Long userTargetId);
 
     }

@@ -18,9 +18,12 @@ public class ServiceConfig {
 
     @Autowired
     private ComplaintTypeRepository complaintTypeRepository;
-
     @Autowired
     private ComplaintRepository complaintRepository;
+    @Autowired
+    private UserTagRepository userTagRepository;
+    @Autowired
+    private TagRepository tagRepository;
 
 
 
@@ -31,6 +34,17 @@ public class ServiceConfig {
     public ComplaintService complaintService(){
         return new ComplaintServiceImpl(complaintRepository);
     }
+
+    @Bean
+    public UserTagService userTagService() {
+        return new UserTagServiceImpl(userTagRepository,this.TagService());
+    }
+
+    @Bean
+    public TagService TagService() {
+        return new TagServiceImpl(tagRepository);
+    }
+
 
 
 }

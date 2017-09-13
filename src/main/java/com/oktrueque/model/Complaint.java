@@ -26,7 +26,7 @@ public class Complaint {
     private ComplaintType complaintType;
     @ManyToOne
     @JoinColumn(name = "id_user_target")
-    private User user_target;
+    private User userTarget;
     @ManyToOne
     @JoinColumn(name = "id_user_origin")
     private User user_origin;
@@ -58,7 +58,7 @@ public class Complaint {
         this.description = description;
         this.date = date;
         this.complaintType = complaintType;
-        this.user_target = user_target;
+        this.userTarget = user_target;
         this.user_origin = user_origin;
     }
 
@@ -86,11 +86,11 @@ public class Complaint {
         this.date = date;
     }
 
-    public User getUser_target() {
-        return user_target;
+    public User getUserTarget() {
+        return userTarget;
     }
 
-    public void setUser_target(User user_target) {
-        this.user_target = user_target;
+    public void setUserTarget(User userTarget) {
+        this.userTarget = userTarget;
     }
 }
