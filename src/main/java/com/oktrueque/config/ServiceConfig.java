@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 /**
@@ -25,12 +27,17 @@ public class ServiceConfig {
     @Autowired
     private TagRepository tagRepository;
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private ItemRepository itemRepository;
     @Autowired
     private ItemTagRepository itemTagRepository;
-
+    @Autowired
+    private JavaMailSender javaMailSender;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private StorageService storageService;
 
 
     @Bean
@@ -56,6 +63,13 @@ public class ServiceConfig {
         return new RedServiceImpl(userRepository,tagRepository,userTagRepository,itemRepository, itemTagRepository);
     }
 
+    @Bean
+    public EmailService emailService(){
+        return new EmailServiceImpl(javaMailSender);
+    }
 
+
+    @Bean
+    public UserService userService() { return  new UserService(userRepository, bCryptPasswordEncoder, storageService, this.emailService());}
 
 }

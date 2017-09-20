@@ -2,6 +2,7 @@ package com.oktrueque.controller;
 
 import com.oktrueque.model.*;
 import com.oktrueque.service.*;
+import netscape.security.UserTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -15,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,6 +29,7 @@ public class UserController {
     private UserTagService userTagService;
     private ComplaintService complaintService;
     private TruequeService truequeService;
+    private EmailService emailService;
 
 
     @Autowired
@@ -105,6 +109,15 @@ public class UserController {
         model.addAttribute("hasComplaints", complaints.size() != 0 ? true : false);
         model.addAttribute("complaints", complaints);
         return "user";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/users/mensaje/{username}")
+    public String sendMail(@PathVariable String username, @RequestParam(value = "subject") String subject, @RequestParam(value = "text") String text) {
+
+            User userTarget = userService.getUserByUsername(username);
+            userService.sendEmailToUser(userTarget, subject, text);
+
+        return "redirect:/users/" + username ;
     }
 
 }

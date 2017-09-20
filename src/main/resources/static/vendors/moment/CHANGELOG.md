@@ -309,7 +309,7 @@ Minor bugfixes:
 - Release July 31, 2014
 
 * incompatible changes
-    * [#1761](https://github.com/moment/moment/issues/1761): moments created without a language are no longer following the global language, in case it changes. Only newly created moments take the global language by default. In case you're affected by this, wait, comment on [#1797](https://github.com/moment/moment/issues/1797) and wait for a proper reimplementation
+    * [#1761](https://github.com/moment/moment/issues/1761): moments created without a language are no longer following the global language, in case it changes. Only newly created moments take the global language by default. In case you're affected by this, wait, description on [#1797](https://github.com/moment/moment/issues/1797) and wait for a proper reimplementation
     * [#1642](https://github.com/moment/moment/issues/1642): 45 days is no longer "a month" according to humanize, cutoffs for month, and year have changed. Hopefully your code does not depend on a particular answer from humanize (which it shouldn't anyway)
     * [#1784](https://github.com/moment/moment/issues/1784): if you use the human readable English datetime format in a weird way (like storing them in a database) that would break when the format changes you're at risk.
 

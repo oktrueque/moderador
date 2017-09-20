@@ -20,4 +20,4 @@ cd build
 grunt
 ```
 
-Please remember to update the changelog in the comment at the header of both JS files when submitting a pull request.
+Please remember to update the changelog in the description at the header of both JS files when submitting a pull request.

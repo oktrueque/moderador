@@ -18,7 +18,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String comment;
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "id_user_origin")
@@ -33,8 +33,8 @@ public class Comment {
     private Date date;
 
 
-    public Comment(String comment, User user_target, User user_origin, int score, Date date) {
-        this.comment = comment;
+    public Comment(String description, User user_target, User user_origin, int score, Date date) {
+        this.description = description;
         this.user_target = user_target;
         this.user_origin = user_origin;
         this.score = score;
@@ -51,12 +51,12 @@ public class Comment {
         this.id = id;
     }
 
-    public String getComment() {
-        return comment;
+    public String getDescription() {
+        return description;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public User getUser_target() {
