@@ -2331,3 +2331,14 @@ body.theme-blue .cwt__footer {
     width: 60%;
     height: auto;
 }
+
+#formSendEmail{
+    float: none !important;
+}
+
+#mensajeAlUser{
+    float: none !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    margin-bottom: 30px;
+}

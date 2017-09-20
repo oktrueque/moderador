@@ -134,12 +134,12 @@ Indent by 2 spaces at a time.
 ### Comments
 
 Comments are the only way others and **YOURSELF** know why a particular code was written and why it was written in the
-way it was. It's crucial that you comment your code parts and specially code that is not trivial.
+way it was. It's crucial that you description your code parts and specially code that is not trivial.
 
 Self explaining code is a **MYTH**. There is no such thing as self explaining code. Also there is no such thing as too
 many comments. There is only too little comments.
 
-When you comment code don't comment what's coded, comment why it was coded this way and comment the thinking behind.
+When you description code don't description what's coded, description why it was coded this way and description the thinking behind.
 Also include links in your comments to open issues, specifications etc.
 
 **Not recommended**
@@ -499,7 +499,7 @@ Clean separation of concerns implies the following things:
   <!-- Don't use presentational elements and assign sensible classes -->
   <div class="sub-title">I'm a subtitle and I'm bold!</div>
   <!-- Maybe your comments get centered in your presentation but that decision is up to the stylesheet -->
-  <span class="comment">Dare you center me!</span>
+  <span class="description">Dare you center me!</span>
   <!-- You wanted to make it red because it's important so then also name the class important and decide in the stylesheet
    what you want to do with it -->
   <div class="important">I'm important!</div>

@@ -43,7 +43,7 @@
                                                     </li>
                                                     <li class="nav-item">
                                                         <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#comentarios" role="tab">
-                                                            <i class="fa fa-comment-o"></i>
+                                                            <i class="fa fa-description-o"></i>
                                                             Comentarios
                                                         </a>
                                                     </li>
@@ -140,10 +140,10 @@
                                                         <hr/>
                                                         <div th:if="${hasComments}">
                                                             <div class="user-wall">
-                                                                <div class="user-wall-item clearfix" th:each="comment : ${comments}">
+                                                                <div class="user-wall-item clearfix" th:each="description : ${comments}">
                                                                     <div class="s1">
                                                                         <a class="avatar" href="javascript:void(0);">
-                                                                            <img th:src="${comment.user_origin.photo1}" />
+                                                                            <img th:src="${description.user_origin.photo1}" />
                                                                         </a>
                                                                     </div>
                                                                     <div class="s2">
@@ -151,15 +151,15 @@
                                                                             <div class="pull-right">
                                                                                 <a href=""><i class="icmn-compass"></i></a>
                                                                             </div>
-                                                                            <strong th:text="${comment.user_origin.name}">Name</strong>
-                                                                            <small th:text="${comment.date}"></small>
+                                                                            <strong th:text="${description.user_origin.name}">Name</strong>
+                                                                            <small th:text="${description.date}"></small>
                                                                         </div>
                                                                         <div class="user-wall-post">
-                                                                            <p th:text="${comment.comment}">Comentario</p>
+                                                                            <p th:text="${description.description}">Comentario</p>
                                                                         </div>
                                                                         <div class="user-wall-controls">
                                                                             <div class="cui-ecommerce--product--rating">
-                                                                                <i class="icmn-star-full" th:each="i : ${#numbers.sequence( 1, comment.score)}"></i>
+                                                                                <i class="icmn-star-full" th:each="i : ${#numbers.sequence( 1, description.score)}"></i>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -210,6 +210,43 @@
                                                         <div th:if="${!hasComments}">
                                                             <p th:text="${'Parece que no hay comentarios sobre ' + user.name + ' por el momento'}"></p>
                                                         </div>
+                                                    </div>
+                                                    <div class="tab-pane" id="comunicacion" role="tabpanel">
+                                                        <h5>Mandar mensaje a <span th:text="${user.name}"></span> </h5>
+                                                        <hr/>
+                                                        <form th:action="@{'/users/mensaje/'+${user.username}}" th:method="POST">
+
+                                                            <div id="formSendEmail" class="col-lg-12">
+                                                                <div class="form-group">
+
+                                                                    <label class="control-label col-md-12 padding-5">Para</label>
+
+                                                                    <div class="col-md-12 ">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon">
+                                                                                <i class="icmn-mail2"></i>
+                                                                            </span>
+                                                                            <input type="email" class="form-control" th:value="${user.email}" id="l2"/>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <label class="control-label col-md-12 padding-5">Asunto</label>
+                                                                    <div class="col-md-12">
+                                                                        <input type="text" th:value="*{subject}" class="form-control" name="subject" id="subject"/>
+                                                                    </div>
+
+                                                                    <label class="control-label col-md-12 padding-5">Mensaje</label>
+
+                                                                    <textarea th:value="*{text}" id="text" name="text" class="margin-left-15 form-control col-md-11" />
+
+
+                                                                </div>
+
+                                                                <button type="submit" class="margin-left-20 margin-top-40 btn btn-primary">Enviar Mensaje</button>
+
+                                                            </div>
+
+                                                        </form>
                                                     </div>
                                                     </div>
                                                 </div>

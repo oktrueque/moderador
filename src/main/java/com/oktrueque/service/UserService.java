@@ -1,6 +1,7 @@
 package com.oktrueque.service;
 
 import com.oktrueque.model.Complaint;
+import com.oktrueque.model.Email;
 import com.oktrueque.model.User;
 import com.oktrueque.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Felipe on 7/5/2017.
@@ -21,12 +24,14 @@ public class UserService {
     private UserRepository userRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private StorageService storageService;
+    private EmailService emailService;
 
     @Autowired
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, StorageService storageService){
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, StorageService storageService, EmailService emailService){
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.storageService = storageService;
+        this.emailService = emailService;
     }
 
     public List<User> getUsers() {
@@ -74,5 +79,21 @@ public class UserService {
 
     public Boolean checkIfUserExists(String email, String username){
         return userRepository.checkIfUserExists(email, username)>0;
+    }
+
+    public void sendEmailToUser(User userTarget, String subject, String text){
+        Email email = new Email();
+        email.setMailTo(userTarget.getEmail());
+        email.setMailSubject(subject);
+
+        Map< String, Object > model = new LinkedHashMap<>();
+
+        model.put("text", text);
+
+
+        // model.put("uri_confirm","http://localhost:8080/trueque/"+trueque.getId()+"/confirm");
+        email.setModel(model);
+        emailService.sendMail(email,"mailAdminToUser.ftl");
+
     }
 }

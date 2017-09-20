@@ -174,7 +174,7 @@ It is very common for pull requests to be opened for issues that contain a clear
 solution to the problem.  These pull requests should be rigorously reviewed by
 the community before being accepted.  If you are not sure about a piece of
 submitted code, or know of a better way to do something, do not hesitate to make
-a comment on the pull request.
+a description on the pull request.
 
 ### Reviving old tickets
 
