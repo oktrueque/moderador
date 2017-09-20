@@ -1,6 +1,8 @@
 package com.oktrueque.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +32,11 @@ public class Item {
     private String photo2;
     @Column(name = "photo3")
     private String photo3;
-    @Transient
-    private List<Tag> tags;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable( name = "items_tags",
+                joinColumns = {@JoinColumn(name="id_item")},
+                inverseJoinColumns = {@JoinColumn(name="id_tag")})
+    private List<Tag> tags = new ArrayList<>();
     @Transient
     private ArrayList<Long> idTags;
 

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
+<head>
+
+</head>
+<th:block layout:fragment="content">
+    <section class="page-content">
+        <div class="page-content-inner">
+            <section class="row">
+                <div class="col-lg-4">
+                    <section class="panel">
+                        <div class="panel-heading">
+                            <h3>Usuarios Con Preferencias</h3>
+                        </div>
+                        <div class="panel-body">
+                            <h4>Usuarios</h4>
+                            <br/>
+                            <input type="hidden" id="level" value="2"></input>
+                            <div class="margin-bottom-50">
+                                <table class="table table-hover nowrap" id="example2" width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th>Usuario</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="user : ${usersWithTags}" >
+                                        <td th:id="${'user-'+user.id}" class="user-initial" th:attr="data-id=${user.id}">
+                                            <div class="cui-ecommerce--dashboard--list--img">
+                                                <img th:id="'user-img-' + ${user.id}" th:src="${user.photo1}"
+                                                     alt="Imagen"/>
+                                            </div>
+                                            <h6 th:text="${user.username}">User</h6>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-lg-4">
+                    <section class="panel">
+                        <div class="panel-heading">
+                            <h3>Usuarios</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="margin-bottom-50">
+                                <table class="table table-hover nowrap" width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th>Usuario</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="users-2">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--<div class="panel-footer">-->
+                        <!--<span>Default panel footer</span>-->
+                        <!--</div>-->
+                    </section>
+                </div>
+                <div class="col-lg-4">
+                    <section class="panel">
+                        <div class="panel-heading">
+                            <h3>Panel in Grid</h3>
+                        </div>
+                        <div class="panel-body">
+                            <h4>Usuarios</h4>
+                            <br/>
+                            <div class="margin-bottom-50">
+                                <table class="table table-hover nowrap" id="example2" width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th>Usuario</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="users-3">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                        <span>BTN Confirmar</span>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <script th:inline="javascript">
+        var token = [[${_csrf.token}]];
+        var header = [[${_csrf.headerName}]];
+
+         var getUser = function(id){
+            var user = {
+                id: id
+            };
+            return user;
+        };
+
+        var getOthersUsers=  function () {
+            $('.user-initial').on('click', function () {
+                var id = $(this).data('id');
+                var user = getUser(id);
+                var level = $('#level').val();
+                console.log(level);
+                $.ajax({
+                    type: "POST",
+                    url: "/propuesta/inicio",
+                    contentType : "application/json",
+                    data: JSON.stringify(user),
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        displayUsersLevel(data,level);
+                        $('#level').val('3');
+                        console.log($('#level').val())
+                    },
+                    error: function (e) {
+                        console.log(e);
+                    }
+                });
+            });
+        }
+        $(document).ready(function () {
+            getOthersUsers();
+        });
+
+        displayUsersLevel = function(datas,level){
+            console.log(datas);
+            var users = $('#users-'+level);
+            users.html("");
+            datas.forEach(function(data){
+                displayUsers(users, data);
+            });
+        };
+        displayUsers = function(users, data){
+            console.log(data);
+            users.append(
+                '<tr>' +
+                '<td id="user-' +data.id + '" class="user-initial" data-id="' + data.id + '">' +
+                '<div class="cui-ecommerce--dashboard--list--img">' +
+                '<img id="user-img-' + data.id +'" src="' + data.photo1 + '" alt="Imagen"/>' +
+                '</div>' +
+                '<h6>'+ data.username +'</h6>' +
+                '</td>' +
+                '</tr>'
+                );
+            getOthersUsers();
+        };
+    </script>
+</th:block>
+</html>

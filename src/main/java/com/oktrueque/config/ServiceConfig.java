@@ -24,6 +24,12 @@ public class ServiceConfig {
     private UserTagRepository userTagRepository;
     @Autowired
     private TagRepository tagRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private ItemRepository itemRepository;
+    @Autowired
+    private ItemTagRepository itemTagRepository;
 
 
 
@@ -43,6 +49,11 @@ public class ServiceConfig {
     @Bean
     public TagService TagService() {
         return new TagServiceImpl(tagRepository);
+    }
+
+    @Bean
+    public RedService redService(){
+        return new RedServiceImpl(userRepository,tagRepository,userTagRepository,itemRepository, itemTagRepository);
     }
 
 

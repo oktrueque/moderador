@@ -1,5 +1,8 @@
 package com.oktrueque.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,6 +36,7 @@ public class User implements UserDetails{
     @Column(name = "status")
     private Integer status;
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Item> items;
     @Column(name = "items_amount")
     private Integer itemsAmount;
@@ -43,16 +47,22 @@ public class User implements UserDetails{
     @NotEmpty
     private String username;
     @OneToMany(mappedBy = "user_target")
+    @JsonIgnore
     private List<Comment> comments;
     @Column(name = "score")
     private Integer score;
     @Column(name="wallpaper")
     private String wallpaper;
     @OneToMany(mappedBy = "userTarget")
+    @JsonIgnore
     private List<Complaint> complaints;
 
-    @Transient
-    private List<Tag> tags;
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY  )
+    @JoinTable( name = "users_tags",
+            joinColumns = {@JoinColumn(name="id_user")},
+            inverseJoinColumns = {@JoinColumn(name="id_tag")})
+    private List<Tag> tags = new ArrayList<>();
 
     public List<Complaint> getComplaints() {
         return complaints;
