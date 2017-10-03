@@ -2,6 +2,7 @@ package com.oktrueque.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class Item {
     private String description;
     @ManyToOne
     @JoinColumn(name = "id_user")
+    @JsonIgnore
     private User user;
     @ManyToOne
     @JoinColumn(name = "id_category")
@@ -32,6 +34,7 @@ public class Item {
     private String photo2;
     @Column(name = "photo3")
     private String photo3;
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable( name = "items_tags",
                 joinColumns = {@JoinColumn(name="id_item")},

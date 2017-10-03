@@ -1,39 +1,24 @@
 package com.oktrueque.service;
 
+import com.oktrueque.model.Item;
 import com.oktrueque.model.Trueque;
 import com.oktrueque.model.UserTrueque;
-import com.oktrueque.repository.TruequeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.oktrueque.repository.UserTruequeRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Map;
 
 /**
- * Created by Envy on 8/7/2017.
+ * Created by Facundo on 9/23/2017.
  */
-@Service
-public class TruequeService {
+public interface TruequeService {
 
-    private TruequeRepository truequeRepository;
-    private UserTruequeRepository userTruequeRepository;
+    List<Trueque> getAllTrueques();
 
-    @Autowired
-    public void setTruequeRepository(TruequeRepository truequeRepository, UserTruequeRepository userTruequeRepository){
-        this.truequeRepository = truequeRepository;
-        this.userTruequeRepository = userTruequeRepository;
-    }
+    List<UserTrueque> getUserTruequeById_UserId(long id);
 
-    public List<Trueque> getAllTrueques(){
-        return (List<Trueque>) this.truequeRepository.findAll();
-    }
+    Trueque getTruequeById (long id);
 
-    public List<UserTrueque> getUserTruequeById_UserId(long id){
-        return userTruequeRepository.getUserTruequeById_UserId(id);
-    }
-
-    public Trueque getTruequeById (long id){
-        return truequeRepository.findTruequeById(id);
-    }
-
+    @Transactional
+    void saveTrueque(Map<Integer, List<Item>> participants, Long user1, Long user2, Long user3);
 }

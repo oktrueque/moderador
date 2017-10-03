@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
 <head>
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <th:block layout:fragment="content">
     <section class="page-content">
@@ -9,23 +9,17 @@
             <section class="row">
                 <div class="col-lg-4">
                     <section class="panel">
-                        <div class="panel-heading">
-                            <h3>Usuarios Con Preferencias</h3>
-                        </div>
                         <div class="panel-body">
-                            <h4>Usuarios</h4>
-                            <br/>
-                            <input type="hidden" id="level" value="2"></input>
                             <div class="margin-bottom-50">
                                 <table class="table table-hover nowrap" id="example2" width="100%">
                                     <thead>
                                     <tr>
-                                        <th>Usuario</th>
+                                        <th>Usuarios</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr th:each="user : ${usersWithTags}" >
-                                        <td th:id="${'user-'+user.id}" class="user-initial" th:attr="data-id=${user.id}">
+                                        <td th:id="${'user1-'+user.id}" class="user-level1" th:attr="data-id=${user.id}">
                                             <div class="cui-ecommerce--dashboard--list--img">
                                                 <img th:id="'user-img-' + ${user.id}" th:src="${user.photo1}"
                                                      alt="Imagen"/>
@@ -41,9 +35,6 @@
                 </div>
                 <div class="col-lg-4">
                     <section class="panel">
-                        <div class="panel-heading">
-                            <h3>Usuarios</h3>
-                        </div>
                         <div class="panel-body">
                             <div class="margin-bottom-50">
                                 <table class="table table-hover nowrap" width="100%">
@@ -52,40 +43,35 @@
                                         <th>Usuario</th>
                                     </tr>
                                     </thead>
-                                    <tbody id="users-2">
+                                    <tbody id="users-level2">
 
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <!--<div class="panel-footer">-->
-                        <!--<span>Default panel footer</span>-->
-                        <!--</div>-->
                     </section>
                 </div>
                 <div class="col-lg-4">
                     <section class="panel">
-                        <div class="panel-heading">
-                            <h3>Panel in Grid</h3>
-                        </div>
                         <div class="panel-body">
-                            <h4>Usuarios</h4>
-                            <br/>
                             <div class="margin-bottom-50">
-                                <table class="table table-hover nowrap" id="example2" width="100%">
+                                <table class="table table-hover nowrap" width="100%">
                                     <thead>
                                     <tr>
                                         <th>Usuario</th>
                                     </tr>
                                     </thead>
-                                    <tbody id="users-3">
+                                    <tbody id="users-level3">
 
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <div class="panel-footer">
-                        <span>BTN Confirmar</span>
+                            <div class="container">
+                                <button type="button" class="btn btn-success margin-inline pull-right" id="verPropuesta"
+                                        data-toggle="modal" data-target="#new-Trueque" disabled="true" >Ver Propuesta</button>
+                            </div>
                         </div>
                     </section>
                 </div>
@@ -93,36 +79,207 @@
         </div>
     </section>
 
+    <div class="modal fade" id="new-Trueque" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Propuesta de Trueque</h4>
+                </div>
+                <section class="row">
+                    <div class="col-lg-4">
+                        <section class="panel">
+                            <div class="panel-heading" id="propuesta-user1">
+                                <!--<h3 th:text="${user.username}">User</h3>-->
+                                <!--<div class="cui-ecommerce&#45;&#45;dashboard&#45;&#45;list&#45;&#45;img">-->
+                                    <!--<img th:id="'user-img-' + ${user.id}" th:src="${user.photo1}"-->
+                                         <!--alt="Imagen"/>-->
+                                <!--</div>-->
+                            </div>
+                            <div class="panel-body">
+                                <div class="margin-bottom-50">
+                                    <table class="table table-hover nowrap" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th>Items</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="propuesta-user1items">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-lg-4">
+                        <section class="panel">
+                            <div class="panel-heading" id="propuesta-user2">
+                                <!--<h3 th:text="${user.username}">User</h3>-->
+                                <!--<div class="cui-ecommerce&#45;&#45;dashboard&#45;&#45;list&#45;&#45;img">-->
+                                <!--<img th:id="'user-img-' + ${user.id}" th:src="${user.photo1}"-->
+                                <!--alt="Imagen"/>-->
+                                <!--</div>-->
+                            </div>
+                            <div class="panel-body">
+                                <div class="margin-bottom-50">
+                                    <table class="table table-hover nowrap" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th>Items</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="propuesta-user2items">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-lg-4">
+                        <section class="panel">
+                            <div class="panel-heading" id="propuesta-user3">
+                                <!--<h3 th:text="${user.username}">User</h3>-->
+                                <!--<div class="cui-ecommerce&#45;&#45;dashboard&#45;&#45;list&#45;&#45;img">-->
+                                <!--<img th:id="'user-img-' + ${user.id}" th:src="${user.photo1}"-->
+                                <!--alt="Imagen"/>-->
+                                <!--</div>-->
+                            </div>
+                            <div class="panel-body">
+                                <div class="margin-bottom-50">
+                                    <table class="table table-hover nowrap" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th>Items</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="propuesta-user3items">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="enviarPropuesta">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script th:inline="javascript">
         var token = [[${_csrf.token}]];
         var header = [[${_csrf.headerName}]];
+        var idUser1 = -1;
+        var idUser2 = -1;
+        var idUser3 = -1;
+        var itemsUser1;
+        var itemsUser2;
+        var itemsUser3;
 
-         var getUser = function(id){
+        $(document).ready(function () {
+            getUsersLevel2();
+        });
+
+        var getUser = function(id){
             var user = {
                 id: id
             };
             return user;
         };
 
-        var getOthersUsers=  function () {
-            $('.user-initial').on('click', function () {
+        var getUsersLevel2=  function () {
+            $('.user-level1').on('click', function () {
+                if(idUser1!=-1){
+                    $('#user1-'+idUser1).css('background-color', '#fcfffa');
+                }
                 var id = $(this).data('id');
+                $('#user1-'+id).css('background-color', '#eceff4');
+                idUser1 = parseInt(id);
                 var user = getUser(id);
-                var level = $('#level').val();
-                console.log(level);
                 $.ajax({
                     type: "POST",
-                    url: "/propuesta/inicio",
+                    url: "/propuesta/paso2",
                     contentType : "application/json",
                     data: JSON.stringify(user),
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader(header, token);
                     },
                     success: function (data) {
-                        console.log(data);
-                        displayUsersLevel(data,level);
-                        $('#level').val('3');
-                        console.log($('#level').val())
+                        displayUsersLevel2(data.users);
+                    },
+                    error: function (e) {
+                        swal({
+                            title: "Ops!",
+                            text: "No se se encontraron items con las preferencias de este usuario, pruebe con otro.",
+                            icon: "warning"
+                        })
+                    }
+                });
+            });
+        }
+
+        var getUsersLevel3=  function () {
+            $('.user-level2').on('click', function () {
+                if(idUser2!=-1){
+                    $('#user2-'+idUser2).css('background-color', '#fcfffa');
+                }
+                var id = $(this).data('id');
+                $('#user2-'+id).css('background-color', '#eceff4');
+                idUser2 = parseInt(id);
+                var user = getUser(id);
+
+                $.ajax({
+                    type: "POST",
+                    url: "/propuesta/paso3/" + idUser1,
+                    contentType : "application/json",
+                    data: JSON.stringify(user),
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function (data) {
+                        displayUsersLevel3(data.users);
+                        itemsUser2 = data.itemsUser2;
+                    },
+                    error: function (e) {
+                        swal({
+                            title: "Ops!",
+                            text: "No se se encontraron items con las preferencias de este usuario, pruebe con otro.",
+                            icon: "warning"
+                        })
+                    }
+                });
+            });
+        }
+
+        var finalizarTrueque=  function () {
+            $('.user-level3').on('click', function () {
+                if(idUser3!=-1){
+                    $('#user3-'+idUser3).css('background-color', '#fcfffa');
+                }
+                var id = $(this).data('id');
+                $('#user3-'+id).css('background-color', '#eceff4');
+                idUser3 = parseInt(id);
+                var user = getUser(id);
+                $('#verPropuesta').prop("disabled",false);
+                $.ajax({
+                    type: "POST",
+                    url: "/propuesta/paso4/"+ idUser1+ "/" +idUser2,
+                    contentType : "application/json",
+                    data: JSON.stringify(user),
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function (data) {
+                        itemsUser3 = data.itemsUser3;
+                        itemsUser1 = data.itemsUser1;
+                        displayPropuesta();
                     },
                     error: function (e) {
                         console.log(e);
@@ -130,32 +287,132 @@
                 });
             });
         }
-        $(document).ready(function () {
-            getOthersUsers();
-        });
 
-        displayUsersLevel = function(datas,level){
-            console.log(datas);
-            var users = $('#users-'+level);
+        var enviarPropuesta=  function () {
+            $('#enviarPropuesta').on('click', function () {
+                $('#user1-'+idUser1).css('background-color', '#fcfffa');
+                $('#user2-'+idUser2).css('background-color', '#fcfffa');
+                $('#user3-'+idUser3).css('background-color', '#fcfffa');
+                var items = {
+                    1 : itemsUser1,
+                    2 : itemsUser2,
+                    3 : itemsUser3
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/enviarPropuesta/" + idUser1+ "/"+ idUser2+ "/"+ idUser3,
+                    contentType : "application/json",
+                    data: JSON.stringify(items),
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function (data) {
+                        swal({
+                            title: "Propuesta Enviada",
+                            icon: "success"
+                        })
+                    },
+                    error: function (e) {
+                        swal({
+                            title: "Error",
+                            text: "No se pudo realizar la propuesta.",
+                            icon: "warning"
+                        })
+                    }
+                });
+                $('#new-Trueque').modal('hide');
+            });
+
+        }
+
+
+
+
+        displayUsersLevel2 = function(datas){
+            var users = $('#users-level2');
             users.html("");
             datas.forEach(function(data){
-                displayUsers(users, data);
+                users.append(
+                    '<tr>' +
+                    '<td id="user2-' +data.id + '" class="user-level2" data-id="' + data.id + '">' +
+                    '<div class="cui-ecommerce--dashboard--list--img">' +
+                    '<img id="user-img-' + data.id +'" src="' + data.photo1 + '" alt="Imagen"/>' +
+                    '</div>' +
+                    '<h6>'+ data.username +'</h6>' +
+                    '</td>' +
+                    '</tr>'
+                );
+            });
+            getUsersLevel3();
+        };
+
+        displayUsersLevel3 = function(datas){
+            var users = $('#users-level3');
+            users.html("");
+            datas.forEach(function(data){
+                users.append(
+                    '<tr>' +
+                    '<td id="user3-' +data.id + '" class="user-level3" data-id="' + data.id + '">' +
+                    '<div class="cui-ecommerce--dashboard--list--img">' +
+                    '<img id="user-img-' + data.id +'" src="' + data.photo1 + '" alt="Imagen"/>' +
+                    '</div>' +
+                    '<h6>'+ data.username +'</h6>' +
+                    '</td>' +
+                    '</tr>'
+                );
+            });
+            finalizarTrueque();
+            enviarPropuesta();
+        };
+
+        displayPropuesta = function(){
+            var propuestaUser1items = $('#propuesta-user1items');
+            propuestaUser1items.html("");
+            itemsUser1.forEach(function(item){
+                propuestaUser1items.append(
+                    '<tr>' +
+                    '<td>' +
+                    '<div class="cui-ecommerce--dashboard--list--img">' +
+                    '<img src="' + item.photo1 + '" alt="Imagen"/>' +
+                    '</div>' +
+                    '<h6>'+ item.name +'</h6>' +
+                    '<span>'+ item.description +'</span>' +
+                    '</td>' +
+                    '</tr>'
+                );
+            });
+            var propuestaUser2items = $('#propuesta-user2items');
+            propuestaUser2items.html("");
+            itemsUser2.forEach(function(item){
+                propuestaUser2items.append(
+                    '<tr>' +
+                    '<td>' +
+                    '<div class="cui-ecommerce--dashboard--list--img">' +
+                    '<img src="' + item.photo1 + '" alt="Imagen"/>' +
+                    '</div>' +
+                    '<h6>'+ item.name +'</h6>' +
+                    '<span>'+ item.description +'</span>' +
+                    '</td>' +
+                    '</tr>'
+                );
+            });
+            var propuestaUser3items = $('#propuesta-user3items');
+            propuestaUser3items.html("");
+            itemsUser3.forEach(function(item){
+                propuestaUser3items.append(
+                    '<tr>' +
+                    '<td>' +
+                    '<div class="cui-ecommerce--dashboard--list--img">' +
+                    '<img src="' + item.photo1 + '" alt="Imagen"/>' +
+                    '</div>' +
+                    '<h6>'+ item.name +'</h6>' +
+                    '<span>'+ item.description +'</span>' +
+                    '</td>' +
+                    '</tr>'
+                );
             });
         };
-        displayUsers = function(users, data){
-            console.log(data);
-            users.append(
-                '<tr>' +
-                '<td id="user-' +data.id + '" class="user-initial" data-id="' + data.id + '">' +
-                '<div class="cui-ecommerce--dashboard--list--img">' +
-                '<img id="user-img-' + data.id +'" src="' + data.photo1 + '" alt="Imagen"/>' +
-                '</div>' +
-                '<h6>'+ data.username +'</h6>' +
-                '</td>' +
-                '</tr>'
-                );
-            getOthersUsers();
-        };
+
     </script>
 </th:block>
 </html>

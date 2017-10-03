@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import javax.mail.MessagingException;
@@ -29,6 +30,7 @@ public class EmailServiceImpl implements EmailService {
         this.javaMailSender = javaMailSender;
     }
 
+    @Async
     @Override
     public void sendMail(Email mail, String template) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();

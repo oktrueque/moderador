@@ -1,6 +1,7 @@
 package com.oktrueque.repository;
 
 import com.oktrueque.model.Item;
+import com.oktrueque.model.Tag;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
@@ -15,5 +16,6 @@ public interface ItemRepository extends CrudRepository<Item, Long> {
     List<Item> findByUser_Username(String username, Pageable pageable);
     List<Item> findAllByIdIn(List<Long> ids);
     List<Item> findById(Long id);
+    List<Item> findAllByUser_IdAndTagsIn(Long id, List<Tag> tags);
 
 }

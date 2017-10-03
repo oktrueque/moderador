@@ -1,15 +1,13 @@
 package com.oktrueque.service;
 
-import com.oktrueque.model.Item;
-import com.oktrueque.model.ItemTag;
-import com.oktrueque.model.User;
-import com.oktrueque.model.UserTag;
+import com.oktrueque.model.*;
 import com.oktrueque.repository.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by Facundo on 9/19/2017.
@@ -71,6 +69,30 @@ public class RedServiceImpl implements RedService{
             }
         });
         return  usersWithItemsByPreferences;
+    }
+
+    @Override
+    public List<User> getUsersByPreferencesOfTwoUsers(Long id, Long idUserInitial) {
+        List<User> candidatesUsers = new ArrayList<>();
+        User userInitial = userRepository.findOne(idUserInitial);
+        this.getUsersByPreferences(id).forEach(user-> {
+            user.getTags().forEach(tag->{
+                userInitial.getItems().forEach(item->{
+                    item.getTags().forEach(tagItem ->{
+                        if(tag.getId().equals(tagItem.getId())){
+                            candidatesUsers.add(user);
+                        }
+                    });
+                });
+            });
+        });
+        return candidatesUsers.stream().distinct().collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Item> getItemsToUser(Long id, Long idUserSelected) {
+        List<Tag> tags = userRepository.findOne(idUserSelected).getTags();
+        return itemRepository.findAllByUser_IdAndTagsIn(id,tags).stream().distinct().collect(Collectors.toList());
     }
 
 

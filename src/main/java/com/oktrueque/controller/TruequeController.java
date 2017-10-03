@@ -1,6 +1,7 @@
 package com.oktrueque.controller;
 
 import com.oktrueque.service.TruequeService;
+import com.oktrueque.service.TruequeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,12 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class TruequeController {
 
-    private TruequeService truequeService;
-
     @Autowired
-    public void setTruequeService(TruequeService truequeService){
-        this.truequeService = truequeService;
-    }
+    private TruequeService truequeService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/trueques")
     public String getTrueques(Model model){

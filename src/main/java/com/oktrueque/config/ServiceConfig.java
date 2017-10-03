@@ -38,6 +38,12 @@ public class ServiceConfig {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private StorageService storageService;
+    @Autowired
+    private TruequeRepository truequeRepository;
+    @Autowired
+    private UserTruequeRepository userTruequeRepository;
+    @Autowired
+    private ItemTruequeRepository itemTruequeRepository;
 
 
     @Bean
@@ -72,4 +78,8 @@ public class ServiceConfig {
     @Bean
     public UserService userService() { return  new UserService(userRepository, bCryptPasswordEncoder, storageService, this.emailService());}
 
+    @Bean
+    public TruequeService truequeService(){
+        return new TruequeServiceImpl(truequeRepository, itemTruequeRepository, userTruequeRepository, userRepository, this.emailService());
+    }
 }
