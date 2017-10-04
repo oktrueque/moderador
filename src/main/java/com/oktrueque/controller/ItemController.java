@@ -83,9 +83,9 @@ public class ItemController {
     }
 
     @RequestMapping(method= RequestMethod.DELETE, value="/items/{id}")
-    public String deleteItem(@PathVariable Long id, Model model){
+    public ResponseEntity deleteItem(@PathVariable Long id){
         itemService.deleteItemAlone(id);
-        return "redirect:/items";
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/items/{id}/approve")

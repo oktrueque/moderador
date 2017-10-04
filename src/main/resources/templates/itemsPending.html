@@ -23,7 +23,6 @@
                         <th>Foto</th>
                         <th>Categoría</th>
                         <th>Usuario</th>
-                        <th>Estado</th>
                         <th>Acción</th>
                     </tr>
                     </thead>
@@ -44,13 +43,9 @@
                             </td>
                             <td th:text="${item.category.name}">category</td>
                             <td th:text="${item.user.name} +' ' + ${item.user.last_name}">userName</td>
-                            <td th:text="${item.status}"></td>
                             <td>
-                                <form th:method="DELETE" th:action="@{'/items/' + ${item.id}}">
-                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                                    <a th:href="@{'/items/' + ${item.id}}" class="btn btn-success btn-xs btn-edit edit-item-btn">Editar</a>
-                                    <button type="button" class="btn btn-danger btn-xs btn-delete-item" th:attr="data-id=${item.id}">Borrar</button>
-                                </form>
+                                <a th:href="@{'/items/' + ${item.id}}" class="btn btn-success btn-xs btn-edit edit-item-btn">Editar</a>
+                                <button type="button" class="btn btn-danger btn-xs btn-delete-item" th:attr="data-id=${item.id}">Borrar</button>
                             </td>
                         </tr>
                     </th:block>
@@ -60,32 +55,6 @@
 
         </section>
         <!-- End Ecommerce Products List -->
-    </div>
-
-    <!-- Modal Dialog de eliminar-->
-    <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Borrar permanentemente</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Estas seguro de esto?</p>
-                </div>
-                <div class="modal-footer">
-                    <form id="confirm_form" th:action="@{'/items/' + id}" th:method="DELETE" role="button">
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                        <button type="button" class="btn btn-default" data-dismiss="modal">
-                            Cancelar
-                        </button>
-                        <button type="submit" class="btn btn-danger" data-dismiss="modal" id="btn_confirm_delete">
-                            Eliminar
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
     </div>
 </section>
 
@@ -100,29 +69,12 @@
             });
         });
 
-        $(function () {
-            $(".btn-delete-item").on("click", function (e) {
-                e.preventDefault();
-                var id = $(this).data("id");
-                console.log(id);
-                $("#confirm_form").attr('action', '/items/' + id);
-                $("#confirmDelete").modal('show');
-            });
-        });
-
-        $("#btn_confirm_delete").on('click', function () {
-            $('#confirm_form').submit();
-        });
-
         approveItem = function(itemId, elem){
             console.log($(elem).parent().parent());
             $.ajax({
                 type : "GET",
                 url : "items/"+ itemId + "/approve",
                 success : function(data) {
-//                    $(elem).parent().parent().parent().remove();
-//                    $('#item-'+itemId).remove();
-//                    $('#approbe-'+itemId).remove();
                     table.row($(elem).parents('tr')).remove().draw();
                     swal("Moderado", "Puede visualizar este item en la seccion Activos", "success");
                 },
@@ -131,6 +83,47 @@
                 }
             });
         }
+    </script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var token = [[${_csrf.token}]];
+        var header = [[${_csrf.headerName}]];
+
+        $(function () {
+            $(".btn-delete-item").on("click", function () {
+                var itemId = $(this).data("id");
+
+                swal({
+                    title: "¿Estás seguro?",
+                    text: "Una vez eliminado, no podrá volver a ver este item",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            table.row($(this).parents('tr')).remove().draw();
+
+                            $.ajax({
+                                type: 'DELETE',
+                                url: '/items/' + itemId,
+                                contentType: 'application/json',
+                                beforeSend: function (xhr) {
+                                    xhr.setRequestHeader(header, token);
+                                },
+                                success: function (data) {
+                                    swal("Eliminado", "El item ha sido correctamente eliminado", "success");
+                                },
+                                error: function (e) {
+                                    console.log(e);
+                                }
+                            });
+                        }
+                    });
+            });
+        });
+
+        /*]]>*/
     </script>
     <!-- Page Scripts -->
 

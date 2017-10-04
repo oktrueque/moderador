@@ -9,9 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Tomas on 21-May-17.
- */
 @Service
 public class ItemService {
 
@@ -26,7 +23,9 @@ public class ItemService {
         itemRepository.save(item);
     }
 
-    public void deleteItemAlone(Long id) { itemRepository.delete(id);    }
+    public void deleteItemAlone(Long id) {
+        itemRepository.delete(id);
+    }
 
     public List<Item> getItemsByCategory(int id_category) {
         return itemRepository.findByCategory_Id(id_category);
