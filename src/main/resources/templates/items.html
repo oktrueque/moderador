@@ -31,9 +31,9 @@
                     <tbody>
 
                     <th:block th:each="item : ${items}">
-                        <tr class="items-table">
-                            <td>
-                                <button class="btn btn-success btn-xs btn-edit edit-item-btn" th:onclick="'approveItem(' + ${__${item.id}__} + ');'">Activar</button>
+                        <tr th:id="${'item-'+item.id}" class="items-table">
+                            <td th:id="${'approbe-'+item.id}">
+                                <button th:id="${'item-'+item.id}"  class="btn btn-success btn-xs" th:onclick="'approveItem(' + ${__${item.id}__} + ', this);'">Activar</button>
                             </td>
                             <td th:text="${item.id}">id</td>
                             <td th:text="${item.name}">name</td>
@@ -91,6 +91,15 @@
 
     <!-- Dialog show event handler -->
     <script type="text/javascript">
+        var table;
+        $(function () {
+             table = $('#table-items').DataTable({
+                autoWidth: true,
+                scrollX: true,
+                fixedColumns: true
+            });
+        });
+
         $(function () {
             $(".btn-delete-item").on("click", function (e) {
                 e.preventDefault();
@@ -105,12 +114,17 @@
             $('#confirm_form').submit();
         });
 
-        function approveItem(itemId){
+        approveItem = function(itemId, elem){
+            console.log($(elem).parent().parent());
             $.ajax({
                 type : "GET",
                 url : "items/"+ itemId + "/approve",
                 success : function(data) {
-                    console.log('Moderado');
+//                    $(elem).parent().parent().parent().remove();
+//                    $('#item-'+itemId).remove();
+//                    $('#approbe-'+itemId).remove();
+                    table.row($(elem).parents('tr')).remove().draw();
+                    swal("Moderado", "Puede visualizar este item en la seccion Activos", "success");
                 },
                 error : function(e) {
                     console.log("ERROR: ", e);
@@ -119,15 +133,6 @@
         }
     </script>
     <!-- Page Scripts -->
-    <script>
-        $(function () {
-            $('#table-items').DataTable({
-                autoWidth: true,
-                scrollX: true,
-                fixedColumns: true
-            });
-        });
-    </script>
 
     <!-- End Page Scripts -->
 </th:block>
