@@ -17,6 +17,7 @@
 
                     <thead class="thead-default">
                     <tr>
+                        <th>Moderar</th>
                         <th>ID</th>
                         <th>Nombre</th>
                         <th>Foto</th>
@@ -31,6 +32,9 @@
 
                     <th:block th:each="item : ${items}">
                         <tr th:id="${'item-'+item.id}" class="items-table">
+                            <td th:id="${'approbe-'+item.id}">
+                                <button th:id="${'item-'+item.id}"  class="btn btn-success btn-xs" th:onclick="'approveItem(' + ${__${item.id}__} + ', this);'">Activar</button>
+                            </td>
                             <td th:text="${item.id}">id</td>
                             <td th:text="${item.name}">name</td>
                             <td>

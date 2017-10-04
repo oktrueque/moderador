@@ -32,6 +32,10 @@ public class ItemController {
     @RequestMapping(method = RequestMethod.GET , value="/items")
     public String getItems(@RequestParam(required = false) Integer status, Model model){
         if(status == null) status = 0;
+        if(status == 0){
+            model.addAttribute("items", itemService.findItemsByStatus(status));
+            return "itemsPending";
+        }
         model.addAttribute("items", itemService.findItemsByStatus(status));
         return "items";
     }
