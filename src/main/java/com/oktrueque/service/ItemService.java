@@ -38,7 +38,7 @@ public class ItemService {
     }
     public Item getItemById(Long id){ return itemRepository.findOne(id);}
 
-    public Item setItem(Item item){
+    public Item saveItem(Item item){
         return itemRepository.save(item);
     }
 

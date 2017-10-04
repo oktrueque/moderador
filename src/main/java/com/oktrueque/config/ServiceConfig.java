@@ -65,6 +65,11 @@ public class ServiceConfig {
     }
 
     @Bean
+    public ItemTagService ItemTagService() {
+        return new ItemTagServiceImpl(itemTagRepository);
+    }
+
+    @Bean
     public RedService redService(){
         return new RedServiceImpl(userRepository,tagRepository,userTagRepository,itemRepository, itemTagRepository);
     }

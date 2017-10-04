@@ -10,4 +10,6 @@ public interface ItemTagRepository extends CrudRepository<ItemTag, ItemTagId> {
 
     List<ItemTag> findAllByIdTagIdIn(List<Long> tagId);
     List<ItemTag> findByIdTagId(Long tagId);
+    List<ItemTag> findByIdItemId(Long itemId);
+    void removeAllById_ItemId(Long itemId);
 }

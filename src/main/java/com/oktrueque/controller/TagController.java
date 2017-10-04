@@ -1,28 +1,46 @@
 package com.oktrueque.controller;
 
+import com.oktrueque.model.Item;
 import com.oktrueque.model.Tag;
+import com.oktrueque.service.ItemService;
+import com.oktrueque.service.ItemTagService;
 import com.oktrueque.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
-/**
- * Created by Facundo on 9/13/2017.
- */
+import javax.transaction.Transactional;
+import java.util.List;
+
 @Controller
 public class TagController {
 
-    @Autowired
     private TagService tagService;
+    private ItemService itemService;
+    private ItemTagService itemTagService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/tags")
-    public String getAllTags(Model model){
-        model.addAttribute("tags" , tagService.getAllTags());
-        return "tags";
+    @Autowired
+    public TagController(TagService tagService, ItemService itemService, ItemTagService itemTagService) {
+        this.tagService = tagService;
+        this.itemService = itemService;
+        this.itemTagService = itemTagService;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/tags") //AutoComplete
+    public ResponseEntity<List<Tag>> autocomplete(){
+        List<Tag> tags = tagService.findAll();
+        return new ResponseEntity<>(tags, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/items/{id}/updateItemTags")
+    @Transactional
+    public ResponseEntity<Void> updateItemTags(@RequestBody List<Tag> tags, @PathVariable Long id){
+        Item item = itemService.getItemById(id);
+        itemTagService.deleteAllByItemId(item.getId());
+        itemTagService.saveItemTags(item.getId(),tags);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.POST,value = "/tags")
