@@ -45,7 +45,7 @@
                             <td th:text="${item.user.name} +' ' + ${item.user.last_name}">userName</td>
                             <td>
                                 <a th:href="@{'/items/' + ${item.id}}" class="btn btn-success btn-xs btn-edit edit-item-btn">Editar</a>
-                                <button type="button" class="btn btn-danger btn-xs btn-delete-item" th:attr="data-id=${item.id}">Borrar</button>
+                                <button type="button" class="btn btn-danger btn-xs btn-delete-item ladda-button" data-style="zoom-in" th:attr="data-id=${item.id}">Borrar</button>
                             </td>
                         </tr>
                     </th:block>
@@ -91,6 +91,8 @@
 
         $(function () {
             $(".btn-delete-item").on("click", function () {
+                var l = Ladda.create(this);
+                l.start();
                 var itemId = $(this).data("id");
 
                 swal({
@@ -102,7 +104,7 @@
                 })
                     .then((willDelete) => {
                         if (willDelete) {
-                            table.row($(this).parents('tr')).remove().draw();
+                            var btn = $(this);
 
                             $.ajax({
                                 type: 'DELETE',
@@ -112,6 +114,8 @@
                                     xhr.setRequestHeader(header, token);
                                 },
                                 success: function (data) {
+                                    l.stop();
+                                    table.row(btn.parents('tr')).remove().draw();
                                     swal("Eliminado", "El item ha sido correctamente eliminado", "success");
                                 },
                                 error: function (e) {

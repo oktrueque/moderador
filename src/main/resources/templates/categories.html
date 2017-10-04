@@ -29,10 +29,8 @@
                                 <td th:text="${category.id}">Name</td>
                                 <td th:text="${category.name}">Last Name</td>
                                 <td>
-                                    <form th:method="DELETE" th:action="@{'/categories/' + ${category.id}}">
-                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#edit-category" class="btn btn-success btn-xs btn-edit edit-category">Editar</a>
-                                        <button id="btn-delete-category" type="submit" class="btn btn-danger btn-xs">Delete</button>
-                                    </form>
+                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#edit-category" class="btn btn-success btn-xs btn-edit edit-category">Editar</a>
+                                    <button type="submit" class="btn btn-danger btn-xs btn-delete-category ladda-button" data-style="zoom-in">Delete</button>
                                 </td>
                             </tr>
                             </tbody>
@@ -120,6 +118,11 @@
         $('#edit-category-id').val(categoryId);
         $('#edit-category-name').val($(td[1]).text());
         $('#edit-category-form').attr('action', "/categories/" + categoryId);
+    });
+
+    $('.btn-delete-category').on('click', function(){
+        var l = Ladda.create(this);
+        l.start();
     });
 
     $(function(){

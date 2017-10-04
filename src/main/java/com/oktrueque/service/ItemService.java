@@ -24,7 +24,7 @@ public class ItemService {
     }
 
     public void deleteItemAlone(Long id) {
-        itemRepository.delete(id);
+        //itemRepository.delete(id);
     }
 
     public List<Item> getItemsByCategory(int id_category) {
