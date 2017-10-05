@@ -6,7 +6,7 @@ ms.initialize = function(){
     $.ajax({
         type: "GET",
         contentType: "application/json",
-        url: "/tags",
+        url: "/tags/rest",
         beforeSend: function (xhr) {
             xhr.setRequestHeader(header, token);
         },
@@ -36,7 +36,7 @@ ms.initializeWithTags = function(item_tags){
     $.ajax({
         type: "GET",
         contentType: "application/json",
-        url: "/tags",
+        url: "/tags/rest",
         beforeSend: function (xhr) {
             xhr.setRequestHeader(header, token);
         },

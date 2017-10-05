@@ -6,9 +6,6 @@ import com.oktrueque.repository.TagRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by nicolas on 19/07/17.
- */
 public class TagServiceImpl implements TagService {
 
     private final TagRepository tagRepository;

@@ -42,6 +42,11 @@ public class ItemTagServiceImpl implements ItemTagService {
     }
 
     @Override
+    public List<ItemTag> getItemTagByTagId(Long tagId) {
+        return itemTagRepository.findByIdTagId(tagId);
+    }
+
+    @Override
     @Transactional
     public void deleteAllByItemId(Long itemId){ itemTagRepository.removeAllById_ItemId(itemId);    }
 

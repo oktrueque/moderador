@@ -16,7 +16,7 @@
 
                                 <br />
                                 <div class="margin-bottom-50">
-                                    <table class="table table-hover nowrap" id="example2" width="100%">
+                                    <table class="table table-hover nowrap" id="table-tags" width="100%">
                                         <thead>
                                         <tr>
                                             <th>Id</th>
@@ -29,10 +29,8 @@
                                             <td th:text="${tag.id}">Name</td>
                                             <td th:text="${tag.name}">Last Name</td>
                                             <td>
-                                                <form th:method="DELETE" th:action="@{'/tags/' + ${tag.id}}">
-                                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#edit-tag" class="btn btn-success btn-xs btn-edit edit-tag">Editar</a>
-                                                    <button id="btn-delete-tag" type="submit" class="btn btn-danger btn-xs">Delete</button>
-                                                </form>
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#edit-tag" class="btn btn-success btn-xs btn-edit edit-tag">Editar</a>
+                                                <button type="button" class="btn btn-danger btn-xs btn-delete-tag ladda-button" data-style="zoom-in" th:attr="data-id=${tag.id}">Delete</button>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -111,7 +109,19 @@
         </div>
     </div>
     <!-- Page Scripts -->
-    <script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var token = [[${_csrf.token}]];
+        var header = [[${_csrf.headerName}]];
+        var table;
+
+        $(function () {
+            table = $('#table-tags').DataTable({
+                autoWidth: true,
+                scrollX: true,
+                fixedColumns: true
+            });
+        });
 
         $(".edit-tag").click(function(e){
             e.preventDefault();
@@ -122,13 +132,35 @@
             $('#edit-tag-form').attr('action', "/tags/" + tagId);
         });
 
-        $(function(){
-            $('#example2').DataTable({
-                autoWidth: true,
-                scrollX: true,
-                fixedColumns: true
+        $('.btn-delete-tag').on('click', function(){
+            var l = Ladda.create(this);
+            l.start();
+            var btn = $(this);
+            var tagId = btn.data('id');
+
+            $.ajax({
+                type: 'DELETE',
+                url: '/tags/' + tagId,
+                contentType: 'application/json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    l.stop();
+                    if(data){
+                        table.row(btn.parents('tr')).remove().draw();
+                        swal("Eliminado", "El tag ha sido correctamente eliminado", "success");
+                    }else{
+                        swal("Error", "No es posible eliminar un tag con items asociados", "error");
+                    }
+                },
+                error: function (e) {
+                    console.log(e);
+                }
             });
         });
+
+        /*]]>*/
     </script>
 </th:block>
 </html>

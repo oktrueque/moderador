@@ -9,6 +9,8 @@ public interface ItemTagService {
 
     List<ItemTag> getItemTagByItemId(Long itemId);
 
+    List<ItemTag> getItemTagByTagId(Long tagId);
+
     List<Tag> getItemTags(Long itemId);
 
     void saveItemTags(Long itemId, List<Tag> tags);
