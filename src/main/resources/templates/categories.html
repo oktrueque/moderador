@@ -16,7 +16,7 @@
 
                     <br />
                     <div class="margin-bottom-50">
-                        <table class="table table-hover nowrap" id="example2" width="100%">
+                        <table class="table table-hover nowrap" id="table-categories" width="100%">
                             <thead>
                             <tr>
                                 <th>Id</th>
@@ -30,7 +30,7 @@
                                 <td th:text="${category.name}">Last Name</td>
                                 <td>
                                     <a href="javascript:void(0)" data-toggle="modal" data-target="#edit-category" class="btn btn-success btn-xs btn-edit edit-category">Editar</a>
-                                    <button type="submit" class="btn btn-danger btn-xs btn-delete-category ladda-button" data-style="zoom-in">Delete</button>
+                                    <button type="submit" class="btn btn-danger btn-xs btn-delete-category ladda-button" data-style="zoom-in" th:attr="data-id=${category.id}">Delete</button>
                                 </td>
                             </tr>
                             </tbody>
@@ -109,7 +109,19 @@
     </div>
 </div>
 <!-- Page Scripts -->
-<script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var token = [[${_csrf.token}]];
+        var header = [[${_csrf.headerName}]];
+        var table;
+
+        $(function () {
+            table = $('#table-categories').DataTable({
+                autoWidth: true,
+                scrollX: true,
+                fixedColumns: true
+            });
+        });
 
     $(".edit-category").click(function(e){
         e.preventDefault();
@@ -123,15 +135,32 @@
     $('.btn-delete-category').on('click', function(){
         var l = Ladda.create(this);
         l.start();
-    });
+        var btn = $(this);
+        var categoryId = btn.data('id');
 
-    $(function(){
-        $('#example2').DataTable({
-            autoWidth: true,
-            scrollX: true,
-            fixedColumns: true
+        $.ajax({
+            type: 'DELETE',
+            url: '/categories/' + categoryId,
+            contentType: 'application/json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (data) {
+                l.stop();
+                if(data){
+                    table.row(btn.parents('tr')).remove().draw();
+                    swal("Eliminado", "La categoria ha sido correctamente eliminado", "success");
+                }else{
+                    swal("Error", "No es posible eliminar una categoria con items asociados", "error");
+                }
+            },
+            error: function (e) {
+                console.log(e);
+            }
         });
     });
+
+        /*]]>*/
 </script>
 </th:block>
 </html>

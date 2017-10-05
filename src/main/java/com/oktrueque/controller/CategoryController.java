@@ -3,6 +3,8 @@ package com.oktrueque.controller;
 import com.oktrueque.model.Category;
 import com.oktrueque.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,10 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
-
-/**
- * Created by Fabrizio SPOSETTI on 01/05/2017.
- */
 
 @Controller
 public class CategoryController {
@@ -42,9 +40,13 @@ public class CategoryController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "categories/{id}")
-    public String deleteCategory(@PathVariable int id){
-         categoryService.deleteCategory(id);
-         return "redirect:/categories";
+    public ResponseEntity<Boolean> deleteCategory(@PathVariable int id){
+         try{
+             categoryService.deleteCategory(id);
+         }catch(Exception e){
+             return new ResponseEntity<>(false, HttpStatus.OK);
+         }
+         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
 
