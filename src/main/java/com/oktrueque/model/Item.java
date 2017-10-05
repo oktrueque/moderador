@@ -35,6 +35,7 @@ public class Item {
     @Column(name = "photo3")
     private String photo3;
     @JsonIgnore
+    @Column(updatable= false)
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable( name = "items_tags",
                 joinColumns = {@JoinColumn(name="id_item")},

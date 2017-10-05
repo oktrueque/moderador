@@ -77,7 +77,8 @@ public class ItemController {
             String pictureUrl = awsS3Service.uploadFileToS3(pictures.get(2), fileNameItems, item.getId(), "3", item.getPhoto1());
             item.setPhoto3(pictureUrl);
         }
-
+        Item itemSaved = itemService.getItemById(item.getId());
+        item.setTags(itemSaved.getTags());
         itemService.saveItem(item);
         return "redirect:/items";
     }
