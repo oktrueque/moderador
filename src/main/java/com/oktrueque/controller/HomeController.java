@@ -18,10 +18,4 @@ public class HomeController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET, value="/reportes")
-    public ResponseEntity getReportData(){
-
-
-        return new ResponseEntity(HttpStatus.OK);
-    }
 }

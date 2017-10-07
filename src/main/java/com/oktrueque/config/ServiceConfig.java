@@ -44,6 +44,8 @@ public class ServiceConfig {
     private UserTruequeRepository userTruequeRepository;
     @Autowired
     private ItemTruequeRepository itemTruequeRepository;
+//    @Autowired
+//    private CategoryRepository categoryRepository;
 
 
     @Bean
@@ -86,5 +88,10 @@ public class ServiceConfig {
     @Bean
     public TruequeService truequeService(){
         return new TruequeServiceImpl(truequeRepository, itemTruequeRepository, userTruequeRepository, userRepository, this.emailService());
+    }
+
+    @Bean
+    public ReportService reportService(){
+        return new ReportServiceImpl(itemRepository, userRepository, truequeRepository);
     }
 }
