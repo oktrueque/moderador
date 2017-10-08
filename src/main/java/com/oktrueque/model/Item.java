@@ -3,9 +3,11 @@ package com.oktrueque.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -34,6 +36,8 @@ public class Item {
     private String photo2;
     @Column(name = "photo3")
     private String photo3;
+    @Column(name= "creation_date")
+    private Date creationDate;
     @JsonIgnore
     @Column(updatable= false)
     @ManyToMany(fetch = FetchType.LAZY)
@@ -64,6 +68,17 @@ public class Item {
         this.description = description;
         this.user = user;
         this.category = category;
+        this.photo1 = photo1;
+        this.photo2 = photo2;
+        this.photo3 = photo3;
+    }
+
+    public Item(String name, String description, User user, Category category, Date creationDate ,String photo1, String photo2, String photo3) {
+        this.name = name;
+        this.description = description;
+        this.user = user;
+        this.category = category;
+        this.creationDate = creationDate;
         this.photo1 = photo1;
         this.photo2 = photo2;
         this.photo3 = photo3;
@@ -166,5 +181,13 @@ public class Item {
 
     public void setIdTags(ArrayList<Long> idTags) {
         this.idTags = idTags;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 }

@@ -4,6 +4,18 @@ import com.oktrueque.model.Report;
 import com.oktrueque.repository.ItemRepository;
 import com.oktrueque.repository.TruequeRepository;
 import com.oktrueque.repository.UserRepository;
+import org.joda.time.DateTime;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Tomas on 07-Oct-17.
@@ -20,9 +32,27 @@ public class ReportServiceImpl implements  ReportService {
         this.truequeRepository = truequeRepository;
     }
 
-    public Report getReportDataByReportName(String name){
+    @Override
+    public Report getItemsCreatedByMonth(int actualMonth, int actualYear){
+        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD"); //mySQL Date column.
+        Calendar cal = Calendar.getInstance();
+        cal.set(actualYear,actualMonth,1);
+        Calendar cal2 = Calendar.getInstance();
+        cal2.set(actualYear,actualMonth,cal2.getActualMaximum(Calendar.DAY_OF_MONTH));
+//        itemRepository.countItemByCreationDateBetween(cal.getTime(),cal2.getTime());
 
-        return new Report(name);
-    };
+        DateTime dateTime = new DateTime();
+        Report report = new Report("itemsPorMes");
+        ArrayList<Integer> cuatroMesesHaciaAtras = new ArrayList<>();
+        ArrayList<Integer> itemsPorMes = new ArrayList<>();
+        for (int x=0;x<5;x++){
+            cuatroMesesHaciaAtras.add(dateTime.getMonthOfYear()-x);
+            itemsPorMes.add(itemRepository.countItemByCreationDate_Month(dateTime.getMonthOfYear()-x));
+        }
+        report.setEjeXint(cuatroMesesHaciaAtras);
+        report.setEjeYint(itemsPorMes);
+
+         return report;
+    }
 
 }

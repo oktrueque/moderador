@@ -21,10 +21,10 @@ public class ReportController {
         this.reportService = reportService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value="/reportes/{reportName}")
-    public ResponseEntity<Report> getReportData(@PathVariable String reportName){
+    @RequestMapping(method = RequestMethod.GET, value="/reportes/itemsPorMes")
+    public ResponseEntity<Report> getReportData(){
 
-        Report report = reportService.getReportDataByReportName(reportName);
+        Report report = reportService.getItemsCreatedByMonth(10,2017);
 
         return new ResponseEntity(report, HttpStatus.CREATED);
     }

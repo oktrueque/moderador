@@ -23,22 +23,22 @@
     </section>
 <script>
 
-//    $.ajax({
-//        type: "GET",
-//        url: "/reportes",
-//        contentType : "application/json",
-//        data: data,
-//        dataType : 'json',
-//        beforeSend: function (xhr) {
-//            xhr.setRequestHeader(header, token);
-//        },
-//        success: function () {
-//
-//        },
-//        error: function (e) {
-//            console.log(e);
-//        }
-//    });
+    $.ajax({
+        type: "GET",
+        url: "/reportes/itemsPorMes",
+        contentType : "application/json",
+        data: data,
+        dataType : 'json',
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(header, token);
+        },
+        success: function () {
+
+        },
+        error: function (e) {
+            console.log(e);
+        }
+    });
 
 
     var ctx = document.getElementById('myChart').getContext('2d');

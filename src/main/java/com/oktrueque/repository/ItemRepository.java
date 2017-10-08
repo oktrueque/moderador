@@ -2,9 +2,11 @@ package com.oktrueque.repository;
 
 import com.oktrueque.model.Item;
 import com.oktrueque.model.Tag;
+import org.joda.time.DateTime;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,5 +19,8 @@ public interface ItemRepository extends CrudRepository<Item, Long> {
     List<Item> findAllByIdIn(List<Long> ids);
     List<Item> findById(Long id);
     List<Item> findAllByUser_IdAndTagsIn(Long id, List<Tag> tags);
+    Integer countItemByStatus(int status);
+//    Integer countItemByCreationDateBetween(Date dateStart,Date dateEnd);
+    Integer countItemByCreationDate_Month(int month);
 
 }
