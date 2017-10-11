@@ -3,7 +3,7 @@ package com.oktrueque.controller;
 import com.oktrueque.model.Item;
 import com.oktrueque.model.ItemTag;
 import com.oktrueque.model.Tag;
-import com.oktrueque.service.ItemService;
+import com.oktrueque.service.ItemServiceImpl;
 import com.oktrueque.service.ItemTagService;
 import com.oktrueque.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +14,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import javax.xml.ws.Response;
 import java.util.List;
 
 @Controller
 public class TagController {
 
     private TagService tagService;
-    private ItemService itemService;
+    private ItemServiceImpl itemService;
     private ItemTagService itemTagService;
 
     @Autowired
-    public TagController(TagService tagService, ItemService itemService, ItemTagService itemTagService) {
+    public TagController(TagService tagService, ItemServiceImpl itemService, ItemTagService itemTagService) {
         this.tagService = tagService;
         this.itemService = itemService;
         this.itemTagService = itemTagService;

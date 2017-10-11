@@ -11,9 +11,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
-/**
- * Created by Facundo on 12/07/2017.
- */
 @Configuration
 @EntityScan(basePackageClasses = {Jsr310JpaConverters.class}, basePackages = "com.oktrueque.model")
 public class ServiceConfig {
@@ -57,6 +54,11 @@ public class ServiceConfig {
     }
 
     @Bean
+    public ItemServiceImpl itemService(){
+        return new ItemServiceImpl(itemRepository);
+    }
+
+    @Bean
     public UserTagService userTagService() {
         return new UserTagServiceImpl(userTagRepository,this.TagService());
     }
@@ -83,7 +85,7 @@ public class ServiceConfig {
 
 
     @Bean
-    public UserService userService() { return  new UserService(userRepository, bCryptPasswordEncoder, storageService, this.emailService());}
+    public UserService userService() { return  new UserService(userRepository, bCryptPasswordEncoder, storageService, this.emailService(), this.itemService());}
 
     @Bean
     public TruequeService truequeService(){

@@ -18,13 +18,12 @@
 
                             <br/>
                             <div class="margin-bottom-50">
-                                <table class="table table-hover nowrap" id="example2" width="100%">
+                                <table class="table table-hover nowrap" id="table-users" width="100%">
                                     <thead>
                                     <tr>
                                         <th>Id</th>
                                         <th>Imagen</th>
                                         <th>Nombre</th>
-                                        <th>Apellido</th>
                                         <th>Email</th>
                                         <th>Username</th>
                                         <th>Items</th>
@@ -42,15 +41,15 @@
                                                      alt="Imagen"/>
                                             </div>
                                         </td>
-                                        <td th:text="${user.name}">Nombre</td>
-                                        <td th:text="${user.last_name}">Apellido</td>
+                                        <td th:text="${user.name} + ' ' + ${user.last_name}">Nombre</td>
                                         <td th:text="${user.email}">Email</td>
                                         <td th:text="${user.username}">Username</td>
                                         <td th:text="${user.itemsAmount}">Items</td>
                                         <td th:text="${user.score}">Score</td>
                                         <td th:text="${user.status}">Status</td>
                                         <td>
-                                            <button th:id="${user.id}" data-toggle="modal" data-target="#edit-user" type="button" class="btn btn-success btn-xs btn-edit edit-user">Editar</button>
+                                            <a th:href="@{'/users/' + ${user.username}}" class="btn btn-success btn-xs btn-edit edit-item-btn">Editar</a>
+                                            <button type="button" class="btn btn-danger btn-xs btn-delete-user ladda-button" data-style="zoom-in" th:attr="data-id=${user.id}">Borrar</button>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -64,242 +63,159 @@
     </div>
 </section>
 
-<div class="modal fade" id="new-user" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel">Nuevo Usuario</h4>
-            </div>
-            <form action="/users" method="POST" name="user" enctype="multipart/form-data">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <div class="modal-body">
+    <div class="modal fade" id="new-user" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Nuevo Usuario</h4>
+                </div>
+                <form action="/users" method="POST" name="user" enctype="multipart/form-data">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <div class="modal-body">
 
-                    <p>Agregar una nuevo usuario</p>
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label class="form-control-label">Nombre</label>
+                        <p>Agregar una nuevo usuario</p>
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <label class="form-control-label">Nombre</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" placeholder="Nombre" name="name"/>
+                            </div>
                         </div>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" placeholder="Nombre" name="name"/>
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <label class="form-control-label">Apellido</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" placeholder="Apellido" name="lastName"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <label class="form-control-label">Email</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" placeholder="Email" name="email"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <label class="form-control-label">Clave</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" placeholder="Clave" name="password"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <label class="form-control-label">Username</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" placeholder="Username" name="username"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <label class="form-control-label">Items Amount</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" placeholder="Items Amount" name="itemsAmount"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <label class="form-control-label">Score</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" placeholder="Score" name="score"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <label class="form-control-label">Status</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" placeholder="Status" name="status"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <label class="form-control-label">Imagen</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="file" class="dropify" name="image" data-allowed-file-extensions="png jpg"/>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label class="form-control-label">Apellido</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" placeholder="Apellido" name="lastName"/>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label class="form-control-label">Email</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" placeholder="Email" name="email"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label class="form-control-label">Clave</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" placeholder="Clave" name="password"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label class="form-control-label">Username</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" placeholder="Username" name="username"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label class="form-control-label">Items Amount</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" placeholder="Items Amount" name="itemsAmount"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label class="form-control-label">Score</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" placeholder="Score" name="score"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label class="form-control-label">Status</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" placeholder="Status" name="status"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label class="form-control-label">Imagen</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="file" class="dropify" name="image" data-allowed-file-extensions="png jpg"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="edit-user" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">Editar Usuario</h4>
-            </div>
-            <form th:method="PUT" name="user" id="edit-user-form">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <div class="modal-body">
-
-                    <input type="hidden" class="form-control" id="edit-user-id" name="id"/>
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label class="form-control-label">Nombre</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" placeholder="Nombre" id="edit-user-name"
-                                   name="name"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label class="form-control-label">Apellido</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" placeholder="Apellido" id="edit-user-lastName"
-                                   name="lastName"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label class="form-control-label">Email</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" placeholder="Email" id="edit-user-email"
-                                   name="email"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label class="form-control-label">Clave</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" placeholder="Clave" id="edit-user-password"
-                                   name="password"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label class="form-control-label">Username</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" placeholder="Username" id="edit-user-username"
-                                   name="username"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label class="form-control-label">Items Amount</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" placeholder="Items Amount" id="edit-user-itemsAmount"
-                                   name="itemsAmount"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label class="form-control-label">Score</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" placeholder="Score" id="edit-user-score"
-                                   name="score"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label class="form-control-label">Status</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" placeholder="Status" id="edit-user-status"
-                                   name="status"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label class="form-control-label">Imagen</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input id="edit-user-photo1" type="file" class="dropify" name="image" data-allowed-file-extensions="png jpg" />
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 <!-- Page Scripts -->
-<script>
-    $(document).ready(function(){
-        $('.dropify').dropify();
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var token = [[${_csrf.token}]];
+        var header = [[${_csrf.headerName}]];
+        var table;
 
-        $(".edit-user").click(function () {
-            var td = $(this).closest('tr').find('td:lt(10)');
-            var userId = $(td[0]).text()
-            $('#edit-user-id').val(userId);
-            $('#edit-user-name').val($(td[2]).text());
-            $('#edit-user-lastName').val($(td[3]).text());
-            $('#edit-user-email').val($(td[4]).text());
-            $('#edit-user-username').val($(td[5]).text());
-            $('#edit-user-itemsAmount').val($(td[6]).text());
-            $('#edit-user-score').val($(td[7]).text());
-            $('#edit-user-status').val($(td[8]).text());
-            $('#edit-user-photo1').attr('data-default-file', $('#user-img-' + userId).attr('src'))
-            $('#edit-user-password').val($(td[9]).text());
-            $('#edit-user-form').attr('action', "/users/" + userId);
+        $(document).ready(function(){
+            $('.dropify').dropify();
         });
 
-        $(function () {
-            $('#example2').DataTable({
-                autoWidth: true,
-                scrollX: true,
-                fixedColumns: true,
-                columnDefs: [ {
-                    targets: [5,9],
-                    render: function ( data, type, row ) {
-                        return data.length > 10 ?
-                            data.substr( 0, 10 ) +'…' :
-                            data;
-                    }
-                } ]
-            });
+    $(function () {
+        table = $('#table-users').DataTable({
+            autoWidth: true,
+            scrollX: true,
+            fixedColumns: true
         });
     });
+
+    $(function () {
+        $(".btn-delete-user").on("click", function () {
+            var l = Ladda.create(this);
+            l.start();
+            var userId = $(this).data("id");
+
+            swal({
+                title: "¿Estás seguro?",
+                text: "Una vez eliminado, no podrá volver a ver este usuario",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        var btn = $(this);
+
+                        $.ajax({
+                            type: 'DELETE',
+                            url: '/users/' + userId,
+                            contentType: 'application/json',
+                            beforeSend: function (xhr) {
+                                xhr.setRequestHeader(header, token);
+                            },
+                            success: function (data) {
+                                l.stop();
+                                table.row(btn.parents('tr')).remove().draw();
+                                swal("Eliminado", "El usuario ha sido correctamente eliminado", "success");
+                            },
+                            error: function (e) {
+                                console.log(e);
+                            }
+                        });
+                    }
+                });
+        });
+    });
+        /*]]>*/
 </script>
 </th:block>
 </html>

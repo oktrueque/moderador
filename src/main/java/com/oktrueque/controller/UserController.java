@@ -5,6 +5,8 @@ import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -22,7 +24,7 @@ import java.util.List;
 public class UserController {
 
     private UserService userService;
-    private ItemService itemService;
+    private ItemServiceImpl itemService;
     private UserTagService userTagService;
     private ComplaintService complaintService;
     private TruequeService truequeService;
@@ -30,7 +32,7 @@ public class UserController {
 
 
     @Autowired
-    public UserController(UserService userService, ItemService itemService, UserTagService userTagService, ComplaintService complaintService, TruequeService truequeService){
+    public UserController(UserService userService, ItemServiceImpl itemService, UserTagService userTagService, ComplaintService complaintService, TruequeService truequeService){
         this.userService = userService;
         this.itemService = itemService;
         this.userTagService = userTagService;
@@ -60,9 +62,13 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/users/{id}")
-    public String deleteUser(@PathVariable Long id){
-        userService.deleteUser(id);
-        return "redirect:/users";
+    public ResponseEntity<Boolean> deleteUser(@PathVariable Long id){
+        try{
+            userService.deleteUser(id);
+        }catch(Exception e){
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
     @RequestMapping("/login")

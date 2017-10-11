@@ -10,14 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Felipe on 7/5/2017.
- */
 @Service
 public class UserService {
 
@@ -25,13 +23,15 @@ public class UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private StorageService storageService;
     private EmailService emailService;
+    private ItemServiceImpl itemService;
 
     @Autowired
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, StorageService storageService, EmailService emailService){
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, StorageService storageService, EmailService emailService, ItemServiceImpl itemService){
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.storageService = storageService;
         this.emailService = emailService;
+        this.itemService = itemService;
     }
 
     public List<User> getUsers() {
@@ -55,10 +55,10 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional
     public void deleteUser(Long id){
-        User user = userRepository.findOne(id);
-        user.setStatus(3);
-        userRepository.save(user);
+        itemService.deleteItemsByUserId(id);
+        userRepository.delete(id);
     }
 
     public User getUserByUsername(String username){

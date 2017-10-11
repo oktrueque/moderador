@@ -17,5 +17,6 @@ public interface ItemRepository extends CrudRepository<Item, Long> {
     List<Item> findAllByIdIn(List<Long> ids);
     List<Item> findById(Long id);
     List<Item> findAllByUser_IdAndTagsIn(Long id, List<Tag> tags);
+    void deleteAllByUserId(Long userId);
 
 }
