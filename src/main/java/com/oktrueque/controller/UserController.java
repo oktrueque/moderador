@@ -58,7 +58,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.PUT, value = "/users/{id}")
     public String updateUser(@ModelAttribute User user){
         userService.updateUser(user);
-        return "redirect:/users";
+        return "redirect:/users/" + user.getUsername();
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/users/{id}")
