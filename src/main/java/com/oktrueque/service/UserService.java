@@ -23,7 +23,6 @@ public class UserService {
 
     private UserRepository userRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private StorageService storageService;
     private EmailService emailService;
     private ItemServiceImpl itemService;
     private AwsS3Service awsS3Service;
@@ -32,10 +31,9 @@ public class UserService {
     private String fileNameUsers;
 
     @Autowired
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, StorageService storageService, EmailService emailService, ItemServiceImpl itemService, AwsS3Service awsS3Service){
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, EmailService emailService, ItemServiceImpl itemService, AwsS3Service awsS3Service){
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.storageService = storageService;
         this.emailService = emailService;
         this.itemService = itemService;
         this.awsS3Service = awsS3Service;

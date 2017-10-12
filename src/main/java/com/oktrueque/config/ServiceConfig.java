@@ -34,8 +34,6 @@ public class ServiceConfig {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
-    private StorageService storageService;
-    @Autowired
     private TruequeRepository truequeRepository;
     @Autowired
     private UserTruequeRepository userTruequeRepository;
@@ -87,10 +85,6 @@ public class ServiceConfig {
     public EmailService emailService(){
         return new EmailServiceImpl(javaMailSender);
     }
-
-
-    @Bean
-    public UserService userService() { return  new UserService(userRepository, bCryptPasswordEncoder, storageService, this.emailService(), this.itemService(), this.awsS3Service());}
 
     @Bean
     public TruequeService truequeService(){

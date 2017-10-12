@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Created by Envy on 14/6/2017.
@@ -20,7 +21,7 @@ public class Trueque {
     private Integer status;
     @Column(name = "proposal_date")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private LocalDateTime proposalDate;
+    private Date proposalDate;
     @Column(name = "acceptance_date")
     private LocalDateTime acceptanceDate;
     @Column(name = "rejection_date")
@@ -35,7 +36,7 @@ public class Trueque {
 
     public Trueque(Integer status) {
         this.status = status;
-        this.proposalDate = LocalDateTime.now();
+        this.proposalDate = new Date();
     }
 
     public Long getId() {
@@ -65,11 +66,11 @@ public class Trueque {
         this.status = status;
     }
 
-    public LocalDateTime getProposalDate() {
+    public Date getProposalDate() {
         return proposalDate;
     }
 
-    public void setProposalDate(LocalDateTime proposalDate) {
+    public void setProposalDate(Date proposalDate) {
         this.proposalDate = proposalDate;
     }
 
