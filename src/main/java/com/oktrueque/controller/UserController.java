@@ -3,6 +3,7 @@ package com.oktrueque.controller;
 import com.oktrueque.model.*;
 import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -28,8 +29,6 @@ public class UserController {
     private UserTagService userTagService;
     private ComplaintService complaintService;
     private TruequeService truequeService;
-    private EmailService emailService;
-
 
     @Autowired
     public UserController(UserService userService, ItemServiceImpl itemService, UserTagService userTagService, ComplaintService complaintService, TruequeService truequeService){

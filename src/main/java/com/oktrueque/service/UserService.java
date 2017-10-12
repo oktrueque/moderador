@@ -4,7 +4,9 @@ import com.oktrueque.model.Complaint;
 import com.oktrueque.model.Email;
 import com.oktrueque.model.User;
 import com.oktrueque.repository.UserRepository;
+import com.oktrueque.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,14 +26,19 @@ public class UserService {
     private StorageService storageService;
     private EmailService emailService;
     private ItemServiceImpl itemService;
+    private AwsS3Service awsS3Service;
+
+    @Value("${aws.s3.fileName.users}")
+    private String fileNameUsers;
 
     @Autowired
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, StorageService storageService, EmailService emailService, ItemServiceImpl itemService){
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, StorageService storageService, EmailService emailService, ItemServiceImpl itemService, AwsS3Service awsS3Service){
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.storageService = storageService;
         this.emailService = emailService;
         this.itemService = itemService;
+        this.awsS3Service = awsS3Service;
     }
 
     public List<User> getUsers() {
@@ -40,14 +47,18 @@ public class UserService {
 
     public User addUser(User user, MultipartFile image){
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        String imageUrl = "";
+        user.setPhoto1(Constants.returnRandomImage());
+
+        //Save user so I can get the id for naming the image
+        User userPartial = userRepository.save(user);
         try {
-            imageUrl = storageService.store(image, user);
+            String pictureUrl = awsS3Service.uploadFileToS3(image, fileNameUsers, userPartial.getId(), "1", userPartial.getPhoto1());
+            userPartial.setPhoto1(pictureUrl);
+            userPartial = userRepository.save(user);
         } catch (Exception e) {
             //model.addAttribute("message", "FAIL to upload " + image.getOriginalimagename() + "!");
         }
-        user.setPhoto1(imageUrl);
-        return userRepository.save(user);
+        return userPartial;
     }
 
     public void updateUser(User user){

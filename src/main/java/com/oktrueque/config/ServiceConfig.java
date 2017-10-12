@@ -59,6 +59,11 @@ public class ServiceConfig {
     }
 
     @Bean
+    public AwsS3Service awsS3Service(){
+        return new AwsS3Service();
+    }
+
+    @Bean
     public UserTagService userTagService() {
         return new UserTagServiceImpl(userTagRepository,this.TagService());
     }
@@ -85,7 +90,7 @@ public class ServiceConfig {
 
 
     @Bean
-    public UserService userService() { return  new UserService(userRepository, bCryptPasswordEncoder, storageService, this.emailService(), this.itemService());}
+    public UserService userService() { return  new UserService(userRepository, bCryptPasswordEncoder, storageService, this.emailService(), this.itemService(), this.awsS3Service());}
 
     @Bean
     public TruequeService truequeService(){
