@@ -30,8 +30,12 @@
                             <tbody>
                             <tr th:each="complaint : ${complaints}">
                                 <td th:text="${complaint.id}"></td>
-                                <td th:text="${complaint.userOrigin.name + ' ' +complaint.userOrigin.lastName}"></td>
-                                <td th:text="${complaint.userTarget.name+ ' '+complaint.userTarget.lastName}"></td>
+                                <td>
+                                    <a th:href="@{'/users/' + ${complaint.userOrigin.username}}" th:text="${complaint.userOrigin.name + ' ' +complaint.userOrigin.lastName}"></a>
+                                </td>
+                                <td>
+                                    <a th:href="@{'/users/' + ${complaint.userTarget.username}}" th:text="${complaint.userTarget.name + ' ' +complaint.userTarget.lastName}"></a>
+                                </td>
                                 <td class="text-truncate" style="max-width: 150px;" th:text="${complaint.description}">
                                 </td>
                                 <td th:text="${complaint.complaintType.name}"></td>
