@@ -7,9 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-/**
- * Created by Fabrizio SPOSETTI on 03/09/2017.
- */
 @Controller
 public class ComplaintController {
 
@@ -22,7 +19,6 @@ public class ComplaintController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/complaints")
     public String getAllComplaints(Model model){
-
         model.addAttribute("complaints" , complaintService.getAllComplaints());
         return "complaints";
     }
