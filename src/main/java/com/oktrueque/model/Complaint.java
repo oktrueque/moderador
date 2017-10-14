@@ -16,7 +16,7 @@ public class Complaint {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private String description;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -29,7 +29,7 @@ public class Complaint {
     private User userTarget;
     @ManyToOne
     @JoinColumn(name = "id_user_origin")
-    private User user_origin;
+    private User userOrigin;
 
 
 
@@ -46,12 +46,12 @@ public class Complaint {
     public Complaint(){};
 
 
-    public User getUser_origin() {
-        return user_origin;
+    public User getUserOrigin() {
+        return userOrigin;
     }
 
-    public void setUser_origin(User user_origin) {
-        this.user_origin = user_origin;
+    public void setUserOrigin(User userOrigin) {
+        this.userOrigin = userOrigin;
     }
 
     public Complaint(String description, Date date, ComplaintType complaintType, User user_target, User user_origin) {
@@ -59,14 +59,14 @@ public class Complaint {
         this.date = date;
         this.complaintType = complaintType;
         this.userTarget = user_target;
-        this.user_origin = user_origin;
+        this.userOrigin = user_origin;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -38,7 +38,7 @@
                                 </div>
                             </td>
                             <td th:text="${item.category.name}">category</td>
-                            <td th:text="${item.user.name} +' ' + ${item.user.last_name}">userName</td>
+                            <td th:text="${item.user.name} +' ' + ${item.user.lastName}">userName</td>
                             <td>
                                 <a th:href="@{'/items/' + ${item.id}}" class="btn btn-success btn-xs btn-edit edit-item-btn">Editar</a>
                                 <button type="button" class="btn btn-danger btn-xs btn-delete-item ladda-button" data-style="zoom-in" th:attr="data-id=${item.id}">Borrar</button>

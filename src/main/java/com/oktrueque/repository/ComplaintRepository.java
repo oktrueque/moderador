@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 
-public interface ComplaintRepository extends CrudRepository<Complaint, Integer> {
+public interface ComplaintRepository extends CrudRepository<Complaint, Long> {
 
         List<Complaint> findAllByUserTargetId(Long userTargetId);
 

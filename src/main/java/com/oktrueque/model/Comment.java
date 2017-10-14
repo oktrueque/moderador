@@ -1,15 +1,9 @@
 package com.oktrueque.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
-
-
-/**
- * Created by Fabrizio SPOSETTI on 03/07/2017.
- */
 
 @Entity
 @Table(name = "comments")
@@ -22,11 +16,11 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "id_user_origin")
-    private User user_origin;
+    private User userOrigin;
 
     @ManyToOne
     @JoinColumn(name = "id_user_target")
-    private User user_target;
+    private User userTarget;
     private int score;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -35,8 +29,8 @@ public class Comment {
 
     public Comment(String description, User user_target, User user_origin, int score, Date date) {
         this.description = description;
-        this.user_target = user_target;
-        this.user_origin = user_origin;
+        this.userTarget = user_target;
+        this.userOrigin = user_origin;
         this.score = score;
         this.date = date;
     }
@@ -59,20 +53,20 @@ public class Comment {
         this.description = description;
     }
 
-    public User getUser_target() {
-        return user_target;
+    public User getUserTarget() {
+        return userTarget;
     }
 
-    public void setUser_target(User user_target) {
-        this.user_target = user_target;
+    public void setUserTarget(User userTarget) {
+        this.userTarget = userTarget;
     }
 
-    public User getUser_origin() {
-        return user_origin;
+    public User getUserOrigin() {
+        return userOrigin;
     }
 
-    public void setUser_origin(User user_origin) {
-        this.user_origin = user_origin;
+    public void setUserOrigin(User userOrigin) {
+        this.userOrigin = userOrigin;
     }
 
     public int getScore() {

@@ -41,7 +41,7 @@
                                                      alt="Imagen"/>
                                             </div>
                                         </td>
-                                        <td th:text="${user.name} + ' ' + ${user.last_name}">Nombre</td>
+                                        <td th:text="${user.name} + ' ' + ${user.lastName}">Nombre</td>
                                         <td th:text="${user.email}">Email</td>
                                         <td th:text="${user.username}">Username</td>
                                         <td th:text="${user.itemsAmount}">Items</td>
@@ -90,7 +90,7 @@
                                 <label class="form-control-label">Apellido</label>
                             </div>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" placeholder="Apellido" name="last_name"/>
+                                <input type="text" class="form-control" placeholder="Apellido" name="lastName"/>
                             </div>
                         </div>
                         <div class="form-group row">

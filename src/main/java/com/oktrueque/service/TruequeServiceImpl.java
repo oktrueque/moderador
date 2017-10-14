@@ -11,7 +11,6 @@ import javax.transaction.Transactional;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Created by Envy on 8/7/2017.
@@ -101,11 +100,11 @@ public class TruequeServiceImpl implements TruequeService {
         email.setMailSubject("Nueva propuesta de Trueque");
         Map< String, Object > model = new LinkedHashMap<>();
         model.put("nombreDestino", userDestinoMail.getName());
-        model.put("apellidoDestino", userDestinoMail.getLast_name());
+        model.put("apellidoDestino", userDestinoMail.getLastName());
         model.put("userNombreDestino", userDestinoItems.getName());
-        model.put("userApellidoDestino", userDestinoItems.getLast_name());
+        model.put("userApellidoDestino", userDestinoItems.getLastName());
         model.put("userNombreOfertante", userOfertante.getName());
-        model.put("userApellidoOfertante", userOfertante.getLast_name());
+        model.put("userApellidoOfertante", userOfertante.getLastName());
         model.put("itemsPropuestos", itemsPropuestos);
         model.put("itemsDemandados", itemsDemandados);
         model.put("uri_confirm",urlServer + "trueques/"+trueque.getId()+"/confirm");

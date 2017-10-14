@@ -81,7 +81,7 @@ public class UserService {
     public List<User> findUsersByIds(List<Complaint> complaints){
         List<Long> usersIds = new ArrayList<Long>();
         for (Complaint queja : complaints) {
-            usersIds.add(queja.getUser_origin().getId());
+            usersIds.add(queja.getUserOrigin().getId());
         }
         return userRepository.findAllByIdIn(usersIds);
     }

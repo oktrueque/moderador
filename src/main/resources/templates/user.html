@@ -139,7 +139,7 @@
                                                                 <div class="user-wall-item clearfix" th:each="description : ${comments}">
                                                                     <div class="s1">
                                                                         <a class="avatar" href="javascript:void(0);">
-                                                                            <img th:src="${description.user_origin.photo1}" />
+                                                                            <img th:src="${description.userOrigin.photo1}" />
                                                                         </a>
                                                                     </div>
                                                                     <div class="s2">
@@ -147,7 +147,7 @@
                                                                             <div class="pull-right">
                                                                                 <a href=""><i class="icmn-compass"></i></a>
                                                                             </div>
-                                                                            <strong th:text="${description.user_origin.name}">Name</strong>
+                                                                            <strong th:text="${description.userOrigin.name}">Name</strong>
                                                                             <small th:text="${description.date}"></small>
                                                                         </div>
                                                                         <div class="user-wall-post">
@@ -185,7 +185,7 @@
                                                                 <div class="user-wall-item clearfix" th:each="complaint : ${complaints}">
                                                                     <div class="s1">
                                                                         <a class="avatar" href="javascript:void(0);">
-                                                                            <img th:src="${complaint.user_origin.photo1}" />
+                                                                            <img th:src="${complaint.userOrigin.photo1}" />
                                                                         </a>
                                                                     </div>
                                                                     <div class="s2">
@@ -193,7 +193,7 @@
                                                                             <div class="pull-right">
                                                                                 <a href=""><i class="icmn-compass"></i></a>
                                                                             </div>
-                                                                            <strong th:text="${complaint.user_origin.name}">Name</strong>
+                                                                            <strong th:text="${complaint.userOrigin.name}">Name</strong>
                                                                         </div>
                                                                         <div class="user-wall-post">
                                                                             <p th:text="${complaint.description}">Comentario</p>
@@ -263,7 +263,7 @@
                                                                 <div class="form-group">
                                                                     <div class="col-md-4">
                                                                         <label class="form-control-label">Apellido</label>
-                                                                        <input type="text" class="form-control" placeholder="Apellido" th:field="${user.last_name}"/>
+                                                                        <input type="text" class="form-control" placeholder="Apellido" th:field="${user.lastName}"/>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">

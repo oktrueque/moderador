@@ -15,7 +15,7 @@
 
                     <br />
                     <div class="margin-bottom-50">
-                        <table class="table table-hover nowrap" id="example2" width="100%">
+                        <table class="table table-hover nowrap" id="tbl-complaints" width="100%">
                             <thead>
                             <tr>
                                 <th>Id</th>
@@ -30,8 +30,8 @@
                             <tbody>
                             <tr th:each="complaint : ${complaints}">
                                 <td th:text="${complaint.id}"></td>
-                                <td th:text="${complaint.user_origin.name + ' ' +complaint.user_origin.last_name}"></td>
-                                <td th:text="${complaint.userTarget.name+ ' '+complaint.userTarget.last_name}"></td>
+                                <td th:text="${complaint.userOrigin.name + ' ' +complaint.userOrigin.lastName}"></td>
+                                <td th:text="${complaint.userTarget.name+ ' '+complaint.userTarget.lastName}"></td>
                                 <td class="text-truncate" style="max-width: 150px;" th:text="${complaint.description}">
                                 </td>
                                 <td th:text="${complaint.complaintType.name}"></td>
@@ -52,26 +52,90 @@
 </div>
 </section>
 
+    <div class="modal fade" id="complaint-detail" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Detalle de denuncia</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h6>Denunciante</h6>
+                            <p id="cmpl-user-origin"></p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6>Denunciado</h6>
+                            <p id="cmpl-user-target"></p>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h6>Tipo</h6>
+                            <p id="cmpl-type"></p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6>Fecha</h6>
+                            <p id="cmpl-date"></p>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h6>Detalle</h6>
+                            <p id="cmpl-description"></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 <!-- Page Scripts -->
 <script>
-
-    $(".edit-category").click(function(e){
-        e.preventDefault();
-        var td = $(this).parents('tr').find('td:lt(2)');
-        var categoryId = $(td[0]).text()
-        $('#edit-category-id').val(categoryId);
-        $('#edit-category-name').val($(td[1]).text());
-        $('#edit-category-form').attr('action', "/categories/" + categoryId);
-    });
-
-    $(function(){
-        $('#example2').DataTable({
+    $(function () {
+        table = $('#tbl-complaints').DataTable({
             autoWidth: true,
             scrollX: true,
             fixedColumns: true
         });
     });
+
+    $(".btn-get-complaint").click(function(e){
+        var l = Ladda.create(this);
+        l.start();
+
+        let cmplId = $(this).data('id');
+        $.ajax({
+            type: 'GET',
+            url: '/complaints/' + cmplId,
+            success: function(data) {
+                $('#cmpl-user-origin').text(data.userOrigin.name + " " + data.userOrigin.lastName);
+                $('#cmpl-user-target').text(data.userTarget.name + " " + data.userTarget.lastName);
+                $('#cmpl-type').text(data.complaintType.name);
+                let date = new Date(data.date);
+                $('#cmpl-date').text(date.getDate() + '-' + (date.getMonth() + 1) + '-' +  date.getFullYear());
+                $('#cmpl-description').text(data.description);
+                $('#complaint-detail').modal('show');
+                l.stop();
+            },
+            error: function(data){
+                console.log("ERROR: ", data);
+                swal("No es recuperar la denuncia", "Intentelo nuevamente más adelante o lea el error para arreglarlo", "error");
+            }
+        });
+    });
+
+    $(".btn-delete-complaint").click(function(e){
+        var l = Ladda.create(this);
+        l.start();
+    });
+
 </script>
 </th:block>
 </html>
