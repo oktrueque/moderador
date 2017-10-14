@@ -33,4 +33,10 @@ public class ComplaintController {
         return new ResponseEntity<>(complaint, HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.DELETE, value = "/complaints/{id}")
+    public ResponseEntity<Void> deleteComplaint(@PathVariable Long id){
+        complaintService.deleteComplaint(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

@@ -21,9 +21,9 @@
                                 <th>Id</th>
                                 <th>Denunciante</th>
                                 <th>Denunciado</th>
-                                <th>Descripcion de la denuncia</th>
-                                <th>Tipo de denuncia</th>
-                                <th>Fecha de la Denuncia</th>
+                                <th>Descripcion</th>
+                                <th>Tipo</th>
+                                <th>Fecha</th>
                                 <th>Acciones</th>
                             </tr>
                             </thead>
@@ -97,45 +97,68 @@
     </div>
 
 <!-- Page Scripts -->
-<script>
-    $(function () {
-        table = $('#tbl-complaints').DataTable({
-            autoWidth: true,
-            scrollX: true,
-            fixedColumns: true
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var token = [[${_csrf.token}]];
+        var header = [[${_csrf.headerName}]];
+        var table;
+
+        $(function () {
+            table = $('#tbl-complaints').DataTable({
+                autoWidth: true,
+                scrollX: true,
+                fixedColumns: true
+            });
         });
-    });
 
-    $(".btn-get-complaint").click(function(e){
-        var l = Ladda.create(this);
-        l.start();
+        $(".btn-get-complaint").click(function(){
+            var l = Ladda.create(this);
+            l.start();
 
-        let cmplId = $(this).data('id');
-        $.ajax({
-            type: 'GET',
-            url: '/complaints/' + cmplId,
-            success: function(data) {
-                $('#cmpl-user-origin').text(data.userOrigin.name + " " + data.userOrigin.lastName);
-                $('#cmpl-user-target').text(data.userTarget.name + " " + data.userTarget.lastName);
-                $('#cmpl-type').text(data.complaintType.name);
-                let date = new Date(data.date);
-                $('#cmpl-date').text(date.getDate() + '-' + (date.getMonth() + 1) + '-' +  date.getFullYear());
-                $('#cmpl-description').text(data.description);
-                $('#complaint-detail').modal('show');
-                l.stop();
-            },
-            error: function(data){
-                console.log("ERROR: ", data);
-                swal("No es recuperar la denuncia", "Intentelo nuevamente más adelante o lea el error para arreglarlo", "error");
-            }
+            let cmplId = $(this).data('id');
+            $.ajax({
+                type: 'GET',
+                url: '/complaints/' + cmplId,
+                success: function(data) {
+                    $('#cmpl-user-origin').text(data.userOrigin.name + " " + data.userOrigin.lastName);
+                    $('#cmpl-user-target').text(data.userTarget.name + " " + data.userTarget.lastName);
+                    $('#cmpl-type').text(data.complaintType.name);
+                    let date = new Date(data.date);
+                    $('#cmpl-date').text(date.getDate() + '-' + (date.getMonth() + 1) + '-' +  date.getFullYear());
+                    $('#cmpl-description').text(data.description);
+                    $('#complaint-detail').modal('show');
+                    l.stop();
+                },
+                error: function(data){
+                    console.log("ERROR: ", data);
+                    swal("No es recuperar la denuncia", "Intentelo nuevamente más adelante o lea el error para arreglarlo", "error");
+                }
+            });
         });
-    });
 
-    $(".btn-delete-complaint").click(function(e){
-        var l = Ladda.create(this);
-        l.start();
-    });
+        $(".btn-delete-complaint").click(function(){
+            var l = Ladda.create(this);
+            l.start();
+            var btn = $(this);
+            var cmplId = btn.data('id');
 
-</script>
+            $.ajax({
+                type: 'DELETE',
+                url: '/complaints/' + cmplId,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function () {
+                    l.stop();
+                    table.row(btn.parents('tr')).remove().draw();
+                    swal("Eliminado", "La denuncia ha sido correctamente eliminada", "success");
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        });
+        /*]]>*/
+    </script>
 </th:block>
 </html>

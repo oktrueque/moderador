@@ -33,4 +33,9 @@ public class ComplaintServiceImpl implements ComplaintService{
     public Complaint getComplaintById(Long id) {
         return complaintRepository.findOne(id);
     }
+
+    @Override
+    public void deleteComplaint(Long id) {
+        complaintRepository.delete(id);
+    }
 }
