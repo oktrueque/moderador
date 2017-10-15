@@ -113,5 +113,8 @@ public class TruequeServiceImpl implements TruequeService {
 
     }
 
-
+    @Override
+    public Map getTrueque(Long id) {
+        return null;
+    }
 }

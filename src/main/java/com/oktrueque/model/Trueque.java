@@ -3,7 +3,6 @@ package com.oktrueque.model;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -23,11 +22,11 @@ public class Trueque {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date proposalDate;
     @Column(name = "acceptance_date")
-    private LocalDateTime acceptanceDate;
+    private Date acceptanceDate;
     @Column(name = "rejection_date")
-    private LocalDateTime rejectionDate;
+    private Date rejectionDate;
     @Column(name = "ending_date")
-    private LocalDateTime endingDate;
+    private Date endingDate;
     @Column(name = "peopleCount")
     private Integer peopleCount;
 
@@ -51,8 +50,9 @@ public class Trueque {
         switch (this.status){
             case 0: return "Pendiente";
             case 1: return "Activo";
-            case 2: return "Eliminado";
-            case 3: return "Baneado";
+            case 2: return "Rechazado";
+            case 3: return "Cancelado";
+            case 4: return "Confirmado";
             default: return "Sin definir";
         }}
 
@@ -74,27 +74,27 @@ public class Trueque {
         this.proposalDate = proposalDate;
     }
 
-    public LocalDateTime getAcceptanceDate() {
+    public Date getAcceptanceDate() {
         return acceptanceDate;
     }
 
-    public void setAcceptanceDate(LocalDateTime acceptanceDate) {
+    public void setAcceptanceDate(Date acceptanceDate) {
         this.acceptanceDate = acceptanceDate;
     }
 
-    public LocalDateTime getRejectionDate() {
+    public Date getRejectionDate() {
         return rejectionDate;
     }
 
-    public void setRejectionDate(LocalDateTime rejectionDate) {
+    public void setRejectionDate(Date rejectionDate) {
         this.rejectionDate = rejectionDate;
     }
 
-    public LocalDateTime getEndingDate() {
+    public Date getEndingDate() {
         return endingDate;
     }
 
-    public void setEndingDate(LocalDateTime endingDate) {
+    public void setEndingDate(Date endingDate) {
         this.endingDate = endingDate;
     }
 
