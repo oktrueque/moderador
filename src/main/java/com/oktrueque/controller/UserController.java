@@ -96,7 +96,7 @@ public class UserController {
         Trueque TruequeNuevo;
         LinkedList<Trueque> trueques = new LinkedList<>();
         for (UserTrueque trueque: userTrueques){
-            TruequeNuevo = truequeService.getTruequeById(trueque.getId().getTruequeId());
+            TruequeNuevo = truequeService.getTruequeById(trueque.getId().getTrueque().getId());
             trueques.add(TruequeNuevo);
         }
         model.addAttribute("user", user);

@@ -5,9 +5,6 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-/**
- * Created by Facundo on 8/23/2017.
- */
 @Entity
 @Table(name = "users_trueques")
 public class UserTrueque implements Comparable {
@@ -18,8 +15,8 @@ public class UserTrueque implements Comparable {
     @Column(name = "orden")
     private Integer order;
 
-    @Column(name= "is_confirm")
-    private Boolean isConfirm;
+    @Column(name = "status")
+    private Integer status;
 
     public UserTrueque() {
     }
@@ -28,10 +25,10 @@ public class UserTrueque implements Comparable {
         return id;
     }
 
-    public UserTrueque(UserTruequeId id,Integer orden, boolean isConfirm) {
+    public UserTrueque(UserTruequeId id, Integer order, Integer status) {
         this.id = id;
-        this.order = orden;
-        this.isConfirm = isConfirm;
+        this.order = order;
+        this.status = status;
     }
 
     public Integer getOrder() {
@@ -42,12 +39,18 @@ public class UserTrueque implements Comparable {
         this.order = order;
     }
 
-    public boolean isConfirm() {
-        return isConfirm;
-    }
+    public String getStatus() {
+        switch (this.status){
+            case 0: return "Pendiente";
+            case 1: return "Activo";
+            case 2: return "Rechazado";
+            case 3: return "Cancelado";
+            case 4: return "Confirmado";
+            default: return "Sin definir";
+        }}
 
-    public void setConfirm(boolean confirm) {
-        isConfirm = confirm;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     @Override

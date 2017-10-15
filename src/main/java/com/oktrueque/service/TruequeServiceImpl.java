@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import com.oktrueque.repository.UserTruequeRepository;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,7 +86,7 @@ public class TruequeServiceImpl implements TruequeService {
     }
 
     private UserTrueque createUserTrueque(Trueque truequeSaved, User user, Integer orden) {
-        UserTrueque userTrueque = new UserTrueque(new UserTruequeId(truequeSaved.getId(), user.getId()), orden, false);
+        UserTrueque userTrueque = new UserTrueque(new UserTruequeId(truequeSaved, user), orden, 0);
         return userTrueque;
     }
 
@@ -114,7 +115,25 @@ public class TruequeServiceImpl implements TruequeService {
     }
 
     @Override
-    public Map getTrueque(Long id) {
-        return null;
+    public Map getTrueque(Long truequeId) {
+        Map map = new LinkedHashMap();
+        List<UserTrueque> userTrueques = userTruequeRepository.findByIdTruequeIdOrderByOrder(truequeId);
+        List<ItemTrueque> itemTrueques = itemTruequeRepository.findById_TruequeId(truequeId);
+        User user;
+        Item item;
+        for (UserTrueque ut : userTrueques){
+            List<Item> items = new ArrayList<>();
+            user = ut.getId().getUser();
+            for(ItemTrueque itemTrueque : itemTrueques){
+                item = itemTrueque.getId().getItem();
+                if(item.getUser().getId().equals(user.getId())){
+                    items.add(item);
+                }
+            }
+
+            map.put(user.getName() + " " + user.getLastName() + " - " + ut.getStatus()
+                    , items);
+        }
+        return map;
     }
 }

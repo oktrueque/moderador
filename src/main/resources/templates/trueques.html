@@ -13,7 +13,7 @@
                             <div class="col-lg-12">
 
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-6 margin-bottom-50">
+                                    <div class="col-sm-12 col-md-9 margin-bottom-50">
                                         <h4>Trueques</h4>
 
                                         <br />
@@ -42,11 +42,11 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="col-sm-12 col-md-6 margin-bottom-50">
+                                    <div class="col-sm-12 col-md-3 margin-bottom-50">
                                         <h4>Detalle</h4>
                                         <hr/>
                                         <br />
-                                        <div id="trueque-detail"></div>
+                                        <div id="trueque-detail" class="container"></div>
                                     </div>
                                 </div>
                             </div>
@@ -101,10 +101,6 @@
                     itemNode.appendChild(document.createTextNode(item.name));
                     itemNode.setAttribute("class", "trueque-item");
                     ul.appendChild(itemNode);
-
-                    if(item.user.id === user.id){
-                        itemsid.push(item.id);
-                    }
                 });
 
                 li.appendChild(ul);

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.security.Principal;
 import java.util.Map;
 
 @Controller
@@ -26,7 +25,7 @@ public class TruequeController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/trueques/{id}")
-    public ResponseEntity<Map<String, Object>> getTrueque(@PathVariable Long id, Principal principal){
+    public ResponseEntity<Map<String, Object>> getTrueque(@PathVariable Long id){
         Map map = truequeService.getTrueque(id);
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
