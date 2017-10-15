@@ -41,7 +41,7 @@
                                 <td th:text="${complaint.complaintType.name}"></td>
                                 <td th:text="${#dates.format(complaint.date, 'dd-MM-yyyy HH:mm')}"></td>
                                 <td>
-                                    <button class="btn btn-success btn-xs btn-get-complaint ladda-button" data-style="zoom-in" th:attr="data-id=${complaint.id}">Editar</button>
+                                    <button class="btn btn-success btn-xs btn-get-complaint ladda-button" data-style="zoom-in" th:attr="data-id=${complaint.id}">Ver</button>
                                     <button class="btn btn-danger btn-xs btn-delete-complaint ladda-button" data-style="zoom-in" th:attr="data-id=${complaint.id}">Borrar</button>
                                 </td>
                             </tr>
