@@ -54,6 +54,9 @@ public class User implements UserDetails{
     @OneToMany(mappedBy = "userTarget")
     @JsonIgnore
     private List<Complaint> complaints;
+    @Column(name = "register_date")
+    private Date registerDate;
+
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY  )
@@ -73,9 +76,9 @@ public class User implements UserDetails{
     public User() {
     }
 
-    public User(String name, String last_name, String email, String password, Integer status, List<Item> items, Integer itemsAmount, String photo1, String username, List<Comment> comments, Integer score, String wallpaper, List<Complaint> complaints, List<Tag> tags) {
+    public User(String name, String lastName, String email, String password, Integer status, List<Item> items, Integer itemsAmount, String photo1, String username, List<Comment> comments, Integer score, String wallpaper, List<Complaint> complaints, Date registerDate, List<Tag> tags) {
         this.name = name;
-        this.lastName = last_name;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.status = status;
@@ -87,7 +90,16 @@ public class User implements UserDetails{
         this.score = score;
         this.wallpaper = wallpaper;
         this.complaints = complaints;
+        this.registerDate = registerDate;
         this.tags = tags;
+    }
+
+    public Date getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(Date registerDate) {
+        this.registerDate = registerDate;
     }
 
     public List<Comment> getComments() {
