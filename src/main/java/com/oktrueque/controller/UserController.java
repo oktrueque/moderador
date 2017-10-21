@@ -93,6 +93,7 @@ public class UserController {
         List<Complaint> complaints = complaintService.getComplaintsByUserTarget(user.getId());
         List<User> usersComplainers = userService.findUsersByIds(complaints);
         List<UserTrueque> userTrueques= truequeService.getUserTruequeById_UserId(user.getId());
+
         Trueque TruequeNuevo;
         LinkedList<Trueque> trueques = new LinkedList<>();
         for (UserTrueque trueque: userTrueques){
@@ -110,6 +111,7 @@ public class UserController {
         model.addAttribute("tags", tags);
         model.addAttribute("hasComplaints", complaints.size() != 0 ? true : false);
         model.addAttribute("complaints", complaints);
+
         return "user";
     }
 
