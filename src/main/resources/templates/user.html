@@ -105,8 +105,8 @@
                                                     <div th:if="${!hasItems}" class="tab-pane active" id="posts" role="tabpanel">
                                                         Parece que este usuaio no tiene items.
                                                     </div>
-                                                    <div class="tab-pane" id="messaging" role="tabpanel">
-                                                        <div class="tab-pane active" id="posts" role="tabpanel">
+                                                    <div  class="tab-pane" id="messaging" role="tabpanel">
+                                                        <div th:if="${hasTrueques}" class="tab-pane active" id="posts" role="tabpanel">
                                                             <h5>Trueques</h5>
                                                             <div class="row">
                                                                 <div class="col-lg-12">
@@ -116,7 +116,7 @@
                                                                             <tr>
                                                                                 <th>Fecha de Propuesta</th>
                                                                                 <th>Participantes</th>
-                                                                                <th>Estado</th>git
+                                                                                <th>Estado</th>
                                                                             </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -131,7 +131,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div th:if="${!hasTrueques}">
+                                                            <p th:text="${'Parece que ' + user.name + ' no ha realizado trueques por el momento'}"></p>
+                                                        </div>
                                                     </div>
+
                                                     <div class="tab-pane" id="comentarios" role="tabpanel">
                                                         <h5>Comentarios</h5>
                                                         <hr/>
