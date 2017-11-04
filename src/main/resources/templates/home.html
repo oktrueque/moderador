@@ -89,7 +89,7 @@
                         <div class="widget widget-seven  background-danger">
                             <div class="widget-body">
                                 <div  class="widget-body-inner">
-                                    <h5 class="text-uppercase">Cant. usuarios baneados</h5>
+                                    <h5 class="text-uppercase">Cant. denuncias</h5>
                                     <i class="counter-icon icmn-users"></i>
                                     <span class="counter-count">
                                         <span class="counter-init" data-from="0" data-to="356">185</span>
@@ -98,75 +98,22 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">
-                        <div class="widget widget-seven">
-                            <div class="widget-body">
-                                <div  class="widget-body-inner">
-                                    <h5 class="text-uppercase">asd</h5>
-                                    <i class="counter-icon icmn-users"></i>
-                                    <span class="counter-count">
-                                <i class="icmn-arrow-up5"></i>
-                                <span class="counter-init" data-from="0" data-to="356"></span>
-                            </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!--<div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">-->
+                        <!--<div class="widget widget-seven">-->
+                            <!--<div class="widget-body">-->
+                                <!--<div  class="widget-body-inner">-->
+                                    <!--<h5 class="text-uppercase">asd</h5>-->
+                                    <!--<i class="counter-icon icmn-users"></i>-->
+                                    <!--<span class="counter-count">-->
+                                <!--<i class="icmn-arrow-up5"></i>-->
+                                <!--<span class="counter-init" data-from="0" data-to="356"></span>-->
+                            <!--</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
                 </div>
-                <div class="dashboard-container">
-                    <div class="row">
-                        <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">
-                            <div class="widget widget-seven background-success">
-                                <div class="widget-body">
-                                    <div  class="widget-body-inner">
-                                        <h5 class="text-uppercase">% usuarios logueados</h5>
-                                        <i class="counter-icon icmn-users"></i>
-                                        <span class="counter-count"><span class="counter-init" data-from="0" data-to="99"></span>%38</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">
-                            <div class="widget widget-seven background-warning">
-                                <div class="widget-body">
-                                    <div  class="widget-body-inner">
-                                        <h5 class="text-uppercase">Usuarios</h5>
-                                        <i class="counter-icon icmn-users"></i>
-                                        <span class="counter-count" style="right: 135px">
-                                    <span class="counter-init" data-from="0" data-to="99">467</span>
-                            </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">
-                            <div class="widget widget-seven  background-danger">
-                                <div class="widget-body">
-                                    <div  class="widget-body-inner">
-                                        <h5 class="text-uppercase">Cant. usuarios baneados</h5>
-                                        <i class="counter-icon icmn-users"></i>
-                                        <span class="counter-count">
-                                        <span class="counter-init" data-from="0" data-to="356">185</span>
-                                    </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">
-                            <div class="widget widget-seven">
-                                <div class="widget-body">
-                                    <div  class="widget-body-inner">
-                                        <h5 class="text-uppercase">asd</h5>
-                                        <i class="counter-icon icmn-users"></i>
-                                        <span class="counter-count">
-                                <i class="icmn-arrow-up5"></i>
-                                <span class="counter-init" data-from="0" data-to="356"></span>
-                            </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
 
             </div>
@@ -431,6 +378,34 @@
                 title: {
                     display: true,
                     text: 'Usuarios por score',
+                    fontStyle: 'bold',
+                    fontSize: 16
+                }}
+        });
+
+        var ctx = document.getElementById('myChart9').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                datasets: [
+                    {
+                        data: [15, 25, 35, 50,10],
+                        backgroundColor:
+                            [
+                                '#ee8300',
+                                '#6d6d6d',
+                                '#e22207',
+                                '#f2926d'
+                            ]
+                    }
+
+                ],
+                labels: ['Foto de Perfil con contenido prohibido','Foto de Item con contenido prohibido','Entrego items en mal estado','Comentario inadecuado','El usuario ha comentado algo que no ocurrió']
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Denuncias por tipos',
                     fontStyle: 'bold',
                     fontSize: 16
                 }}
