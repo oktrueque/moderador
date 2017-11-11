@@ -3,8 +3,11 @@ package com.oktrueque.controller;
 import com.oktrueque.model.*;
 import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -22,15 +25,13 @@ import java.util.List;
 public class UserController {
 
     private UserService userService;
-    private ItemService itemService;
+    private ItemServiceImpl itemService;
     private UserTagService userTagService;
     private ComplaintService complaintService;
     private TruequeService truequeService;
-    private EmailService emailService;
-
 
     @Autowired
-    public UserController(UserService userService, ItemService itemService, UserTagService userTagService, ComplaintService complaintService, TruequeService truequeService){
+    public UserController(UserService userService, ItemServiceImpl itemService, UserTagService userTagService, ComplaintService complaintService, TruequeService truequeService){
         this.userService = userService;
         this.itemService = itemService;
         this.userTagService = userTagService;
@@ -56,13 +57,17 @@ public class UserController {
     @RequestMapping(method = RequestMethod.PUT, value = "/users/{id}")
     public String updateUser(@ModelAttribute User user){
         userService.updateUser(user);
-        return "redirect:/users";
+        return "redirect:/users/" + user.getUsername();
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/users/{id}")
-    public String deleteUser(@PathVariable Long id){
-        userService.deleteUser(id);
-        return "redirect:/users";
+    public ResponseEntity<Boolean> deleteUser(@PathVariable Long id){
+        try{
+            userService.deleteUser(id);
+        }catch(Exception e){
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
     @RequestMapping("/login")
@@ -88,10 +93,11 @@ public class UserController {
         List<Complaint> complaints = complaintService.getComplaintsByUserTarget(user.getId());
         List<User> usersComplainers = userService.findUsersByIds(complaints);
         List<UserTrueque> userTrueques= truequeService.getUserTruequeById_UserId(user.getId());
+
         Trueque TruequeNuevo;
         LinkedList<Trueque> trueques = new LinkedList<>();
         for (UserTrueque trueque: userTrueques){
-            TruequeNuevo = truequeService.getTruequeById(trueque.getId().getTruequeId());
+            TruequeNuevo = truequeService.getTruequeById(trueque.getId().getTrueque().getId());
             trueques.add(TruequeNuevo);
         }
         model.addAttribute("user", user);
@@ -105,6 +111,7 @@ public class UserController {
         model.addAttribute("tags", tags);
         model.addAttribute("hasComplaints", complaints.size() != 0 ? true : false);
         model.addAttribute("complaints", complaints);
+
         return "user";
     }
 

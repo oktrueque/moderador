@@ -4,34 +4,39 @@ import com.oktrueque.model.Complaint;
 import com.oktrueque.model.Email;
 import com.oktrueque.model.User;
 import com.oktrueque.repository.UserRepository;
+import com.oktrueque.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Felipe on 7/5/2017.
- */
 @Service
 public class UserService {
 
     private UserRepository userRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private StorageService storageService;
     private EmailService emailService;
+    private ItemServiceImpl itemService;
+    private AwsS3Service awsS3Service;
+
+    @Value("${aws.s3.fileName.users}")
+    private String fileNameUsers;
 
     @Autowired
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, StorageService storageService, EmailService emailService){
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, EmailService emailService, ItemServiceImpl itemService, AwsS3Service awsS3Service){
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.storageService = storageService;
         this.emailService = emailService;
+        this.itemService = itemService;
+        this.awsS3Service = awsS3Service;
     }
 
     public List<User> getUsers() {
@@ -40,14 +45,18 @@ public class UserService {
 
     public User addUser(User user, MultipartFile image){
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        String imageUrl = "";
+        user.setPhoto1(Constants.returnRandomImage());
+
+        //Save user so I can get the id for naming the image
+        User userPartial = userRepository.save(user);
         try {
-            imageUrl = storageService.store(image, user);
+            String pictureUrl = awsS3Service.uploadFileToS3(image, fileNameUsers, userPartial.getId(), "1", userPartial.getPhoto1());
+            userPartial.setPhoto1(pictureUrl);
+            userPartial = userRepository.save(user);
         } catch (Exception e) {
             //model.addAttribute("message", "FAIL to upload " + image.getOriginalimagename() + "!");
         }
-        user.setPhoto1(imageUrl);
-        return userRepository.save(user);
+        return userPartial;
     }
 
     public void updateUser(User user){
@@ -55,10 +64,10 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional
     public void deleteUser(Long id){
-        User user = userRepository.findOne(id);
-        user.setStatus(3);
-        userRepository.save(user);
+        itemService.deleteItemsByUserId(id);
+        userRepository.delete(id);
     }
 
     public User getUserByUsername(String username){
@@ -72,7 +81,7 @@ public class UserService {
     public List<User> findUsersByIds(List<Complaint> complaints){
         List<Long> usersIds = new ArrayList<Long>();
         for (Complaint queja : complaints) {
-            usersIds.add(queja.getUser_origin().getId());
+            usersIds.add(queja.getUserOrigin().getId());
         }
         return userRepository.findAllByIdIn(usersIds);
     }

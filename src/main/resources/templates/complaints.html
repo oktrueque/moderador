@@ -15,32 +15,34 @@
 
                     <br />
                     <div class="margin-bottom-50">
-                        <table class="table table-hover nowrap" id="example2" width="100%">
+                        <table class="table table-hover nowrap" id="tbl-complaints" width="100%">
                             <thead>
                             <tr>
                                 <th>Id</th>
                                 <th>Denunciante</th>
                                 <th>Denunciado</th>
-                                <th>Descripcion de la denuncia</th>
-                                <th>Tipo de denuncia</th>
-                                <th>Fecha de la Denuncia</th>
-                                <th>Perfil del denunciante</th>
+                                <th>Descripcion</th>
+                                <th>Tipo</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="complaint : ${complaints}">
                                 <td th:text="${complaint.id}"></td>
-                                <td th:text="${complaint.user_origin.name + ' ' +complaint.user_origin.lastName}"></td>
-                                <td th:text="${complaint.userTarget.name+ ' '+complaint.userTarget.lastName}"></td>
                                 <td>
-                                <p th:text="${complaint.description}"></p>
+                                    <a th:href="@{'/users/' + ${complaint.userOrigin.username}}" th:text="${complaint.userOrigin.name + ' ' +complaint.userOrigin.lastName}"></a>
+                                </td>
+                                <td>
+                                    <a th:href="@{'/users/' + ${complaint.userTarget.username}}" th:text="${complaint.userTarget.name + ' ' +complaint.userTarget.lastName}"></a>
+                                </td>
+                                <td class="text-truncate" style="max-width: 150px;" th:text="${complaint.description}">
                                 </td>
                                 <td th:text="${complaint.complaintType.name}"></td>
-                                <td th:text="${complaint.date}"></td>
-
-                                <td><a th:href="'/users/' + ${complaint.userTarget.id}">
-                                    <img width="100px" th:src="${complaint.userTarget.photo1}"/>
-                                    </a>
+                                <td th:text="${#dates.format(complaint.date, 'dd-MM-yyyy HH:mm')}"></td>
+                                <td>
+                                    <button class="btn btn-success btn-xs btn-get-complaint ladda-button" data-style="zoom-in" th:attr="data-id=${complaint.id}">Ver</button>
+                                    <button class="btn btn-danger btn-xs btn-delete-complaint ladda-button" data-style="zoom-in" th:attr="data-id=${complaint.id}">Borrar</button>
                                 </td>
                             </tr>
                             </tbody>
@@ -54,26 +56,113 @@
 </div>
 </section>
 
+    <div class="modal fade" id="complaint-detail" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Detalle de denuncia</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h6>Denunciante</h6>
+                            <p id="cmpl-user-origin"></p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6>Denunciado</h6>
+                            <p id="cmpl-user-target"></p>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h6>Tipo</h6>
+                            <p id="cmpl-type"></p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6>Fecha</h6>
+                            <p id="cmpl-date"></p>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h6>Detalle</h6>
+                            <p id="cmpl-description"></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 <!-- Page Scripts -->
-<script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var token = [[${_csrf.token}]];
+        var header = [[${_csrf.headerName}]];
+        var table;
 
-    $(".edit-category").click(function(e){
-        e.preventDefault();
-        var td = $(this).parents('tr').find('td:lt(2)');
-        var categoryId = $(td[0]).text()
-        $('#edit-category-id').val(categoryId);
-        $('#edit-category-name').val($(td[1]).text());
-        $('#edit-category-form').attr('action', "/categories/" + categoryId);
-    });
-
-    $(function(){
-        $('#example2').DataTable({
-            autoWidth: true,
-            scrollX: true,
-            fixedColumns: true
+        $(function () {
+            table = $('#tbl-complaints').DataTable({
+                autoWidth: true,
+                scrollX: true,
+                fixedColumns: true
+            });
         });
-    });
-</script>
+
+        $(".btn-get-complaint").click(function(){
+            var l = Ladda.create(this);
+            l.start();
+
+            let cmplId = $(this).data('id');
+            $.ajax({
+                type: 'GET',
+                url: '/complaints/' + cmplId,
+                success: function(data) {
+                    $('#cmpl-user-origin').text(data.userOrigin.name + " " + data.userOrigin.lastName);
+                    $('#cmpl-user-target').text(data.userTarget.name + " " + data.userTarget.lastName);
+                    $('#cmpl-type').text(data.complaintType.name);
+                    let date = new Date(data.date);
+                    $('#cmpl-date').text(date.getDate() + '-' + (date.getMonth() + 1) + '-' +  date.getFullYear());
+                    $('#cmpl-description').text(data.description);
+                    $('#complaint-detail').modal('show');
+                    l.stop();
+                },
+                error: function(data){
+                    console.log("ERROR: ", data);
+                    swal("No es recuperar la denuncia", "Intentelo nuevamente más adelante o lea el error para arreglarlo", "error");
+                }
+            });
+        });
+
+        $(".btn-delete-complaint").click(function(){
+            var l = Ladda.create(this);
+            l.start();
+            var btn = $(this);
+            var cmplId = btn.data('id');
+
+            $.ajax({
+                type: 'DELETE',
+                url: '/complaints/' + cmplId,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function () {
+                    l.stop();
+                    table.row(btn.parents('tr')).remove().draw();
+                    swal("Eliminado", "La denuncia ha sido correctamente eliminada", "success");
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        });
+        /*]]>*/
+    </script>
 </th:block>
 </html>

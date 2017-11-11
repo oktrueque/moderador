@@ -1,0 +1,9 @@
+.avatar-circle{
+    border-radius: 50%;
+    border: 3px solid #fff;
+    -webkit-box-shadow: 0 0 10px 2px #ddd;
+}
+
+.pointer{
+    cursor: pointer;
+}

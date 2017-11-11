@@ -11,12 +11,13 @@
     <section class="panel panel-with-borders page-content-inner">
         <div class="panel-heading row">
             <div class="col-lg-3 col-md-3 col-3">
-                <img class="center-block" id="profilePhoto" th:src="${user.photo1}"/>
+                <img class="center-block avatar-circle" id="profilePhoto" th:src="${user.photo1}"/>
             </div>
+
             <div class="col-lg- col-md-9 col-9">
-                <h2 class="col-lg-12 col-md-12" th:text="${user.name}" ></h2>
                 <p class="col-lg-12 col-md-12" th:text="${user.username}"></p>
                 <p class="col-lg-12 col-md-12" th:text="${user.email}"></p>
+                <p class="col-lg-12 col-md-12" th:text="${'Fecha de registro: ' + user.registerDate}"></p>
             </div>
         </div>
         <div class="panel-body">
@@ -43,7 +44,7 @@
                                                     </li>
                                                     <li class="nav-item">
                                                         <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#comentarios" role="tab">
-                                                            <i class="fa fa-description-o"></i>
+                                                            <i class="icmn-info"></i>
                                                             Comentarios
                                                         </a>
                                                     </li>
@@ -65,6 +66,12 @@
                                                             Mandar mensaje a <span th:text="${user.name}"></span>
                                                         </a>
                                                     </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#edit" role="tab">
+                                                            <i class="fa fa-pencil"></i>
+                                                            Editar datos
+                                                        </a>
+                                                    </li>
                                                 </ul>
                                                 <div class="tab-content padding-vertical-20 active">
                                                     <div th:if="${hasItems}" class="tab-pane active" id="posts" role="tabpanel">
@@ -81,12 +88,11 @@
                                                                         </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                        <tr  th:each="item : ${user.getItems()}">
+                                                                        <tr  th:each="item : ${user.getItems()}" class="item-row pointer" th:attr="data-id=${item.id}">
                                                                             <td><a th:href="'/profile/items/' + ${item.id}">
                                                                                 <img width="100px" th:src="${item.photo1}"/>
                                                                             </a></td>
-                                                                            <td><a th:href="'/profile/items/' + ${item.id}" class="link-underlined"><span
-                                                                                    th:text="${item.name}"></span></a></td>
+                                                                            <td th:text="${item.name}">Nombre</td>
                                                                             <td th:text="${item.category.name}">Categoria</td>
                                                                             <td><span class="label label-info" th:text="${item.getStatusValue()}">Estado</span></td>
                                                                         </tr>
@@ -95,13 +101,12 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <a href="/profile/items" class="btn btn-default width-full" th:text="${'Ver Más (' + user.itemsAmount + ')'}">Ver Más</a>
                                                     </div>
                                                     <div th:if="${!hasItems}" class="tab-pane active" id="posts" role="tabpanel">
                                                         Parece que este usuaio no tiene items.
                                                     </div>
-                                                    <div class="tab-pane" id="messaging" role="tabpanel">
-                                                        <div class="tab-pane active" id="posts" role="tabpanel">
+                                                    <div  class="tab-pane" id="messaging" role="tabpanel">
+                                                        <div th:if="${hasTrueques}" class="tab-pane active" id="posts" role="tabpanel">
                                                             <h5>Trueques</h5>
                                                             <div class="row">
                                                                 <div class="col-lg-12">
@@ -112,21 +117,13 @@
                                                                                 <th>Fecha de Propuesta</th>
                                                                                 <th>Participantes</th>
                                                                                 <th>Estado</th>
-                                                                                <th>Ver Detalle</th>
                                                                             </tr>
                                                                             </thead>
                                                                             <tbody>
                                                                             <tr th:each="trueque : ${trueques}">
-                                                                                <td th:text="${trueque.proposalDate}"></td>
+                                                                                <td th:text="${#dates.format(trueque.proposalDate, 'dd-MM-yyyy')}"></td>
                                                                                 <td th:text="${trueque.peopleCount}"></td>
                                                                                 <td><span class="label label-info" th:text="${trueque.status}"></span></td>
-                                                                                <td>
-                                                                                    <a th:href="'/profile/trueques/' + ${trueque.id}">
-                                                                                        <button type="button" class="btn">
-                                                                                            <i class="fa fa-bars" aria-hidden="true"/>
-                                                                                        </button>
-                                                                                    </a>
-                                                                                </td>
                                                                             </tr>
                                                                             </tbody>
                                                                         </table>
@@ -134,7 +131,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div th:if="${!hasTrueques}">
+                                                            <p th:text="${'Parece que ' + user.name + ' no ha realizado trueques por el momento'}"></p>
+                                                        </div>
                                                     </div>
+
                                                     <div class="tab-pane" id="comentarios" role="tabpanel">
                                                         <h5>Comentarios</h5>
                                                         <hr/>
@@ -143,7 +144,7 @@
                                                                 <div class="user-wall-item clearfix" th:each="description : ${comments}">
                                                                     <div class="s1">
                                                                         <a class="avatar" href="javascript:void(0);">
-                                                                            <img th:src="${description.user_origin.photo1}" />
+                                                                            <img th:src="${description.userOrigin.photo1}" />
                                                                         </a>
                                                                     </div>
                                                                     <div class="s2">
@@ -151,7 +152,7 @@
                                                                             <div class="pull-right">
                                                                                 <a href=""><i class="icmn-compass"></i></a>
                                                                             </div>
-                                                                            <strong th:text="${description.user_origin.name}">Name</strong>
+                                                                            <strong th:text="${description.userOrigin.name}">Name</strong>
                                                                             <small th:text="${description.date}"></small>
                                                                         </div>
                                                                         <div class="user-wall-post">
@@ -189,7 +190,7 @@
                                                                 <div class="user-wall-item clearfix" th:each="complaint : ${complaints}">
                                                                     <div class="s1">
                                                                         <a class="avatar" href="javascript:void(0);">
-                                                                            <img th:src="${complaint.user_origin.photo1}" />
+                                                                            <img th:src="${complaint.userOrigin.photo1}" />
                                                                         </a>
                                                                     </div>
                                                                     <div class="s2">
@@ -197,7 +198,7 @@
                                                                             <div class="pull-right">
                                                                                 <a href=""><i class="icmn-compass"></i></a>
                                                                             </div>
-                                                                            <strong th:text="${complaint.user_origin.name}">Name</strong>
+                                                                            <strong th:text="${complaint.userOrigin.name}">Name</strong>
                                                                         </div>
                                                                         <div class="user-wall-post">
                                                                             <p th:text="${complaint.description}">Comentario</p>
@@ -234,18 +235,71 @@
                                                                     <div class="col-md-12">
                                                                         <input type="text" th:value="*{subject}" class="form-control" name="subject" id="subject"/>
                                                                     </div>
-
-                                                                    <label class="control-label col-md-12 padding-5">Mensaje</label>
-
-                                                                    <textarea th:value="*{text}" id="text" name="text" class="margin-left-15 form-control col-md-11" />
-
-
+                                                                    <label for="text" class="control-label col-md-12 padding-5">Mensaje</label>
+                                                                    <textarea th:value="*{text}" id="text" name="text" class="margin-left-15 form-control col-md-11"></textarea>
                                                                 </div>
-
                                                                 <button type="submit" class="margin-left-20 margin-top-40 btn btn-primary">Enviar Mensaje</button>
-
                                                             </div>
 
+                                                        </form>
+                                                    </div>
+                                                    <div class="tab-pane" id="edit" role="tabpanel">
+                                                        <h5>Editar</h5>
+                                                        <hr/>
+                                                        <form th:action="@{'/users/'+${user.id}}" th:method="PUT" th:object="${user}">
+                                                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                                            <input type="hidden" th:field="${user.id}" />
+                                                            <input type="hidden" th:field="${user.username}" />
+                                                            <input type="hidden" th:field="${user.email}" />
+                                                            <input type="hidden" th:field="${user.password}" />
+                                                            <div class="container">
+                                                                <div class="form-group">
+                                                                    <div class="col-md-4">
+                                                                        <label class="form-control-label">Nombre</label>
+                                                                        <input type="text" class="form-control" placeholder="Nombre" th:field="${user.name}"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="col-md-4">
+                                                                        <label class="form-control-label">Apellido</label>
+                                                                        <input type="text" class="form-control" placeholder="Apellido" th:field="${user.lastName}"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="col-md-4">
+                                                                        <label class="form-control-label">Foto</label>
+                                                                        <input type="text" class="form-control" placeholder="Imagen" th:field="${user.photo1}"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="col-md-4">
+                                                                        <label class="form-control-label">Score</label>
+                                                                        <input type="text" class="form-control" placeholder="Score" th:field="${user.score}"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="col-md-4">
+                                                                        <label for="statusComboBox" class="form-control-label">Status</label>
+                                                                        <select class="form-control" id="statusComboBox" name="status">
+                                                                            <option id="registradoOpt"  value="0">Registrado</option>
+                                                                            <option id="activoOpt"      value="1">Activo</option>
+                                                                            <option id="eliminadoOpt"   value="2">Eliminado</option>
+                                                                            <option id="baneadoOpt"     value="3">Baneado</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="col-md-4">
+                                                                        <label class="form-control-label">Cantidad de items</label>
+                                                                        <input type="text" readonly="true" class="form-control" placeholder="Cantidad de Items Activos" th:field="${user.itemsAmount}"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12">
+                                                                        <button type="submit" class="margin-top-15 btn btn-primary">Guardar</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </form>
                                                     </div>
                                                     </div>
@@ -274,6 +328,21 @@
         for(i; i < 5; i++){
             $('.stars').append('<i class="icmn-star-empty"></i>');
         }
+
+        $(document).ready(function(){
+            $('.item-row').on('click', function(){
+                let itemId = $(this).data('id');
+                window.location.href = "/items/" + itemId;
+            });
+        });
+
+        // SETEAR VALOR DROPDOWN LIST DE ESTADO //
+
+        let statusComboBox = document.getElementById('statusComboBox');
+        var status = [[${user.status}]];
+        $(document).ready(function(){
+            statusComboBox.selectedIndex = status;
+        });
 
         /*]]>*/
     </script>

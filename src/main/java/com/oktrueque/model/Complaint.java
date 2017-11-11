@@ -1,10 +1,9 @@
 package com.oktrueque.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Created by Fabrizio SPOSETTI on 31/08/2017.
@@ -17,11 +16,11 @@ public class Complaint {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private String description;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime date;
+    private Date date;
     @ManyToOne
     @JoinColumn(name = "id_complaint_type")
     private ComplaintType complaintType;
@@ -30,7 +29,7 @@ public class Complaint {
     private User userTarget;
     @ManyToOne
     @JoinColumn(name = "id_user_origin")
-    private User user_origin;
+    private User userOrigin;
 
 
 
@@ -47,27 +46,27 @@ public class Complaint {
     public Complaint(){};
 
 
-    public User getUser_origin() {
-        return user_origin;
+    public User getUserOrigin() {
+        return userOrigin;
     }
 
-    public void setUser_origin(User user_origin) {
-        this.user_origin = user_origin;
+    public void setUserOrigin(User userOrigin) {
+        this.userOrigin = userOrigin;
     }
 
-    public Complaint(String description, LocalDateTime date, ComplaintType complaintType, User user_target, User user_origin) {
+    public Complaint(String description, Date date, ComplaintType complaintType, User user_target, User user_origin) {
         this.description = description;
         this.date = date;
         this.complaintType = complaintType;
         this.userTarget = user_target;
-        this.user_origin = user_origin;
+        this.userOrigin = user_origin;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -79,11 +78,11 @@ public class Complaint {
         this.description = description;
     }
 
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

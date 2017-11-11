@@ -6,10 +6,13 @@ import freemarker.template.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -19,7 +22,8 @@ import java.util.Map;
 public class EmailServiceImpl implements EmailService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailServiceImpl.class);
-    private static final String MESSAGE= "Error al enviar el mail";
+    private static final String MESSAGE= "Error sending email";
+    private static final String SUCCESS= "Email send";
 
     private final JavaMailSender javaMailSender;
 
@@ -42,8 +46,9 @@ public class EmailServiceImpl implements EmailService {
             mimeMessageHelper.setText(mail.getMailContent(), true);
             javaMailSender.send(mimeMessageHelper.getMimeMessage());
         } catch (MessagingException e) {
-           LOGGER.warn(MESSAGE, e);
+            LOGGER.warn(MESSAGE, e);
         }
+        LOGGER.info(SUCCESS);
     }
 
     private String geContentFromTemplate(Map < String, Object > model, String template) {
@@ -55,5 +60,14 @@ public class EmailServiceImpl implements EmailService {
             LOGGER.warn(MESSAGE, e);
         }
         return content.toString();
+    }
+
+
+    public ResponseEntity contact(Email email){
+        Map<String,Object> model = new LinkedHashMap<>();
+        model.put("emailContent",email.getMailContent());
+        email.setModel(model);
+        sendMail(email,"contactUs.ftl");
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 import com.oktrueque.model.Item;
-import com.oktrueque.service.ItemService;
+import com.oktrueque.service.ItemServiceImpl;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class ItemController {
 
-    private ItemService itemService;
+    private ItemServiceImpl itemService;
     private CategoryService categoryService;
     private ItemTagService itemTagService;
     private AwsS3Service awsS3Service;
@@ -30,7 +30,7 @@ public class ItemController {
     private String fileNameItems;
 
     @Autowired
-    public ItemController(ItemService itemService, CategoryService categoryService, ItemTagService itemTagService, AwsS3Service awsS3Service){
+    public ItemController(ItemServiceImpl itemService, CategoryService categoryService, ItemTagService itemTagService, AwsS3Service awsS3Service){
         this.itemService = itemService;
         this.categoryService = categoryService;
         this.itemTagService = itemTagService;

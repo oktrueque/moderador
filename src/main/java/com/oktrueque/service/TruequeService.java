@@ -21,4 +21,6 @@ public interface TruequeService {
 
     @Transactional
     void saveTrueque(Map<Integer, List<Item>> participants, Long user1, Long user2, Long user3);
+
+    Map getTrueque(Long id);
 }

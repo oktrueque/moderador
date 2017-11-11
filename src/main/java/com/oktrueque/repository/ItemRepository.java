@@ -22,5 +22,6 @@ public interface ItemRepository extends CrudRepository<Item, Long> {
     Integer countItemByStatus(int status);
 //    Integer countItemByCreationDateBetween(Date dateStart,Date dateEnd);
     Integer countItemByCreationDate_Month(int month);
+    void deleteAllByUserId(Long userId);
 
 }

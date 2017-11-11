@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * Created by Fabrizio SPOSETTI on 31/08/2017.
- */
 public class ComplaintServiceImpl implements ComplaintService{
 
     private final ComplaintRepository complaintRepository;
@@ -30,5 +27,15 @@ public class ComplaintServiceImpl implements ComplaintService{
     @Override
     public List<Complaint> getComplaintsByUserTarget(Long Id){
         return complaintRepository.findAllByUserTargetId(Id);
+    }
+
+    @Override
+    public Complaint getComplaintById(Long id) {
+        return complaintRepository.findOne(id);
+    }
+
+    @Override
+    public void deleteComplaint(Long id) {
+        complaintRepository.delete(id);
     }
 }
