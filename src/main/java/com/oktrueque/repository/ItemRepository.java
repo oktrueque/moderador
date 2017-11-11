@@ -4,6 +4,7 @@ import com.oktrueque.model.Item;
 import com.oktrueque.model.Tag;
 import org.joda.time.DateTime;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Date;
@@ -21,7 +22,10 @@ public interface ItemRepository extends CrudRepository<Item, Long> {
     List<Item> findAllByUser_IdAndTagsIn(Long id, List<Tag> tags);
     Integer countItemByStatus(int status);
 //    Integer countItemByCreationDateBetween(Date dateStart,Date dateEnd);
-    Integer countItemByCreationDate_Month(int month);
+ //   Integer countItemByCreationDate_Month(int month);
     void deleteAllByUserId(Long userId);
+
+    @Query(nativeQuery = true, value= "select * from items i where month(creation_date) = ?1")
+            int countByMonth(int month);
 
 }

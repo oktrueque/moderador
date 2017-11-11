@@ -1,5 +1,6 @@
 package com.oktrueque.service;
 
+import com.oktrueque.model.Dataset;
 import com.oktrueque.model.Report;
 import com.oktrueque.repository.ItemRepository;
 import com.oktrueque.repository.TruequeRepository;
@@ -34,25 +35,26 @@ public class ReportServiceImpl implements  ReportService {
 
     @Override
     public Report getItemsCreatedByMonth(int actualMonth, int actualYear){
-        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD"); //mySQL Date column.
-        Calendar cal = Calendar.getInstance();
-        cal.set(actualYear,actualMonth,1);
-        Calendar cal2 = Calendar.getInstance();
-        cal2.set(actualYear,actualMonth,cal2.getActualMaximum(Calendar.DAY_OF_MONTH));
-//        itemRepository.countItemByCreationDateBetween(cal.getTime(),cal2.getTime());
+//        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD"); //mySQL Date column.
+//        Calendar cal = Calendar.getInstance();
+//        cal.set(actualYear,actualMonth,1);
+//        Calendar cal2 = Calendar.getInstance();
+//        cal2.set(actualYear,actualMonth,cal2.getActualMaximum(Calendar.DAY_OF_MONTH));
+////        itemRepository.countItemByCreationDateBetween(cal.getTime(),cal2.getTime());
+//
+//        DateTime dateTime = new DateTime();
+//        Report report = new Report();
+//        Dataset firstDataset = new Dataset();
+//        ArrayList<Integer> cuatroMesesHaciaAtras = new ArrayList<>();
+//        ArrayList<Integer> itemsPorMes = new ArrayList<>();
+//        for (int x=0;x<5;x++){
+//            cuatroMesesHaciaAtras.add(dateTime.getMonthOfYear()-x);
+//            itemsPorMes.add(itemRepository.countByMonth(actualMonth-x));
+//        }
+//        firstDataset.setData(itemsPorMes);
+//        report.setFirstDataset(firstDataset);
 
-        DateTime dateTime = new DateTime();
-        Report report = new Report("itemsPorMes");
-        ArrayList<Integer> cuatroMesesHaciaAtras = new ArrayList<>();
-        ArrayList<Integer> itemsPorMes = new ArrayList<>();
-        for (int x=0;x<5;x++){
-            cuatroMesesHaciaAtras.add(dateTime.getMonthOfYear()-x);
-            itemsPorMes.add(itemRepository.countItemByCreationDate_Month(dateTime.getMonthOfYear()-x));
-        }
-        report.setEjeXint(cuatroMesesHaciaAtras);
-        report.setEjeYint(itemsPorMes);
-
-         return report;
+         return null;
     }
 
 }

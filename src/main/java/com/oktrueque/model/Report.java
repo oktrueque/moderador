@@ -8,53 +8,76 @@ import java.util.ArrayList;
  */
 public class Report {
 
-    private ArrayList<Integer> ejeXint;
-    private ArrayList<String> ejeXstring;
-    private ArrayList<Integer> ejeYint;
-    private ArrayList<String> ejeYstring;
-    private String nombre;
+    private String reportName;
+    private String reportType; //bar, doughnut, line.
+    private ArrayList<String> labels;
+    private String reportTitle;
+    private Dataset firstDataset;
+    private Dataset secondDataset;
 
-    public Report(String nombre) {
-        this.nombre = nombre;
+    public Report() {
     }
 
-    public ArrayList<Integer> getEjeXint() {
-        return ejeXint;
+    public Report(String reportName, String reportType, ArrayList<String> labels, String reportTitle, Dataset firstDataset, Dataset secondDataset) {
+        this.reportName = reportName;
+        this.reportType = reportType;
+        this.labels = labels;
+        this.reportTitle = reportTitle;
+        this.firstDataset = firstDataset;
+        this.secondDataset = secondDataset;
     }
 
-    public void setEjeXint(ArrayList<Integer> ejeXint) {
-        this.ejeXint = ejeXint;
+    public Report(String reportName, String reportType, String reportTitle) {
+        this.reportName = reportName;
+        this.reportType = reportType;
+        this.reportTitle = reportTitle;
     }
 
-    public ArrayList<Integer> getEjeYint() {
-        return ejeYint;
+    public String getReportName() {
+        return reportName;
     }
 
-    public void setEjeYint(ArrayList<Integer> ejeYint) {
-        this.ejeYint = ejeYint;
+    public void setReportName(String reportName) {
+        this.reportName = reportName;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getReportType() {
+        return reportType;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setReportType(String reportType) {
+        this.reportType = reportType;
     }
 
-    public ArrayList<String> getEjeXstring() {
-        return ejeXstring;
+    public ArrayList<String> getLabels() {
+        return labels;
     }
 
-    public void setEjeXstring(ArrayList<String> ejeXstring) {
-        this.ejeXstring = ejeXstring;
+    public void setLabels(ArrayList<String> labels) {
+        this.labels = labels;
     }
 
-    public ArrayList<String> getEjeYstring() {
-        return ejeYstring;
+    public String getReportTitle() {
+        return reportTitle;
     }
 
-    public void setEjeYstring(ArrayList<String> ejeYstring) {
-        this.ejeYstring = ejeYstring;
+    public void setReportTitle(String reportTitle) {
+        this.reportTitle = reportTitle;
+    }
+
+    public Dataset getFirstDataset() {
+        return firstDataset;
+    }
+
+    public void setFirstDataset(Dataset firstDataset) {
+        this.firstDataset = firstDataset;
+    }
+
+    public Dataset getSecondDataset() {
+        return secondDataset;
+    }
+
+    public void setSecondDataset(Dataset secondDataset) {
+        this.secondDataset = secondDataset;
     }
 }
