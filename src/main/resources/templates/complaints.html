@@ -19,6 +19,7 @@
                             <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>Estado</th>
                                 <th>Denunciante</th>
                                 <th>Denunciado</th>
                                 <th>Descripcion</th>
@@ -30,6 +31,7 @@
                             <tbody>
                             <tr th:each="complaint : ${complaints}">
                                 <td th:text="${complaint.id}"></td>
+                                <td><span class="label label-info" th:text="${complaint.getStatusValue()}"></span></td>
                                 <td>
                                     <a th:href="@{'/users/' + ${complaint.userOrigin.username}}" th:text="${complaint.userOrigin.name + ' ' +complaint.userOrigin.lastName}"></a>
                                 </td>
@@ -89,13 +91,19 @@
                     </div>
                     <hr/>
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             <h6>Detalle</h6>
                             <p id="cmpl-description"></p>
                         </div>
+                        <div class="col-sm-6">
+                            <h6>Estado</h6>
+                            <p id="cmpl-status"></p>
+                        </div>
                     </div>
                 </div>
-
+                <div class="modal-footer">
+                    <button id="btn-complaint-action" class="btn btn-info"></button>
+                </div>
             </div>
         </div>
     </div>
@@ -130,6 +138,7 @@
                     let date = new Date(data.date);
                     $('#cmpl-date').text(date.getDate() + '-' + (date.getMonth() + 1) + '-' +  date.getFullYear());
                     $('#cmpl-description').text(data.description);
+                    $('#cmpl-status').text(getComplaintStatusValue(data.status));
                     $('#complaint-detail').modal('show');
                     l.stop();
                 },
@@ -139,6 +148,29 @@
                 }
             });
         });
+
+        let getComplaintStatusValue = function(status){
+            let btn = $('#btn-complaint-action');
+            btn.attr('data-status', status);
+            switch (status){
+                case 0 :
+                    btn.text('Moderar');
+                    btn.removeClass();
+                    btn.addClass('btn btn-danger');
+                    return "Pendiente";
+                case 1 :
+                    btn.text('Moderada');
+                    btn.removeClass();
+                    btn.addClass('btn btn-warning');
+                    return "En Moderación";
+                case 2 :
+                    btn.text('Moderada');
+                    btn.removeClass();
+                    btn.addClass('btn btn-success');
+                    btn.prop('disabled', true);
+                    return "Moderada";
+            }
+        };
 
         $(".btn-delete-complaint").click(function(){
             var l = Ladda.create(this);
