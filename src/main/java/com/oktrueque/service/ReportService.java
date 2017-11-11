@@ -7,6 +7,6 @@ import com.oktrueque.model.Report;
  */
 public interface ReportService {
 
-    Report getItemsCreatedByMonth(int actualMonth, int actualYear);
+    Report getItemsCreatedByMonth();
 
 }

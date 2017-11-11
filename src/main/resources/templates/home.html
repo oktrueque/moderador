@@ -50,6 +50,14 @@
                                         <canvas id="myChart8"></canvas>
                                     </div>
                                 </div>
+                                <div class="col-lg-12">
+                                    <div class="col-lg-6">
+                                        <canvas id="myChart9"></canvas>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <canvas id="myChart10"></canvas>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -123,25 +131,30 @@
     </section>
 
 
-    <script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var token = [[${_csrf.token}]];
+        var header = [[${_csrf.headerName}]];
+        var dashboard = [[${dashboard}]];
+        var itemsPorMesReport = [[${itemsPorMesReport}]];
 
 
-        //    $.ajax({
-        //        type: "GET",
-        //        url: "/reportes",
-        //        contentType : "application/json",
-        //        data: data,
-        //        dataType : 'json',
-        //        beforeSend: function (xhr) {
-        //            xhr.setRequestHeader(header, token);
-        //        },
-        //        success: function () {
-        //
-        //        },
-        //        error: function (e) {
-        //            console.log(e);
-        //        }
-        //    });
+//            $.ajax({
+//                type: "GET",
+//                url: "/dashboard",
+//                contentType : "application/json",
+//                data: data,
+//                dataType : 'text',
+//                beforeSend: function (xhr) {
+//                    xhr.setRequestHeader(header, token);
+//                },
+//                success: function () {
+//
+//                },
+//                error: function (e) {
+//                    console.log(JSON.stringify(e));
+//                }
+//            });
 
 
         var ctx = document.getElementById('myChart').getContext('2d');
@@ -184,13 +197,14 @@
             }
         });
 
+
         var ctx = document.getElementById('myChart2').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 datasets: [
                     {
-                        data: [5, 10, 15, 25, 35, 40, 60, 65, 70, 80, 95, 130],
+                        data: itemsPorMesReport.firstDataset.data,
                         label: 'Items',
                         backgroundColor: '#e22207',
                         borderColor: '#000000'
@@ -198,7 +212,7 @@
                     }
 
                 ],
-                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun','Jul','Ago','Sep','Oct','Nov','Dic']
+                labels: itemsPorMesReport.labels
             },
             options: {
                 scales: {
@@ -232,7 +246,7 @@
                             '#6d6d6d',
                             '#f2926d'
                             ]
-                    },
+                    }
 
                 ],
                 labels: ['Instrumentos','Muebles','Videojuegos','Herramientas'],
@@ -388,7 +402,7 @@
             data: {
                 datasets: [
                     {
-                        data: [15, 25, 35, 50,10],
+                        data: [25, 35, 50,10],
                         backgroundColor:
                             [
                                 '#ee8300',
@@ -399,7 +413,7 @@
                     }
 
                 ],
-                labels: ['Foto de Perfil con contenido prohibido','Foto de Item con contenido prohibido','Entrego items en mal estado','Comentario inadecuado','El usuario ha comentado algo que no ocurrió']
+                labels: ['Foto de Item con contenido prohibido','Entrego items en mal estado','Comentario inadecuado','El usuario ha comentado algo que no ocurrió']
             },
             options: {
                 title: {
@@ -409,6 +423,7 @@
                     fontSize: 16
                 }}
         });
+        /*]]>*/
     </script>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
