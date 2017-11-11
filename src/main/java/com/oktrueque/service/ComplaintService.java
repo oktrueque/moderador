@@ -13,4 +13,6 @@ public interface ComplaintService {
     Complaint getComplaintById(Long id);
 
     void deleteComplaint(Long id);
+
+    Integer updateComplaintStatus(Integer status, Long complaintId);
 }
