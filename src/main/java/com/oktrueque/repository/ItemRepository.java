@@ -25,7 +25,9 @@ public interface ItemRepository extends CrudRepository<Item, Long> {
  //   Integer countItemByCreationDate_Month(int month);
     void deleteAllByUserId(Long userId);
 
-    @Query(nativeQuery = true, value= "select count(*) from items i where month(creation_date) = ?1")
-            Integer countByMonth(int month);
+    @Query(nativeQuery = true, value= "select count(*) from items i where month(creation_date) = ?1 and year(creation_date)=?2")
+            Integer countByMonthAndYear(int month, int year);
+
+
 
 }

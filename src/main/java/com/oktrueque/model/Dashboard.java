@@ -7,23 +7,23 @@ import java.util.List;
  */
 public class Dashboard {
 
-    private String dashboardName;
+    private String name;
     private List<Report> reportes;
 
     public Dashboard() {
     }
 
-    public Dashboard(String dashboardName, List<Report> reportes) {
-        this.dashboardName = dashboardName;
+    public Dashboard(String name, List<Report> reportes) {
+        this.name = name;
         this.reportes = reportes;
     }
 
-    public String getDashboardName() {
-        return dashboardName;
+    public String getName() {
+        return name;
     }
 
-    public void setDashboardName(String dashboardName) {
-        this.dashboardName = dashboardName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Report> getReportes() {

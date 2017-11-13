@@ -2,11 +2,14 @@ package com.oktrueque.service;
 
 import com.oktrueque.model.Dataset;
 import com.oktrueque.model.Report;
+import com.oktrueque.model.Trueque;
 import com.oktrueque.repository.ItemRepository;
 import com.oktrueque.repository.TruequeRepository;
 import com.oktrueque.repository.UserRepository;
+
 import org.joda.time.DateTime;
 
+import javax.xml.crypto.Data;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
@@ -14,10 +17,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * Created by Tomas on 07-Oct-17.
@@ -37,11 +37,11 @@ public class ReportServiceImpl implements  ReportService {
     @Override
     public Report getItemsCreatedByMonth(){
 //        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD"); //mySQL Date column.
-        Calendar cal = Calendar.getInstance();
 //        cal.set(actualYear,actualMonth,1);
 //        Calendar cal2 = Calendar.getInstance();
 //        cal2.set(actualYear,actualMonth,cal2.getActualMaximum(Calendar.DAY_OF_MONTH));
 //        itemRepository.countItemByCreationDateBetween(cal.getTime(),cal2.getTime());
+        Calendar cal = Calendar.getInstance();
         DateTime dateTime = new DateTime();
         Integer actualMonth = dateTime.getMonthOfYear();
         Integer actualYear = dateTime.getYear();
@@ -49,10 +49,13 @@ public class ReportServiceImpl implements  ReportService {
         Dataset firstDataset = new Dataset();
         ArrayList<Integer> cuatroMesesHaciaAtras = new ArrayList<>();
         ArrayList<Integer> itemsPorMes = new ArrayList<>();
-        for (Integer x=0;x<5;x++){
-            cuatroMesesHaciaAtras.add(dateTime.getMonthOfYear()-x);
-            int aux = itemRepository.countByMonth(actualMonth-x);
-            itemsPorMes.add(aux);
+        /*TODO Crear metodo en el itemRepository countByYear y recorrer esa lista para buscar por mes */
+        for (Integer x=7;x>0;x--){ //INFO: X-1 = Cantidad de meses hacia atras que se vera en el reporte.
+            if(dateTime.getMonthOfYear()-x>0) {
+                cuatroMesesHaciaAtras.add(dateTime.getMonthOfYear() - x);
+                int aux = itemRepository.countByMonthAndYear(actualMonth - x, actualYear);
+                itemsPorMes.add(aux);
+            }
         }
         firstDataset.setData(itemsPorMes);
         firstDataset.setLabel("Items");
@@ -64,12 +67,13 @@ public class ReportServiceImpl implements  ReportService {
         report.setFirstDataset(firstDataset);
         report.setReportName("itemsPorMes");
         report.setReportType("bar");
-        report.setReportTitle("Items por mes");
+        report.setReportTitle("Items creados por mes, del año actual.");
 
         return report;
     }
 
-    String getMonthForInt(int num) {
+
+    private String getMonthForInt(int num) {
         String month = "wrong";
         DateFormatSymbols dfs = new DateFormatSymbols();
         String[] months = dfs.getMonths();
@@ -77,6 +81,66 @@ public class ReportServiceImpl implements  ReportService {
             month = months[num];
         }
         return month;
+    }
+
+    @Override
+    public Report getTruequesConcretadosVsIniciados(){
+
+        List<Trueque> concretados = truequeRepository.findByStatus(3);
+        List<Trueque> iniciados = truequeRepository.findByStatus(1);
+
+        Report report = new Report("TruequesIniciadosVsConcretados","line","Trueques Iniciados vs Concretados");
+        Dataset firstDataset = new Dataset();
+        firstDataset.setLabel("Concretados");
+        Dataset secondDataset = new Dataset();
+        secondDataset.setLabel("Iniciados");
+
+        Calendar calendar = Calendar.getInstance();
+        DateTime dateTime = new DateTime();
+        Integer actualMonth = dateTime.getMonthOfYear();
+        Integer actualYear = dateTime.getYear();
+        DateFormatSymbols dfs = new DateFormatSymbols();
+
+
+        ArrayList<String> mesesList = new ArrayList<>();
+
+        for(int x=11;x>-1;x--){
+            mesesList.add(getMonthForInt(x));
+        }
+        report.setLabels(mesesList);
+
+        int mes = -1;
+        for (Trueque Tc:concretados){
+            calendar.setTime(Tc.getEndingDate());
+            mes = calendar.get(Calendar.MONTH);
+            firstDataset = setDatasetDataForAYear(mes,firstDataset);
+        }
+
+        for (Trueque Ti:iniciados){
+            calendar.setTime(Ti.getEndingDate());
+            mes = calendar.get(Calendar.MONTH);
+            secondDataset = setDatasetDataForAYear(mes,secondDataset);
+        }
+
+        return report;
+    }
+
+    private Dataset setDatasetDataForAYear(int mes, Dataset dataset){
+        switch (mes){
+            case 0:dataset.getData().add(mes,dataset.getData().get(mes)+1);
+            case 1:dataset.getData().add(mes,dataset.getData().get(mes)+1);
+            case 2:dataset.getData().add(mes,dataset.getData().get(mes)+1);
+            case 3:dataset.getData().add(mes,dataset.getData().get(mes)+1);
+            case 4:dataset.getData().add(mes,dataset.getData().get(mes)+1);
+            case 5:dataset.getData().add(mes,dataset.getData().get(mes)+1);
+            case 6:dataset.getData().add(mes,dataset.getData().get(mes)+1);
+            case 7:dataset.getData().add(mes,dataset.getData().get(mes)+1);
+            case 8:dataset.getData().add(mes,dataset.getData().get(mes)+1);
+            case 9:dataset.getData().add(mes,dataset.getData().get(mes)+1);
+            case 10:dataset.getData().add(mes,dataset.getData().get(mes)+1);
+            case 11:dataset.getData().add(mes,dataset.getData().get(mes)+1);
+        }
+        return dataset;
     }
 
 }

@@ -9,4 +9,6 @@ public interface ReportService {
 
     Report getItemsCreatedByMonth();
 
+    Report getTruequesConcretadosVsIniciados();
+
 }
