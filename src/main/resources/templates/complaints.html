@@ -19,6 +19,7 @@
                             <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>Estado</th>
                                 <th>Denunciante</th>
                                 <th>Denunciado</th>
                                 <th>Descripcion</th>
@@ -30,6 +31,7 @@
                             <tbody>
                             <tr th:each="complaint : ${complaints}">
                                 <td th:text="${complaint.id}"></td>
+                                <td><span th:id="${'lbl-cmpl-status-' + complaint.id}" class="label label-info" th:text="${complaint.getStatusValue()}"></span></td>
                                 <td>
                                     <a th:href="@{'/users/' + ${complaint.userOrigin.username}}" th:text="${complaint.userOrigin.name + ' ' +complaint.userOrigin.lastName}"></a>
                                 </td>
@@ -89,13 +91,19 @@
                     </div>
                     <hr/>
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             <h6>Detalle</h6>
                             <p id="cmpl-description"></p>
                         </div>
+                        <div class="col-sm-6">
+                            <h6>Estado</h6>
+                            <p id="cmpl-status"></p>
+                        </div>
                     </div>
                 </div>
-
+                <div class="modal-footer">
+                    <button id="btn-complaint-action" class="btn btn-info ladda-button" data-style="zoom-in" ></button>
+                </div>
             </div>
         </div>
     </div>
@@ -130,12 +138,75 @@
                     let date = new Date(data.date);
                     $('#cmpl-date').text(date.getDate() + '-' + (date.getMonth() + 1) + '-' +  date.getFullYear());
                     $('#cmpl-description').text(data.description);
+                    $('#cmpl-status').text(getComplaintStatusValue(data.status, cmplId));
                     $('#complaint-detail').modal('show');
                     l.stop();
                 },
                 error: function(data){
                     console.log("ERROR: ", data);
                     swal("No es recuperar la denuncia", "Intentelo nuevamente más adelante o lea el error para arreglarlo", "error");
+                }
+            });
+        });
+
+        let getComplaintStatusValue = function(status, cmplId){
+            let btn = $('#btn-complaint-action');
+            btn.data('status', status);
+            btn.data('cmplId', cmplId);
+            switch (status){
+                case 0 :
+                    btn.text('Moderar');
+                    btn.removeClass();
+                    btn.addClass('btn btn-danger');
+                    btn.prop('disabled', false);
+                    return "Pendiente";
+                case 1 :
+                    btn.text('Moderada');
+                    btn.removeClass();
+                    btn.addClass('btn btn-warning');
+                    btn.prop('disabled', false);
+                    return "En Moderación";
+                case 2 :
+                    btn.text('Moderada');
+                    btn.removeClass();
+                    btn.addClass('btn btn-success');
+                    btn.prop('disabled', true);
+                    return "Moderada";
+            }
+        };
+
+        $('#btn-complaint-action').on('click', function () {
+            var l = Ladda.create(this);
+            l.start();
+            let status = $(this).data('status');
+            let cmplId = $(this).data('cmplId');
+            let label = $('#lbl-cmpl-status-' + cmplId);
+            $.ajax({
+                url: '/complaints/' + cmplId,
+                type: 'PUT',
+                data: "status=" + status,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(newStatus) {
+                    switch (newStatus){
+                        case 1 :
+                            swal("En Moderación", "La denuncia se encuentra en proceso de moderación", "success");
+                            label.text("En Moderación");
+                            break;
+                        case 2 :
+                            swal("Exito!", "La denuncia ha sido moderada", "success");
+                            label.text("Moderada");
+                            break;
+                        default :
+                            swal("Oops", "Revise el estado de la denuncia " + cmplId, "error");
+                    }
+                    table.row().draw();
+                    l.stop();
+                    $('#complaint-detail').modal('hide');
+                },
+                error: function (e) {
+                    console.log(e);
                 }
             });
         });

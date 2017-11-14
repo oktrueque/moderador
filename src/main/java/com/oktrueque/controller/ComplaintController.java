@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ComplaintController {
@@ -37,6 +38,12 @@ public class ComplaintController {
     public ResponseEntity<Void> deleteComplaint(@PathVariable Long id){
         complaintService.deleteComplaint(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/complaints/{id}")
+    public ResponseEntity<Integer> updateComplaintStatus(@RequestParam Integer status, @PathVariable Long id){
+        Integer statusUpdated = complaintService.updateComplaintStatus(status, id);
+        return new ResponseEntity<>(statusUpdated, HttpStatus.OK);
     }
 
 }

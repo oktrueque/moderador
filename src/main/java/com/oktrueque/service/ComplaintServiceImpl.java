@@ -38,4 +38,13 @@ public class ComplaintServiceImpl implements ComplaintService{
     public void deleteComplaint(Long id) {
         complaintRepository.delete(id);
     }
+
+    @Override
+    public Integer updateComplaintStatus(Integer status, Long complaintId) {
+        Complaint complaint = complaintRepository.findOne(complaintId);
+        Integer statusUpdated = status+1;
+        complaint.setStatus(statusUpdated);
+        Complaint complaintUpdated = complaintRepository.save(complaint);
+        return complaintUpdated.getStatus();
+    }
 }

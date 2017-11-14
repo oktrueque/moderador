@@ -1,13 +1,10 @@
 package com.oktrueque.model;
 
+import com.oktrueque.utils.Constants;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
-
-/**
- * Created by Fabrizio SPOSETTI on 31/08/2017.
- */
 
 @Entity
 @Table(name = "complaint")
@@ -30,9 +27,8 @@ public class Complaint {
     @ManyToOne
     @JoinColumn(name = "id_user_origin")
     private User userOrigin;
-
-
-
+    @Column(name = "status")
+    private Integer status;
 
     public ComplaintType getComplaintType() {
         return complaintType;
@@ -92,5 +88,17 @@ public class Complaint {
 
     public void setUserTarget(User userTarget) {
         this.userTarget = userTarget;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getStatusValue(){
+        return Constants.getComplaintStatusName(this.status);
     }
 }
