@@ -9,14 +9,7 @@ import com.oktrueque.repository.UserRepository;
 
 import org.joda.time.DateTime;
 
-import javax.xml.crypto.Data;
-import java.text.DateFormat;
 import java.text.DateFormatSymbols;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.ZoneId;
 import java.util.*;
 
 /**
@@ -96,50 +89,50 @@ public class ReportServiceImpl implements  ReportService {
         secondDataset.setLabel("Iniciados");
 
         Calendar calendar = Calendar.getInstance();
-        DateTime dateTime = new DateTime();
-        Integer actualMonth = dateTime.getMonthOfYear();
-        Integer actualYear = dateTime.getYear();
-        DateFormatSymbols dfs = new DateFormatSymbols();
-
 
         ArrayList<String> mesesList = new ArrayList<>();
-
-        for(int x=11;x>-1;x--){
+        for(int x=0;x<12;x++){
             mesesList.add(getMonthForInt(x));
         }
         report.setLabels(mesesList);
-
         int mes = -1;
         for (Trueque Tc:concretados){
-            calendar.setTime(Tc.getEndingDate());
-            mes = calendar.get(Calendar.MONTH);
-            firstDataset = setDatasetDataForAYear(mes,firstDataset);
+                calendar.setTime(Tc.getAcceptanceDate());
+                mes = calendar.get(Calendar.MONTH);
+                firstDataset = setDatasetDataForAYear(mes);
         }
-
         for (Trueque Ti:iniciados){
-            calendar.setTime(Ti.getEndingDate());
-            mes = calendar.get(Calendar.MONTH);
-            secondDataset = setDatasetDataForAYear(mes,secondDataset);
+                calendar.setTime(Ti.getAcceptanceDate());
+                mes = calendar.get(Calendar.MONTH);
+                secondDataset = setDatasetDataForAYear(mes);
         }
-
+        report.setFirstDataset(firstDataset);
+        report.setSecondDataset(secondDataset);
         return report;
     }
 
-    private Dataset setDatasetDataForAYear(int mes, Dataset dataset){
-        switch (mes){
-            case 0:dataset.getData().add(mes,dataset.getData().get(mes)+1);
-            case 1:dataset.getData().add(mes,dataset.getData().get(mes)+1);
-            case 2:dataset.getData().add(mes,dataset.getData().get(mes)+1);
-            case 3:dataset.getData().add(mes,dataset.getData().get(mes)+1);
-            case 4:dataset.getData().add(mes,dataset.getData().get(mes)+1);
-            case 5:dataset.getData().add(mes,dataset.getData().get(mes)+1);
-            case 6:dataset.getData().add(mes,dataset.getData().get(mes)+1);
-            case 7:dataset.getData().add(mes,dataset.getData().get(mes)+1);
-            case 8:dataset.getData().add(mes,dataset.getData().get(mes)+1);
-            case 9:dataset.getData().add(mes,dataset.getData().get(mes)+1);
-            case 10:dataset.getData().add(mes,dataset.getData().get(mes)+1);
-            case 11:dataset.getData().add(mes,dataset.getData().get(mes)+1);
+    private Dataset setDatasetDataForAYear(int nroMes){
+        ArrayList<Integer> data = new ArrayList<>();
+        for(int x=0;x<12;x++){
+            data.add(x,0);
+
         }
+        switch (nroMes){ // .add(Index,Element)
+            case 0:data.set(nroMes,data.get(nroMes)+1);
+            case 1:data.set(nroMes,data.get(nroMes)+1);
+            case 2:data.set(nroMes,data.get(nroMes)+1);
+            case 3:data.set(nroMes,data.get(nroMes)+1);
+            case 4:data.set(nroMes,data.get(nroMes)+1);
+            case 5:data.set(nroMes,data.get(nroMes)+1);
+            case 6:data.set(nroMes,data.get(nroMes)+1);
+            case 7:data.set(nroMes,data.get(nroMes)+1);
+            case 8:data.set(nroMes,data.get(nroMes)+1);
+            case 9:data.set(nroMes,data.get(nroMes)+1);
+            case 10:data.set(nroMes,data.get(nroMes)+1);
+            case 11:data.set(nroMes,data.get(nroMes)+1);
+        }
+        Dataset dataset = new Dataset();
+        dataset.setData(data);
         return dataset;
     }
 

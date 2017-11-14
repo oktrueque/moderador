@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/items/**", "/categories/**", "/users/**", "/users/**", "/trueques/**", "/").authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login").defaultSuccessUrl("/dashboard").failureUrl("/login");
+                .loginPage("/login").defaultSuccessUrl("/").failureUrl("/login");
     }
 
 }

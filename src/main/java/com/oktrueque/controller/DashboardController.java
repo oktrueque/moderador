@@ -23,7 +23,7 @@ public class DashboardController {
         this.reportService = reportService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value="/dashboard")
+    @RequestMapping(method = RequestMethod.GET, value="/")
     public String getDashboard(Model model){
         Report itemsPorMesReport = reportService.getItemsCreatedByMonth();
         Report truequesConcretadosVsIniciadosReport = reportService.getTruequesConcretadosVsIniciados();
