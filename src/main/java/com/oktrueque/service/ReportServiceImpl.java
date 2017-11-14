@@ -115,9 +115,8 @@ public class ReportServiceImpl implements  ReportService {
         ArrayList<Integer> data = new ArrayList<>();
         for(int x=0;x<12;x++){
             data.add(x,0);
-
         }
-        switch (nroMes){ // .add(Index,Element)
+        switch (nroMes){ // .set(Index,Element)
             case 0:data.set(nroMes,data.get(nroMes)+1);
             case 1:data.set(nroMes,data.get(nroMes)+1);
             case 2:data.set(nroMes,data.get(nroMes)+1);
