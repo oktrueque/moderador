@@ -124,4 +124,13 @@ public class UserController {
         return "redirect:/users/" + username ;
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/user/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        User user = userService.getUserById(id);
+        if(user != null){
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
 }

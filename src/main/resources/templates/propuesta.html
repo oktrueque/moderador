@@ -20,11 +20,11 @@
                                     <tbody>
                                     <tr th:each="user : ${usersWithTags}" >
                                         <td th:id="${'user1-'+user.id}" class="user-level1" th:attr="data-id=${user.id}">
-                                            <div class="cui-ecommerce--dashboard--list--img">
+                                            <div class="cui-ecommerce--dashboard--list--img avatar">
                                                 <img th:id="'user-img-' + ${user.id}" th:src="${user.photo1}"
                                                      alt="Imagen"/>
                                             </div>
-                                            <h6 th:text="${user.username}">User</h6>
+                                            <h6 th:text="${user.fullName}">User</h6>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -40,7 +40,7 @@
                                 <table class="table table-hover nowrap" width="100%">
                                     <thead>
                                     <tr>
-                                        <th>Usuario</th>
+                                        <th>Usuarios</th>
                                     </tr>
                                     </thead>
                                     <tbody id="users-level2">
@@ -58,7 +58,7 @@
                                 <table class="table table-hover nowrap" width="100%">
                                     <thead>
                                     <tr>
-                                        <th>Usuario</th>
+                                        <th>Usuarios</th>
                                     </tr>
                                     </thead>
                                     <tbody id="users-level3">
@@ -92,11 +92,7 @@
                     <div class="col-lg-4">
                         <section class="panel">
                             <div class="panel-heading" id="propuesta-user1">
-                                <!--<h3 th:text="${user.username}">User</h3>-->
-                                <!--<div class="cui-ecommerce&#45;&#45;dashboard&#45;&#45;list&#45;&#45;img">-->
-                                    <!--<img th:id="'user-img-' + ${user.id}" th:src="${user.photo1}"-->
-                                         <!--alt="Imagen"/>-->
-                                <!--</div>-->
+
                             </div>
                             <div class="panel-body">
                                 <div class="margin-bottom-50">
@@ -117,11 +113,7 @@
                     <div class="col-lg-4">
                         <section class="panel">
                             <div class="panel-heading" id="propuesta-user2">
-                                <!--<h3 th:text="${user.username}">User</h3>-->
-                                <!--<div class="cui-ecommerce&#45;&#45;dashboard&#45;&#45;list&#45;&#45;img">-->
-                                <!--<img th:id="'user-img-' + ${user.id}" th:src="${user.photo1}"-->
-                                <!--alt="Imagen"/>-->
-                                <!--</div>-->
+
                             </div>
                             <div class="panel-body">
                                 <div class="margin-bottom-50">
@@ -142,11 +134,7 @@
                     <div class="col-lg-4">
                         <section class="panel">
                             <div class="panel-heading" id="propuesta-user3">
-                                <!--<h3 th:text="${user.username}">User</h3>-->
-                                <!--<div class="cui-ecommerce&#45;&#45;dashboard&#45;&#45;list&#45;&#45;img">-->
-                                <!--<img th:id="'user-img-' + ${user.id}" th:src="${user.photo1}"-->
-                                <!--alt="Imagen"/>-->
-                                <!--</div>-->
+
                             </div>
                             <div class="panel-body">
                                 <div class="margin-bottom-50">
@@ -335,10 +323,10 @@
                 users.append(
                     '<tr>' +
                     '<td id="user2-' +data.id + '" class="user-level2" data-id="' + data.id + '">' +
-                    '<div class="cui-ecommerce--dashboard--list--img">' +
+                    '<div class="cui-ecommerce--dashboard--list--img avatar">' +
                     '<img id="user-img-' + data.id +'" src="' + data.photo1 + '" alt="Imagen"/>' +
                     '</div>' +
-                    '<h6>'+ data.username +'</h6>' +
+                    '<h6>'+ data.fullName +'</h6>' +
                     '</td>' +
                     '</tr>'
                 );
@@ -353,10 +341,10 @@
                 users.append(
                     '<tr>' +
                     '<td id="user3-' +data.id + '" class="user-level3" data-id="' + data.id + '">' +
-                    '<div class="cui-ecommerce--dashboard--list--img">' +
+                    '<div class="cui-ecommerce--dashboard--list--img avatar">' +
                     '<img id="user-img-' + data.id +'" src="' + data.photo1 + '" alt="Imagen"/>' +
                     '</div>' +
-                    '<h6>'+ data.username +'</h6>' +
+                    '<h6>'+ data.fullName +'</h6>' +
                     '</td>' +
                     '</tr>'
                 );
@@ -367,19 +355,64 @@
 
         displayPropuesta = function(){
             var propuestaUser1items = $('#propuesta-user1items');
+            $.ajax({
+                type: "GET",
+                url: "/user/" + idUser1,
+                contentType : "application/json",
+                async: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    var user1 = data;
+                    var propuestaUser1 = $('#propuesta-user1');
+                    propuestaUser1.html("");
+                    propuestaUser1.append(
+                        '<h5>'+user1.fullName +'</h5>' +
+                        '<div class="avatar">' +
+                        '<img src="'+ user1.photo1 + '" alt="Imagen"/>' +
+                        '</div>'
+                    );
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
             propuestaUser1items.html("");
             itemsUser1.forEach(function(item){
                 propuestaUser1items.append(
                     '<tr>' +
                     '<td>' +
-                    '<div class="cui-ecommerce--dashboard--list--img">' +
+                    '<div class="cui-ecommerce--dashboard--list--img avatar">' +
                     '<img src="' + item.photo1 + '" alt="Imagen"/>' +
                     '</div>' +
-                    '<h6>'+ item.name +'</h6>' +
-                    '<span>'+ item.description +'</span>' +
+                    '<p>'+ item.name +'</p>' +
                     '</td>' +
                     '</tr>'
                 );
+            });
+            $.ajax({
+                type: "GET",
+                url: "/user/" + idUser2,
+                contentType : "application/json",
+                async: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    var user2 = data;
+                    var propuestaUser2 = $('#propuesta-user2');
+                    propuestaUser2.html("");
+                    propuestaUser2.append(
+                        '<h5>'+user2.fullName +'</h5>' +
+                        '<div class="avatar">' +
+                        '<img src="'+ user2.photo1 + '" alt="Imagen"/>' +
+                        '</div>'
+                    );
+                },
+                error: function (e) {
+                    console.log(e);
+                }
             });
             var propuestaUser2items = $('#propuesta-user2items');
             propuestaUser2items.html("");
@@ -387,14 +420,36 @@
                 propuestaUser2items.append(
                     '<tr>' +
                     '<td>' +
-                    '<div class="cui-ecommerce--dashboard--list--img">' +
+                    '<div class="cui-ecommerce--dashboard--list--img avatar">' +
                     '<img src="' + item.photo1 + '" alt="Imagen"/>' +
                     '</div>' +
-                    '<h6>'+ item.name +'</h6>' +
-                    '<span>'+ item.description +'</span>' +
+                    '<p>'+ item.name +'</p>' +
                     '</td>' +
                     '</tr>'
                 );
+            });
+            $.ajax({
+                type: "GET",
+                url: "/user/" + idUser3,
+                contentType : "application/json",
+                async: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    var user3 = data;
+                    var propuestaUser3 = $('#propuesta-user3');
+                    propuestaUser3.html("");
+                    propuestaUser3.append(
+                        '<h5>'+user3.fullName +'</h5>' +
+                        '<div class="avatar">' +
+                        '<img src="'+ user3.photo1 + '" alt="Imagen"/>' +
+                        '</div>'
+                    );
+                },
+                error: function (e) {
+                    console.log(e);
+                }
             });
             var propuestaUser3items = $('#propuesta-user3items');
             propuestaUser3items.html("");
@@ -402,11 +457,10 @@
                 propuestaUser3items.append(
                     '<tr>' +
                     '<td>' +
-                    '<div class="cui-ecommerce--dashboard--list--img">' +
+                    '<div class="cui-ecommerce--dashboard--list--img avatar">' +
                     '<img src="' + item.photo1 + '" alt="Imagen"/>' +
                     '</div>' +
-                    '<h6>'+ item.name +'</h6>' +
-                    '<span>'+ item.description +'</span>' +
+                    '<p>'+ item.name +'</p>' +
                     '</td>' +
                     '</tr>'
                 );

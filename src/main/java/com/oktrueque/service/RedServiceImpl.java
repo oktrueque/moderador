@@ -3,10 +3,7 @@ package com.oktrueque.service;
 import com.oktrueque.model.*;
 import com.oktrueque.repository.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -47,14 +44,13 @@ public class RedServiceImpl implements RedService{
     }
 
     @Override
-    public List<User> getUsersByPreferences(Long id) {
-        List<User> usersWithItemsByPreferences = new ArrayList<>();
+    public Set<User> getUsersByPreferences(Long id) { 
+        Set<User> usersWithItemsByPreferences = new HashSet<>();
         User user = userRepository.findOne(id);
         List<Long> idTags = new ArrayList<>();
         user.getTags().forEach(t->{
             idTags.add(t.getId());
         });
-
         List<ItemTag> itemsTags = (idTags.size()!= 1) ?
                 itemTagRepository.findAllByIdTagIdIn(idTags) : itemTagRepository.findByIdTagId(idTags.get(0));
         List<Long> idItems = new ArrayList<>();
@@ -72,21 +68,21 @@ public class RedServiceImpl implements RedService{
     }
 
     @Override
-    public List<User> getUsersByPreferencesOfTwoUsers(Long id, Long idUserInitial) {
-        List<User> candidatesUsers = new ArrayList<>();
+    public Set<User> getUsersByPreferencesOfTwoUsers(Long id, Long idUserInitial) {
+        Set<User> candidatesUsers = new HashSet<>();
         User userInitial = userRepository.findOne(idUserInitial);
         this.getUsersByPreferences(id).forEach(user-> {
             user.getTags().forEach(tag->{
                 userInitial.getItems().forEach(item->{
                     item.getTags().forEach(tagItem ->{
-                        if(tag.getId().equals(tagItem.getId())){
+                        if(tag.getId().equals(tagItem.getId()) && !user.getId().equals(idUserInitial)){
                             candidatesUsers.add(user);
                         }
                     });
                 });
             });
         });
-        return candidatesUsers.stream().distinct().collect(Collectors.toList());
+        return candidatesUsers.stream().distinct().collect(Collectors.toSet());
     }
 
     @Override

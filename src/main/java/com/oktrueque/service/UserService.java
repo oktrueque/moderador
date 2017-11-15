@@ -105,4 +105,8 @@ public class UserService {
         emailService.sendMail(email,"mailAdminToUser.ftl");
 
     }
+
+    public User getUserById(Long id) {
+        return userRepository.findOne(id);
+    }
 }
