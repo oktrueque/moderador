@@ -18,8 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class UserController {
@@ -125,10 +127,13 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/user/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    public ResponseEntity<Map<String,Object>> getUserById(@PathVariable Long id) {
+        Map<String,Object> response = new LinkedHashMap<>();
         User user = userService.getUserById(id);
         if(user != null){
-            return new ResponseEntity<>(user, HttpStatus.OK);
+            response.put("user",user);
+            response.put("tags",userTagService.getTagByUserTags(id));
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

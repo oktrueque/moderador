@@ -364,15 +364,24 @@
                     xhr.setRequestHeader(header, token);
                 },
                 success: function (data) {
-                    var user1 = data;
+                    var user1 = data.user;
+                    var tags1 = data.tags;
                     var propuestaUser1 = $('#propuesta-user1');
                     propuestaUser1.html("");
                     propuestaUser1.append(
+                        '<div>' +
                         '<h5>'+user1.fullName +'</h5>' +
                         '<div class="avatar">' +
                         '<img src="'+ user1.photo1 + '" alt="Imagen"/>' +
+                        '</div>' +
                         '</div>'
+
                     );
+                    tags1.forEach(function (tag){
+                        propuestaUser1.append(
+                            '<span class="label label-default tag-margin">'+tag.name+'</span>'
+                        )
+                    });
                 },
                 error: function (e) {
                     console.log(e);
@@ -400,15 +409,23 @@
                     xhr.setRequestHeader(header, token);
                 },
                 success: function (data) {
-                    var user2 = data;
+                    var user2 = data.user;
+                    var tags2 = data.tags;
                     var propuestaUser2 = $('#propuesta-user2');
                     propuestaUser2.html("");
                     propuestaUser2.append(
+                        '<div>' +
                         '<h5>'+user2.fullName +'</h5>' +
                         '<div class="avatar">' +
                         '<img src="'+ user2.photo1 + '" alt="Imagen"/>' +
+                        '</div>' +
                         '</div>'
                     );
+                    tags2.forEach(function (tag){
+                        propuestaUser2.append(
+                            '<span class="label label-default tag-margin">'+tag.name+'</span>'
+                        )
+                    });
                 },
                 error: function (e) {
                     console.log(e);
@@ -437,15 +454,23 @@
                     xhr.setRequestHeader(header, token);
                 },
                 success: function (data) {
-                    var user3 = data;
+                    var user3 = data.user;
+                    var tags3 = data.tags;
                     var propuestaUser3 = $('#propuesta-user3');
                     propuestaUser3.html("");
                     propuestaUser3.append(
+                        '<div>' +
                         '<h5>'+user3.fullName +'</h5>' +
                         '<div class="avatar">' +
                         '<img src="'+ user3.photo1 + '" alt="Imagen"/>' +
+                        '</div>' +
                         '</div>'
                     );
+                    tags3.forEach(function (tag){
+                       propuestaUser3.append(
+                        '<span class="label label-default tag-margin">'+tag.name+'</span>'
+                       )
+                    });
                 },
                 error: function (e) {
                     console.log(e);
