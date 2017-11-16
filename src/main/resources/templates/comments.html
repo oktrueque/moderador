@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
+<head>
+
+</head>
+<th:block layout:fragment="content">
+    <section class="page-content">
+        <div class="page-content-inner">
+            <section class="panel">
+                <div class="page-content-inner">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4>Comentarios</h4>
+
+                                <br/>
+                                <div class="margin-bottom-50">
+                                    <table class="table table-hover nowrap" id="table-comments" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Origen</th>
+                                            <th>Destino</th>
+                                            <th>Descripcion</th>
+                                            <th>Score</th>
+                                            <th>Fecha</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="comment : ${comments}">
+                                            <td th:text="${comment.id}"></td>
+                                            <td>
+                                                <a th:href="@{'/users/' + ${comment.userOrigin.username}}" th:text="${comment.userOrigin.fullName}"></a>
+                                            </td>
+                                            <td>
+                                                <a th:href="@{'/users/' + ${comment.userTarget.username}}" th:text="${comment.userTarget.name}"></a>
+                                            </td>
+                                            <td class="text-truncate" style="max-width: 150px;" th:text="${comment.description}">
+                                            </td>
+                                            <td th:text="${comment.score}"></td>
+                                            <td th:text="${#dates.format(comment.date, 'dd-MM-yyyy HH:mm')}"></td>
+                                            <td>
+                                                <button class="btn btn-success btn-xs btn-get-comment ladda-button" data-style="zoom-in" th:attr="data-id=${comment.id}">Ver</button>
+                                                <button class="btn btn-danger btn-xs btn-delete-comment ladda-button" data-style="zoom-in" th:attr="data-id=${comment.id}">Borrar</button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <div class="modal fade" id="comment-detail" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Detalle de Comentario</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h6>Usuario Origen</h6>
+                            <p id="comment-user-origin"></p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6>Usuario Destino</h6>
+                            <p id="comment-user-target"></p>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h6>Valoración</h6>
+                            <p id="comment-score"></p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6>Fecha</h6>
+                            <p id="comment-date"></p>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h6>Comentario</h6>
+                            <p id="comment-description"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Scripts -->
+    <script th:inline="javascript">
+        var token = [[${_csrf.token}]];
+        var header = [[${_csrf.headerName}]];
+        var table;
+
+        $(function () {
+            table = $('#table-comments').DataTable({
+                autoWidth: true,
+                scrollX: true,
+                fixedColumns: true
+            });
+        });
+
+        $(".btn-get-comment").click(function(){
+            var l = Ladda.create(this);
+            l.start();
+
+            var commentId = $(this).data('id');
+            $.ajax({
+                type: 'GET',
+                url: '/comments/' + commentId,
+                success: function(data) {
+                    $('#comment-user-origin').text(data.userOrigin.name + " " + data.userOrigin.lastName);
+                    $('#comment-user-target').text(data.userTarget.name + " " + data.userTarget.lastName);
+                    $('#comment-score').text(data.score);
+                    var date = new Date(data.date);
+                    $('#comment-date').text(date.getDate() + '-' + (date.getMonth() + 1) + '-' +  date.getFullYear());
+                    $('#comment-description').text(data.description);
+                    $('#comment-detail').modal('show');
+                    l.stop();
+                },
+                error: function(data){
+                    console.log("ERROR: ", data);
+                    swal("No es recuperar el comentario", "Intentelo nuevamente más adelante o lea el error para arreglarlo", "error");
+                }
+            });
+        });
+
+        $(".btn-delete-comment").click(function(){
+            var l = Ladda.create(this);
+            l.start();
+            var btn = $(this);
+            var commentId = btn.data('id');
+            $.ajax({
+                type: 'DELETE',
+                url: '/comments/' + commentId,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function () {
+                    l.stop();
+                    table.row(btn.parents('tr')).remove().draw();
+                    swal("Eliminado", "El comentario ha sido correctamente eliminado", "success");
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        });
+    </script>
+</th:block>
+</html>

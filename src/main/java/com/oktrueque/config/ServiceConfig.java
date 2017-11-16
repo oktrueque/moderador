@@ -39,9 +39,14 @@ public class ServiceConfig {
     private UserTruequeRepository userTruequeRepository;
     @Autowired
     private ItemTruequeRepository itemTruequeRepository;
-//    @Autowired
-//    private CategoryRepository categoryRepository;
+    @Autowired
+    private CommentRepository commentRepository;
 
+
+    @Bean
+    public CommentService commentService(){
+        return new CommentServiceImpl(commentRepository);
+    }
 
     @Bean
     public ComplaintTypeService complaintTypeService(){return new ComplaintTypeServiceImpl(complaintTypeRepository);}
