@@ -14,4 +14,6 @@ public interface TruequeRepository extends CrudRepository<Trueque, Long> {
 
     List<Trueque> findByStatus(int status);
 
+    Integer countAllByStatus(int status);
+
 }

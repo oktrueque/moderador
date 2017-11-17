@@ -18,13 +18,15 @@ public class ReportServiceImpl implements  ReportService {
     private final TruequeRepository truequeRepository;
     private final CategoryRepository categoryRepository;
     private final ComplaintRepository complaintRepository;
+    private final ComplaintTypeRepository complaintTypeRepository;
 
-    public ReportServiceImpl(ItemRepository itemRepository, UserRepository userRepository, TruequeRepository truequeRepository, CategoryRepository categoryRepository, ComplaintRepository complaintRepository) {
+    public ReportServiceImpl(ItemRepository itemRepository, UserRepository userRepository, TruequeRepository truequeRepository, CategoryRepository categoryRepository, ComplaintRepository complaintRepository, ComplaintTypeRepository complaintTypeRepository) {
         this.userRepository = userRepository;
         this.itemRepository = itemRepository;
         this.truequeRepository = truequeRepository;
         this.categoryRepository = categoryRepository;
         this.complaintRepository = complaintRepository;
+        this.complaintTypeRepository = complaintTypeRepository;
     }
 
     private Dataset setDatasetDataForMonths(ArrayList<Integer> meses){
@@ -233,5 +235,89 @@ public class ReportServiceImpl implements  ReportService {
         report.setLabels(labels);
         return report;
     }
+
+    @Override
+    public Report usuariosPorEstado(){
+        Report report = new Report("usuariosPorEstado","doughnut","Usuarios por estado");
+        Dataset dataset = new Dataset();
+        Integer registrados = userRepository.countAllByStatus(0);
+        Integer activos = userRepository.countAllByStatus(1);
+        Integer eliminados = userRepository.countAllByStatus(2);
+        Integer baneados = userRepository.countAllByStatus(3);
+        ArrayList<Integer> data = new ArrayList<>();
+        ArrayList<String> labels = new ArrayList<>();
+        data.add(registrados);labels.add("Registrados");
+        data.add(activos);labels.add("Activos");
+        data.add(eliminados);labels.add("Eliminados");
+        data.add(baneados);labels.add("Baneados");
+        report.setLabels(labels);
+        dataset.setData(data);
+        report.setFirstDataset(dataset);
+        return report;
+    }
+
+    @Override
+    public Report truequesPorEstado(){
+        Report report = new Report("truequesPorEstado","doughnut","Trueques por estado");
+        Dataset dataset = new Dataset();
+        Integer propuestos = truequeRepository.countAllByStatus(0);
+        Integer activos = truequeRepository.countAllByStatus(1);
+        Integer rechazados = truequeRepository.countAllByStatus(2);
+        Integer confirmados = truequeRepository.countAllByStatus(3);
+        Integer cancelados = truequeRepository.countAllByStatus(4);
+        ArrayList<Integer> data = new ArrayList<>();
+        ArrayList<String> labels = new ArrayList<>();
+        data.add(propuestos);labels.add("Propuestos");
+        data.add(activos);labels.add("Activos");
+        data.add(rechazados);labels.add("Rechazados");
+        data.add(confirmados);labels.add("Confirmados");
+        data.add(cancelados);labels.add("Cancelados");
+        report.setLabels(labels);
+        dataset.setData(data);
+        report.setFirstDataset(dataset);
+        return report;
+    }
+
+    @Override
+    public Report usuariosPorScore(){
+        Report report = new Report("usuariosPorScore","doughnut","Usuarios por Score");
+        Dataset dataset = new Dataset();
+        Integer malos = userRepository.countAllByScore(1);
+        Integer regulares = userRepository.countAllByScore(2);
+        Integer buenos = userRepository.countAllByScore(3);
+        Integer muyBuenos = userRepository.countAllByScore(4);
+        Integer excelentes = userRepository.countAllByScore(5);
+        ArrayList<Integer> data = new ArrayList<>();
+        ArrayList<String> labels = new ArrayList<>();
+        data.add(malos);labels.add("Malos");
+        data.add(regulares);labels.add("Regulares");
+        data.add(buenos);labels.add("Buenos");
+        data.add(muyBuenos);labels.add("Muy buenos");
+        data.add(excelentes);labels.add("Excelentes");
+        report.setLabels(labels);
+        dataset.setData(data);
+        report.setFirstDataset(dataset);
+        return report;
+    }
+
+    @Override
+    public Report denunciasPorTipos(){
+        Report report = new Report("denunciasPorTipos","doughnut","Denuncias por tipos");
+        Dataset dataset = new Dataset();
+        ArrayList<Integer> data = new ArrayList<>();
+        ArrayList<String> labels = new ArrayList<>();
+        List<ComplaintType> tipos = complaintTypeRepository.findAll();
+        for(ComplaintType CT:tipos){
+            Integer aux = complaintRepository.countAllByComplaintType_Id(CT.getId());
+            data.add(aux);
+            labels.add(CT.getName());
+        }
+        report.setLabels(labels);
+        dataset.setData(data);
+        report.setFirstDataset(dataset);
+        return report;
+    }
+
+
 
 }

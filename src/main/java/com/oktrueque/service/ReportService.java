@@ -17,4 +17,12 @@ public interface ReportService {
 
     Report itemsPorEstado();
 
+    Report usuariosPorEstado();
+
+    Report truequesPorEstado();
+
+    Report usuariosPorScore();
+
+    Report denunciasPorTipos();
+
 }

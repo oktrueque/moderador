@@ -100,6 +100,6 @@ public class ServiceConfig {
 
     @Bean
     public ReportService reportService(){
-        return new ReportServiceImpl(itemRepository, userRepository,truequeRepository,categoryRepository,complaintRepository);
+        return new ReportServiceImpl(itemRepository, userRepository,truequeRepository,categoryRepository,complaintRepository, complaintTypeRepository);
     }
 }

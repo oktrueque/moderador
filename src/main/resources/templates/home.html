@@ -133,14 +133,18 @@
 
     <script th:inline="javascript">
         /*<![CDATA[*/
-        var token = [[${_csrf.token}]];
-        var header = [[${_csrf.headerName}]];
-        var dashboard = [[${dashboard}]];
+//        var token = [[${_csrf.token}]];
+//        var header = [[${_csrf.headerName}]];
+//        var dashboard = [[${dashboard}]];
         var itemsPorMesReport = [[${itemsPorMesReport}]];
         var truequesConcretadosVsIniciadosReport = [[${truequesConcretadosVsIniciadosReport}]];
         var itemsPorCategoriaReport = [[${itemsPorCategoriaReport}]];
         var denunciasPorMesReport = [[${denunciasPorMesReport}]];
         var itemsPorEstadoReport = [[${itemsPorEstadoReport}]];
+        var usuariosPorEstadoReport = [[${usuariosPorEstadoReport}]];
+        var truequesPorEstadoReport = [[${truequesPorEstadoReport}]];
+        var usuariosPorScoreReport =  [[${usuariosPorScoreReport}]];
+        var denunciasPorTiposReport = [[${denunciasPorTiposReport}]];
 
         function getColorForEachOne(array) {
 
@@ -316,27 +320,22 @@
 
         var ctx = document.getElementById('myChart6').getContext('2d');
         var myChart = new Chart(ctx, {
-            type: 'doughnut',
+            type: usuariosPorEstadoReport.reportType,
             data: {
                 datasets: [
                     {
-                        data: [15, 25, 35, 50],
-                        backgroundColor:
-                            [
-                                '#ee8300',
-                                '#6d6d6d',
-                                '#e22207',
-                                '#f2926d'
-                            ]
+                        data: usuariosPorEstadoReport.firstDataset.data,
+                        backgroundColor: getColorForEachOne(usuariosPorEstadoReport.firstDataset.data)
+
                     },
 
                 ],
-                labels: ['Registrado','Activo','Eliminado','Baneado'],
+                labels: usuariosPorEstadoReport.labels,
             },
             options: {
                 title: {
                     display: true,
-                    text: 'Usuarios por estado',
+                    text: usuariosPorEstadoReport.reportTitle,
                     fontStyle: 'bold',
                     fontSize: 16
                 }}
@@ -344,27 +343,21 @@
 
         var ctx = document.getElementById('myChart7').getContext('2d');
         var myChart = new Chart(ctx, {
-            type: 'doughnut',
+            type: truequesPorEstadoReport.reportType,
             data: {
                 datasets: [
                     {
-                        data: [15, 25, 35, 50, 100],
-                        backgroundColor:
-                            [
-                                '#ee8300',
-                                '#6d6d6d',
-                                '#e22207',
-                                '#f2926d'
-                            ]
+                        data: truequesPorEstadoReport.firstDataset.data,
+                        backgroundColor:getColorForEachOne(truequesPorEstadoReport.firstDataset.data)
                     },
 
                 ],
-                labels: ['Propuesto','Activo','Rechazado','Confirmado','Cancelado'],
+                labels: truequesPorEstadoReport.labels,
             },
             options: {
                 title: {
                     display: true,
-                    text: 'Trueques por estado',
+                    text: truequesPorEstadoReport.reportTitle,
                     fontStyle: 'bold',
                     fontSize: 16
                 }}
@@ -372,27 +365,21 @@
 
         var ctx = document.getElementById('myChart8').getContext('2d');
         var myChart = new Chart(ctx, {
-            type: 'doughnut',
+            type: usuariosPorScoreReport.reportType,
             data: {
                 datasets: [
                     {
-                        data: [15, 25, 35, 50,10],
-                        backgroundColor:
-                            [
-                                '#ee8300',
-                                '#6d6d6d',
-                                '#e22207',
-                                '#f2926d'
-                            ]
+                        data: usuariosPorScoreReport.firstDataset.data,
+                        backgroundColor:getColorForEachOne(usuariosPorScoreReport.firstDataset.data)
                     }
 
                 ],
-                labels: ['Malo','Regular','Bueno','Muy bueno','Excelente']
+                labels: usuariosPorScoreReport.labels
             },
             options: {
                 title: {
                     display: true,
-                    text: 'Usuarios por score',
+                    text: usuariosPorScoreReport.reportTitle,
                     fontStyle: 'bold',
                     fontSize: 16
                 }}
@@ -400,27 +387,21 @@
 
         var ctx = document.getElementById('myChart9').getContext('2d');
         var myChart = new Chart(ctx, {
-            type: 'doughnut',
+            type: denunciasPorTiposReport.reportType,
             data: {
                 datasets: [
                     {
-                        data: [25, 35, 50,10],
-                        backgroundColor:
-                            [
-                                '#ee8300',
-                                '#6d6d6d',
-                                '#e22207',
-                                '#f2926d'
-                            ]
+                        data: denunciasPorTiposReport.firstDataset.data,
+                        backgroundColor:getColorForEachOne(denunciasPorTiposReport.firstDataset.data)
                     }
 
                 ],
-                labels: ['Foto de Item con contenido prohibido','Entrego items en mal estado','Comentario inadecuado','El usuario ha comentado algo que no ocurrió']
+                labels: denunciasPorTiposReport.labels
             },
             options: {
                 title: {
                     display: true,
-                    text: 'Denuncias por tipos',
+                    text: denunciasPorTiposReport.reportTitle,
                     fontStyle: 'bold',
                     fontSize: 16
                 }}

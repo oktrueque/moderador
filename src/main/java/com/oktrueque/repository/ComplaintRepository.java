@@ -13,4 +13,6 @@ public interface ComplaintRepository extends CrudRepository<Complaint, Long> {
 
         List<Complaint> findAll();
 
+        Integer countAllByComplaintType_Id(Long id);
+
     }

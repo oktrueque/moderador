@@ -19,4 +19,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     List<User> findAllByIdIn(List<Long> ids);
 
+    Integer countAllByStatus(int status);
+
+    Integer countAllByScore(int score);
+
 }
