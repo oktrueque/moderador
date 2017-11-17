@@ -28,14 +28,12 @@ public class ReportServiceImpl implements  ReportService {
     }
 
     private Dataset setDatasetDataForMonths(ArrayList<Integer> meses){
-
         ArrayList<Integer> data = new ArrayList<>();
         ArrayList<Integer> aux = new ArrayList<>();
         for(int x=0;x<12;x++){
             data.add(x,0);
             aux.add(x,0);
         }
-
         for(Integer nroMes:meses) {
             switch (nroMes) { // .set(Index,Element)
                 case 0:
@@ -99,7 +97,6 @@ public class ReportServiceImpl implements  ReportService {
         report.setReportName("itemsPorMes");
         report.setReportType("bar");
         report.setReportTitle("Items creados por mes, del año actual.");
-
         return report;
     }
 
@@ -125,12 +122,10 @@ public class ReportServiceImpl implements  ReportService {
         secondDataset.setLabel("Iniciados");
         Calendar calendar = Calendar.getInstance();
         ArrayList<String> mesesList = new ArrayList<>();
-
         for(int x=0;x<12;x++){
             mesesList.add(getMonthForInt(x));
         }
         report.setLabels(mesesList);
-
         if(concretados.size()==0){
             ArrayList<Integer> aux = new ArrayList<>();
             aux.add(0);
@@ -140,7 +135,6 @@ public class ReportServiceImpl implements  ReportService {
             aux.add(0);
             secondDataset.setData(aux);
         }
-
         int mes = -1;
         ArrayList<Integer> meses1 = new ArrayList<>();
         for (Trueque Tc:concretados){
@@ -157,7 +151,6 @@ public class ReportServiceImpl implements  ReportService {
                 meses2.add(mes);
         }
         secondDataset = setDatasetDataForMonths(meses2);
-
         report.setFirstDataset(firstDataset);
         report.setSecondDataset(secondDataset);
         return report;
@@ -234,16 +227,10 @@ public class ReportServiceImpl implements  ReportService {
         labels.add("Baneados");
         data.add(eliminados);
         labels.add("Eliminados");
-
         dataset.setData(data);
         dataset.setLabel("Items");
         report.setFirstDataset(dataset);
         report.setLabels(labels);
-
-        ArrayList<Integer> estados = new ArrayList<>();
-        for(int x=0;x<5;x++)estados.add(x); // de 0 a 4
-
-
         return report;
     }
 
