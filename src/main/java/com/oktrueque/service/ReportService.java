@@ -11,4 +11,6 @@ public interface ReportService {
 
     Report getTruequesConcretadosVsIniciados();
 
+    Report itemPorCategoria();
+
 }

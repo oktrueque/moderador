@@ -27,10 +27,12 @@ public class DashboardController {
     public String getDashboard(Model model){
         Report itemsPorMesReport = reportService.getItemsCreatedByMonth();
         Report truequesConcretadosVsIniciadosReport = reportService.getTruequesConcretadosVsIniciados();
+        Report itemsPorCategoriaReport = reportService.itemPorCategoria();
 
         List<Report> reportes = new ArrayList<>();
         reportes.add(itemsPorMesReport);
         reportes.add(truequesConcretadosVsIniciadosReport);
+        reportes.add(itemsPorCategoriaReport);
 
         Dashboard dashboard = new Dashboard();
         dashboard.setName("Moderator Dashboard");
@@ -39,6 +41,7 @@ public class DashboardController {
         model.addAttribute("dashboard",dashboard);
         model.addAttribute("itemsPorMesReport",itemsPorMesReport);
         model.addAttribute("truequesConcretadosVsIniciadosReport",truequesConcretadosVsIniciadosReport);
+        model.addAttribute("itemsPorCategoriaReport",itemsPorCategoriaReport);
         return "home";
     }
 }

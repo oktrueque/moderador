@@ -138,6 +138,25 @@
         var dashboard = [[${dashboard}]];
         var itemsPorMesReport = [[${itemsPorMesReport}]];
         var truequesConcretadosVsIniciadosReport = [[${truequesConcretadosVsIniciadosReport}]];
+        var itemsPorCategoriaReport = [[${itemsPorCategoriaReport}]];
+
+        function getColorForEachOne(array) {
+
+            var myColors = [
+                '#ee8300',
+                '#e22207',
+                '#6d6d6d',
+                '#f2926d'
+            ];
+
+            var finalColors = [];
+
+            array.forEach(function () {
+                finalColors.push(myColors[Math.floor((Math.random() * myColors.length))])
+            });
+
+            return finalColors;
+        }
 
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -187,7 +206,7 @@
                 datasets: [
                     {
                         data: itemsPorMesReport.firstDataset.data,
-                        label: 'Items',
+                        label: itemsPorMesReport.firstDataset.label,
                         backgroundColor: '#e22207',
                         borderColor: '#000000'
 
@@ -214,33 +233,32 @@
             }
         });
 
+
+
         var ctx = document.getElementById('myChart3').getContext('2d');
         var myChart = new Chart(ctx, {
-            type: 'doughnut',
+            type: itemsPorCategoriaReport.reportType,
             data: {
                 datasets: [
                     {
-                        data: [15, 25, 35, 50],
-                        backgroundColor:
-                            [
-                             '#ee8300',
-                            '#e22207',
-                            '#6d6d6d',
-                            '#f2926d'
-                            ]
+                        data: itemsPorCategoriaReport.firstDataset.data,
+                        backgroundColor:'#e22207',
+                        label: itemsPorCategoriaReport.firstDataset.label,
+                        borderColor: '#000000'
                     }
-
                 ],
-                labels: ['Instrumentos','Muebles','Videojuegos','Herramientas'],
+                labels: itemsPorCategoriaReport.labels,
             },
             options: {
                 title: {
                     display: true,
-                    text: 'Items por categoría',
+                    text: itemsPorCategoriaReport.reportTitle,
                     fontStyle: 'bold',
                     fontSize: 16
                 }}
         });
+
+
 
         var ctx = document.getElementById('myChart4').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -250,7 +268,7 @@
                     {
                         data: [115, 125, 135, 150, 165, 170, 185, 190, 110, 130, 150, 165,100],
                         label: 'Denuncias',
-                        backgroundColor: '#ee8300',
+                        backgroundColor: "#ee8300",
                         borderColor: '#6d6d6d'
                     }
                 ],

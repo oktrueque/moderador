@@ -28,6 +28,6 @@ public interface ItemRepository extends CrudRepository<Item, Long> {
     @Query(nativeQuery = true, value= "select count(*) from items i where month(creation_date) = ?1 and year(creation_date)=?2")
             Integer countByMonthAndYear(int month, int year);
 
-
+    Integer countAllByCategory_Id(int catId);
 
 }

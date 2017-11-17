@@ -39,8 +39,8 @@ public class ServiceConfig {
     private UserTruequeRepository userTruequeRepository;
     @Autowired
     private ItemTruequeRepository itemTruequeRepository;
-//    @Autowired
-//    private CategoryRepository categoryRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
 
     @Bean
@@ -93,6 +93,6 @@ public class ServiceConfig {
 
     @Bean
     public ReportService reportService(){
-        return new ReportServiceImpl(itemRepository, userRepository, truequeRepository);
+        return new ReportServiceImpl(itemRepository, userRepository, truequeRepository, categoryRepository);
     }
 }

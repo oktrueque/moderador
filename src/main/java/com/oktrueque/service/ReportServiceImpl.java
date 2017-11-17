@@ -1,8 +1,7 @@
 package com.oktrueque.service;
 
-import com.oktrueque.model.Dataset;
-import com.oktrueque.model.Report;
-import com.oktrueque.model.Trueque;
+import com.oktrueque.model.*;
+import com.oktrueque.repository.CategoryRepository;
 import com.oktrueque.repository.ItemRepository;
 import com.oktrueque.repository.TruequeRepository;
 import com.oktrueque.repository.UserRepository;
@@ -20,11 +19,13 @@ public class ReportServiceImpl implements  ReportService {
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
     private final TruequeRepository truequeRepository;
+    private final CategoryRepository categoryRepository;
 
-    public ReportServiceImpl(ItemRepository itemRepository, UserRepository userRepository, TruequeRepository truequeRepository) {
+    public ReportServiceImpl(ItemRepository itemRepository, UserRepository userRepository, TruequeRepository truequeRepository, CategoryRepository categoryRepository) {
         this.userRepository = userRepository;
         this.itemRepository = itemRepository;
         this.truequeRepository = truequeRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
@@ -133,6 +134,32 @@ public class ReportServiceImpl implements  ReportService {
         Dataset dataset = new Dataset();
         dataset.setData(data);
         return dataset;
+    }
+
+    @Override
+    public Report itemPorCategoria(){
+        Report report = new Report("itemsPorCategoriaReport","bar","Items por categoria");
+        Dataset dataset = new Dataset();
+        List<Item> items = itemRepository.findByStatus(1);
+        List<Category> categorias = categoryRepository.findAll();
+        ArrayList<String> catNames = new ArrayList<>();
+        ArrayList<Integer> data = new ArrayList<>();
+
+        for(Category cat:categorias){
+            catNames.add(cat.getName());
+            int cantItemsPorCat = itemRepository.countAllByCategory_Id(cat.getId());
+            data.add(cantItemsPorCat);
+        }
+        report.setLabels(catNames);
+        dataset.setData(data);
+        dataset.setLabel("Items");
+        report.setFirstDataset(dataset);
+
+
+
+
+
+        return report;
     }
 
 }
