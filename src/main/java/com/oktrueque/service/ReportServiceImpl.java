@@ -72,7 +72,6 @@ public class ReportServiceImpl implements  ReportService {
 
     @Override
     public Report getItemsCreatedByMonth(){
-        Calendar cal = Calendar.getInstance();
         DateTime dateTime = new DateTime();
         Integer actualMonth = dateTime.getMonthOfYear();
         Integer actualYear = dateTime.getYear();
@@ -81,7 +80,7 @@ public class ReportServiceImpl implements  ReportService {
         ArrayList<Integer> cuatroMesesHaciaAtras = new ArrayList<>();
         ArrayList<Integer> itemsPorMes = new ArrayList<>();
         /*TODO Crear metodo en el itemRepository countByYear y recorrer esa lista para buscar por mes */
-        for (Integer x=7;x>0;x--){ //INFO: X-1 = Cantidad de meses hacia atras que se vera en el reporte.
+        for (Integer x=12;x>-1;x--){ //INFO: X-1 = Cantidad de meses hacia atras que se vera en el reporte.
             if(dateTime.getMonthOfYear()-x>0) {
                 cuatroMesesHaciaAtras.add(dateTime.getMonthOfYear() - x);
                 int aux = itemRepository.countByMonthAndYear(actualMonth - x, actualYear);
