@@ -11,9 +11,9 @@ import java.util.Set;
 public interface RedService {
     Set<User> getAllUsersWithTags();
 
-    List<User> getUsersByPreferences(Long id);
+    Set<User> getUsersByPreferences(Long id);
 
-    List<User> getUsersByPreferencesOfTwoUsers(Long id, Long idUserInitial);
+    Set<User> getUsersByPreferencesOfTwoUsers(Long id, Long idUserInitial);
 
     List<Item> getItemsToUser(Long id, Long idUserSelected);
 }

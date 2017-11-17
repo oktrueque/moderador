@@ -35,7 +35,7 @@ public class RedController {
     @RequestMapping(method = RequestMethod.POST, value = "/propuesta/paso2")
     public ResponseEntity<Map<String,Object>> getUserLevel2(@RequestBody User user){
         Map<String, Object> map = new LinkedHashMap<>();
-        List<User> users = redService.getUsersByPreferences(user.getId());
+        Set<User> users = redService.getUsersByPreferences(user.getId());
         if(users.size() > 0){
             map.put("users", users);
             return new ResponseEntity<>(map, HttpStatus.OK);
@@ -47,7 +47,7 @@ public class RedController {
     @RequestMapping(method = RequestMethod.POST, value = "/propuesta/paso3/{idUserInitial}")
     public ResponseEntity<Map<String,Object>> getUserLevel3(@RequestBody User user, @PathVariable Long idUserInitial){
         Map<String, Object> map = new LinkedHashMap<>();
-        List<User> users = redService.getUsersByPreferencesOfTwoUsers(user.getId(), idUserInitial);
+        Set<User> users = redService.getUsersByPreferencesOfTwoUsers(user.getId(), idUserInitial);
         if(users.size() > 0){
             map.put("users", users);
             map.put("itemsUser2", redService.getItemsToUser(user.getId(),idUserInitial));
