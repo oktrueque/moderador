@@ -29,5 +29,8 @@ public interface ItemRepository extends CrudRepository<Item, Long> {
             Integer countByMonthAndYear(int month, int year);
 
     Integer countAllByCategory_Id(int catId);
+    List<Item> findAll();
+    Integer countAllByStatus(int status);
+
 
 }

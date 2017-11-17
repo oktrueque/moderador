@@ -28,20 +28,26 @@ public class DashboardController {
         Report itemsPorMesReport = reportService.getItemsCreatedByMonth();
         Report truequesConcretadosVsIniciadosReport = reportService.getTruequesConcretadosVsIniciados();
         Report itemsPorCategoriaReport = reportService.itemPorCategoria();
+        Report denunciasPorMesReport = reportService.denunciasPorMes();
+        Report itemsPorEstadoReport = reportService.itemsPorEstado();
 
-        List<Report> reportes = new ArrayList<>();
-        reportes.add(itemsPorMesReport);
-        reportes.add(truequesConcretadosVsIniciadosReport);
-        reportes.add(itemsPorCategoriaReport);
+//        List<Report> reportes = new ArrayList<>();
+//        reportes.add(itemsPorMesReport);
+//        reportes.add(truequesConcretadosVsIniciadosReport);
+//        reportes.add(itemsPorCategoriaReport);
+//        reportes.add(denunciasPorMesReport);
+//        reportes.add(itemsPorEstado);
 
         Dashboard dashboard = new Dashboard();
         dashboard.setName("Moderator Dashboard");
-        dashboard.setReportes(reportes);
+//        dashboard.setReportes(reportes);
 
         model.addAttribute("dashboard",dashboard);
         model.addAttribute("itemsPorMesReport",itemsPorMesReport);
         model.addAttribute("truequesConcretadosVsIniciadosReport",truequesConcretadosVsIniciadosReport);
         model.addAttribute("itemsPorCategoriaReport",itemsPorCategoriaReport);
+        model.addAttribute("denunciasPorMesReport",denunciasPorMesReport);
+        model.addAttribute("itemsPorEstadoReport",itemsPorEstadoReport);
         return "home";
     }
 }

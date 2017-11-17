@@ -13,4 +13,8 @@ public interface ReportService {
 
     Report itemPorCategoria();
 
+    Report denunciasPorMes();
+
+    Report itemsPorEstado();
+
 }

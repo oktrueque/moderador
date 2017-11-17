@@ -11,4 +11,6 @@ public interface ComplaintRepository extends CrudRepository<Complaint, Long> {
 
         List<Complaint> findAllByUserTargetId(Long userTargetId);
 
+        List<Complaint> findAll();
+
     }

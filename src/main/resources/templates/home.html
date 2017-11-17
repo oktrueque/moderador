@@ -139,6 +139,8 @@
         var itemsPorMesReport = [[${itemsPorMesReport}]];
         var truequesConcretadosVsIniciadosReport = [[${truequesConcretadosVsIniciadosReport}]];
         var itemsPorCategoriaReport = [[${itemsPorCategoriaReport}]];
+        var denunciasPorMesReport = [[${denunciasPorMesReport}]];
+        var itemsPorEstadoReport = [[${itemsPorEstadoReport}]];
 
         function getColorForEachOne(array) {
 
@@ -262,22 +264,22 @@
 
         var ctx = document.getElementById('myChart4').getContext('2d');
         var myChart = new Chart(ctx, {
-            type: 'bar',
+            type: denunciasPorMesReport.reportType,
             data: {
                 datasets: [
                     {
-                        data: [115, 125, 135, 150, 165, 170, 185, 190, 110, 130, 150, 165,100],
-                        label: 'Denuncias',
+                        data:denunciasPorMesReport.firstDataset.data,
+                        label: denunciasPorMesReport.firstDataset.label,
                         backgroundColor: "#ee8300",
                         borderColor: '#6d6d6d'
                     }
                 ],
-                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun','Jul','Ago','Sep','Oct','Nov','Dic']
+                labels: denunciasPorMesReport.labels
             },
             options: {
                 title: {
                     display: true,
-                    text: 'Denuncias por mes',
+                    text: denunciasPorMesReport.reportTitle,
                     fontStyle: 'bold',
                     fontSize: 16
                 }
@@ -286,11 +288,11 @@
 
         var ctx = document.getElementById('myChart5').getContext('2d');
         var myChart = new Chart(ctx, {
-            type: 'doughnut',
+            type: itemsPorEstadoReport.reportType,
             data: {
                 datasets: [
                     {
-                        data: [259, 602, 150, 800],
+                        data: itemsPorEstadoReport.firstDataset.data,
                         backgroundColor:
                             [
                                 '#ee8300',
@@ -301,12 +303,12 @@
                     },
 
                 ],
-                labels: ['Registrado','Activo','Baneado','Eliminado'],
+                labels: itemsPorEstadoReport.labels,
             },
             options: {
                 title: {
                     display: true,
-                    text: 'Items por estado',
+                    text: itemsPorEstadoReport.reportTitle,
                     fontStyle: 'bold',
                     fontSize: 16
                 }}
