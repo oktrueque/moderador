@@ -3,6 +3,7 @@ package com.oktrueque.service;
 import com.oktrueque.model.*;
 import com.oktrueque.repository.*;
 
+import com.oktrueque.utils.Constants;
 import org.joda.time.DateTime;
 
 import java.text.DateFormatSymbols;
@@ -214,10 +215,10 @@ public class ReportServiceImpl implements  ReportService {
     public Report itemsPorEstado(){
         Report report = new Report("itemsPorEstado","doughnut","Items por estado");
         Dataset dataset = new Dataset();
-        Integer registrados = itemRepository.countAllByStatus(0);
-        Integer activos = itemRepository.countAllByStatus(1);
-        Integer baneados = itemRepository.countAllByStatus(3);
-        Integer eliminados = itemRepository.countAllByStatus(4);
+        Integer registrados = itemRepository.countAllByStatus(Constants.ITEM_STATUS_PENDING);
+        Integer activos = itemRepository.countAllByStatus(Constants.ITEM_STATUS_ACTIVE);
+        Integer baneados = itemRepository.countAllByStatus(Constants.ITEM_STATUS_BANNED);
+        Integer eliminados = itemRepository.countAllByStatus(Constants.ITEM_STATUS_EXCHANGED);
         ArrayList<Integer> data = new ArrayList<>();
         ArrayList<String> labels = new ArrayList<>();
         data.add(registrados);
@@ -259,18 +260,18 @@ public class ReportServiceImpl implements  ReportService {
     public Report truequesPorEstado(){
         Report report = new Report("truequesPorEstado","doughnut","Trueques por estado");
         Dataset dataset = new Dataset();
-        Integer propuestos = truequeRepository.countAllByStatus(0);
-        Integer activos = truequeRepository.countAllByStatus(1);
-        Integer rechazados = truequeRepository.countAllByStatus(2);
-        Integer confirmados = truequeRepository.countAllByStatus(3);
-        Integer cancelados = truequeRepository.countAllByStatus(4);
+        Integer propuestos = truequeRepository.countAllByStatus(Constants.TRUEQUE_STATUS_PENDING);
+        Integer activos = truequeRepository.countAllByStatus(Constants.TRUEQUE_STATUS_ACTIVE);
+        Integer rechazados = truequeRepository.countAllByStatus(Constants.TRUEQUE_STATUS_REJECTED);
+        Integer confirmados = truequeRepository.countAllByStatus(Constants.TRUEQUE_STATUS_CONFIRMED);
+        Integer cancelados = truequeRepository.countAllByStatus(Constants.TRUEQUE_STATUS_CANCELED);
         ArrayList<Integer> data = new ArrayList<>();
         ArrayList<String> labels = new ArrayList<>();
-        data.add(propuestos);labels.add("Propuestos");
-        data.add(activos);labels.add("Activos");
-        data.add(rechazados);labels.add("Rechazados");
-        data.add(confirmados);labels.add("Confirmados");
-        data.add(cancelados);labels.add("Cancelados");
+        data.add(propuestos);labels.add(Constants.TRUEQUE_STATUS_NAME_PENDING);
+        data.add(activos);labels.add(Constants.TRUEQUE_STATUS_NAME_ACTIVE);
+        data.add(rechazados);labels.add(Constants.TRUEQUE_STATUS_NAME_REJECTED);
+        data.add(confirmados);labels.add(Constants.TRUEQUE_STATUS_NAME_CONFIRMED);
+        data.add(cancelados);labels.add(Constants.TRUEQUE_STATUS_NAME_CANCELED);
         report.setLabels(labels);
         dataset.setData(data);
         report.setFirstDataset(dataset);

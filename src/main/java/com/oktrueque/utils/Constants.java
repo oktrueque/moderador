@@ -35,6 +35,29 @@ public class Constants {
     public static final int COMPLAINT_STATUS_READY = 2;
     public static final String COMPLAINT_STATUS_NAME_READY = "Moderada";
 
+    public static final int USER_STATUS_REGISTERED = 0;
+    public static final String USER_STATUS_NAME_REGISTERED = "Registrado";
+    public static final int USER_STATUS_ACTIVE = 1;
+    public static final String USER_STATUS_NAME_ACTIVE = "Activo";
+    public static final int USER_STATUS_DELETED = 2;
+    public static final String USER_STATUS_NAME_DELETED = "Eliminado";
+    public static final int USER_STATUS_BANNED = 3;
+    public static final String USER_STATUS_NAME_BANNED = "Baneado";
+
+    public static String getUserStatusName(int key){
+        switch(key){
+            case USER_STATUS_REGISTERED:
+                return USER_STATUS_NAME_REGISTERED;
+            case USER_STATUS_ACTIVE:
+                return USER_STATUS_NAME_ACTIVE;
+            case USER_STATUS_DELETED:
+                return USER_STATUS_NAME_DELETED;
+            case USER_STATUS_BANNED:
+                return USER_STATUS_NAME_BANNED;
+        }
+        return "Error";
+    }
+
     public static String getTruequeStatusName(int key){
         switch(key){
             case TRUEQUE_STATUS_PENDING:
