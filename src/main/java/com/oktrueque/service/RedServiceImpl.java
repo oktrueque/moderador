@@ -88,7 +88,7 @@ public class RedServiceImpl implements RedService{
     @Override
     public List<Item> getItemsToUser(Long id, Long idUserSelected) {
         List<Tag> tags = userRepository.findOne(idUserSelected).getTags();
-        return itemRepository.findAllByUser_IdAndTagsIn(id,tags).stream().distinct().collect(Collectors.toList());
+        return itemRepository.findTop3ByUser_IdAndTagsIn(id,tags).stream().distinct().collect(Collectors.toList());
     }
 
 
