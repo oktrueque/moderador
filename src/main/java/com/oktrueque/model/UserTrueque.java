@@ -11,12 +11,13 @@ public class UserTrueque implements Comparable {
 
     @EmbeddedId
     private UserTruequeId id;
-
     @Column(name = "orden")
     private Integer order;
-
-    @Column(name = "status")
+    @Column(name= "status")
     private Integer status;
+    @Column(name="show_actions")
+    private Boolean showActions;
+
 
     public UserTrueque() {
     }
@@ -25,10 +26,11 @@ public class UserTrueque implements Comparable {
         return id;
     }
 
-    public UserTrueque(UserTruequeId id, Integer order, Integer status) {
+    public UserTrueque(UserTruequeId id, Integer order, Integer status, Boolean showActions) {
         this.id = id;
         this.order = order;
         this.status = status;
+        this.showActions = showActions;
     }
 
     public Integer getOrder() {
@@ -39,18 +41,20 @@ public class UserTrueque implements Comparable {
         this.order = order;
     }
 
-    public String getStatus() {
-        switch (this.status){
-            case 0: return "Pendiente";
-            case 1: return "Activo";
-            case 2: return "Rechazado";
-            case 3: return "Cancelado";
-            case 4: return "Confirmado";
-            default: return "Sin definir";
-        }}
+    public Integer getStatus() {
+        return status;
+    }
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Boolean getShowActions() {
+        return showActions;
+    }
+
+    public void setShowActions(Boolean showActions) {
+        this.showActions = showActions;
     }
 
     @Override

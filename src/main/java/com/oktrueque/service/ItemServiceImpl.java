@@ -2,6 +2,7 @@ package com.oktrueque.service;
 
 import com.oktrueque.model.Item;
 import com.oktrueque.repository.ItemRepository;
+import com.oktrueque.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -51,7 +52,7 @@ public class ItemServiceImpl implements ItemService{
     @Override
     public void approveItem(Long id) {
         Item item = itemRepository.findOne(id);
-        item.setStatus(1);
+        item.setStatus(Constants.ITEM_STATUS_ACTIVE);
         itemRepository.save(item);
     }
 

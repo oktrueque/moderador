@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
 <head>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
@@ -18,8 +19,9 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="user : ${usersWithTags}" >
-                                        <td th:id="${'user1-'+user.id}" class="user-level1" th:attr="data-id=${user.id}">
+                                    <tr th:each="user : ${usersWithTags}">
+                                        <td th:id="${'user1-'+user.id}" class="user-level1"
+                                            th:attr="data-id=${user.id}">
                                             <div class="cui-ecommerce--dashboard--list--img avatar">
                                                 <img th:id="'user-img-' + ${user.id}" th:src="${user.photo1}"
                                                      alt="Imagen"/>
@@ -70,7 +72,8 @@
                         <div class="panel-footer">
                             <div class="container">
                                 <button type="button" class="btn btn-success margin-inline pull-right" id="verPropuesta"
-                                        data-toggle="modal" data-target="#new-Trueque" disabled="true" >Ver Propuesta</button>
+                                        data-toggle="modal" data-target="#new-Trueque" disabled="true">Ver Propuesta
+                                </button>
                             </div>
                         </div>
                     </section>
@@ -175,26 +178,26 @@
             getUsersLevel2();
         });
 
-        var getUser = function(id){
+        var getUser = function (id) {
             var user = {
                 id: id
             };
             return user;
         };
 
-        var getUsersLevel2=  function () {
+        var getUsersLevel2 = function () {
             $('.user-level1').on('click', function () {
-                if(idUser1!=-1){
-                    $('#user1-'+idUser1).css('background-color', '#fcfffa');
+                if (idUser1 != -1) {
+                    $('#user1-' + idUser1).css('background-color', '#fcfffa');
                 }
                 var id = $(this).data('id');
-                $('#user1-'+id).css('background-color', '#eceff4');
+                $('#user1-' + id).css('background-color', '#eceff4');
                 idUser1 = parseInt(id);
                 var user = getUser(id);
                 $.ajax({
                     type: "POST",
                     url: "/propuesta/paso2",
-                    contentType : "application/json",
+                    contentType: "application/json",
                     data: JSON.stringify(user),
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader(header, token);
@@ -213,20 +216,20 @@
             });
         }
 
-        var getUsersLevel3=  function () {
+        var getUsersLevel3 = function () {
             $('.user-level2').on('click', function () {
-                if(idUser2!=-1){
-                    $('#user2-'+idUser2).css('background-color', '#fcfffa');
+                if (idUser2 != -1) {
+                    $('#user2-' + idUser2).css('background-color', '#fcfffa');
                 }
                 var id = $(this).data('id');
-                $('#user2-'+id).css('background-color', '#eceff4');
+                $('#user2-' + id).css('background-color', '#eceff4');
                 idUser2 = parseInt(id);
                 var user = getUser(id);
 
                 $.ajax({
                     type: "POST",
                     url: "/propuesta/paso3/" + idUser1,
-                    contentType : "application/json",
+                    contentType: "application/json",
                     data: JSON.stringify(user),
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader(header, token);
@@ -246,20 +249,20 @@
             });
         }
 
-        var finalizarTrueque=  function () {
+        var finalizarTrueque = function () {
             $('.user-level3').on('click', function () {
-                if(idUser3!=-1){
-                    $('#user3-'+idUser3).css('background-color', '#fcfffa');
+                if (idUser3 != -1) {
+                    $('#user3-' + idUser3).css('background-color', '#fcfffa');
                 }
                 var id = $(this).data('id');
-                $('#user3-'+id).css('background-color', '#eceff4');
+                $('#user3-' + id).css('background-color', '#eceff4');
                 idUser3 = parseInt(id);
                 var user = getUser(id);
-                $('#verPropuesta').prop("disabled",false);
+                $('#verPropuesta').prop("disabled", false);
                 $.ajax({
                     type: "POST",
-                    url: "/propuesta/paso4/"+ idUser1+ "/" +idUser2,
-                    contentType : "application/json",
+                    url: "/propuesta/paso4/" + idUser1 + "/" + idUser2,
+                    contentType: "application/json",
                     data: JSON.stringify(user),
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader(header, token);
@@ -276,20 +279,20 @@
             });
         }
 
-        var enviarPropuesta=  function () {
+        var enviarPropuesta = function () {
             $('#enviarPropuesta').on('click', function () {
-                $('#user1-'+idUser1).css('background-color', '#fcfffa');
-                $('#user2-'+idUser2).css('background-color', '#fcfffa');
-                $('#user3-'+idUser3).css('background-color', '#fcfffa');
+                $('#user1-' + idUser1).css('background-color', '#fcfffa');
+                $('#user2-' + idUser2).css('background-color', '#fcfffa');
+                $('#user3-' + idUser3).css('background-color', '#fcfffa');
                 var items = {
-                    1 : itemsUser1,
-                    2 : itemsUser2,
-                    3 : itemsUser3
+                    1: itemsUser1,
+                    2: itemsUser2,
+                    3: itemsUser3
                 }
                 $.ajax({
                     type: "POST",
-                    url: "/enviarPropuesta/" + idUser1+ "/"+ idUser2+ "/"+ idUser3,
-                    contentType : "application/json",
+                    url: "/enviarPropuesta/" + idUser1 + "/" + idUser2 + "/" + idUser3,
+                    contentType: "application/json",
                     data: JSON.stringify(items),
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader(header, token);
@@ -309,42 +312,43 @@
                     }
                 });
                 $('#new-Trueque').modal('hide');
+                $('#users-level2').html("");
+                $('#users-level3').html("");
             });
 
         }
 
 
-
-
-        displayUsersLevel2 = function(datas){
+        displayUsersLevel2 = function (datas) {
             var users = $('#users-level2');
             users.html("");
-            datas.forEach(function(data){
+            datas.forEach(function (data) {
                 users.append(
                     '<tr>' +
-                    '<td id="user2-' +data.id + '" class="user-level2" data-id="' + data.id + '">' +
+                    '<td id="user2-' + data.id + '" class="user-level2" data-id="' + data.id + '">' +
                     '<div class="cui-ecommerce--dashboard--list--img avatar">' +
-                    '<img id="user-img-' + data.id +'" src="' + data.photo1 + '" alt="Imagen"/>' +
+                    '<img id="user-img-' + data.id + '" src="' + data.photo1 + '" alt="Imagen"/>' +
                     '</div>' +
-                    '<h6>'+ data.fullName +'</h6>' +
+                    '<h6>' + data.fullName + '</h6>' +
                     '</td>' +
                     '</tr>'
                 );
             });
+            $('#users-level3').html("");
             getUsersLevel3();
         };
 
-        displayUsersLevel3 = function(datas){
+        displayUsersLevel3 = function (datas) {
             var users = $('#users-level3');
             users.html("");
-            datas.forEach(function(data){
+            datas.forEach(function (data) {
                 users.append(
                     '<tr>' +
-                    '<td id="user3-' +data.id + '" class="user-level3" data-id="' + data.id + '">' +
+                    '<td id="user3-' + data.id + '" class="user-level3" data-id="' + data.id + '">' +
                     '<div class="cui-ecommerce--dashboard--list--img avatar">' +
-                    '<img id="user-img-' + data.id +'" src="' + data.photo1 + '" alt="Imagen"/>' +
+                    '<img id="user-img-' + data.id + '" src="' + data.photo1 + '" alt="Imagen"/>' +
                     '</div>' +
-                    '<h6>'+ data.fullName +'</h6>' +
+                    '<h6>' + data.fullName + '</h6>' +
                     '</td>' +
                     '</tr>'
                 );
@@ -353,12 +357,12 @@
             enviarPropuesta();
         };
 
-        displayPropuesta = function(){
+        displayPropuesta = function () {
             var propuestaUser1items = $('#propuesta-user1items');
             $.ajax({
                 type: "GET",
                 url: "/user/" + idUser1,
-                contentType : "application/json",
+                contentType: "application/json",
                 async: false,
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader(header, token);
@@ -370,16 +374,15 @@
                     propuestaUser1.html("");
                     propuestaUser1.append(
                         '<div>' +
-                        '<h5>'+user1.fullName +'</h5>' +
+                        '<h5>' + user1.fullName + '</h5>' +
                         '<div class="avatar">' +
-                        '<img src="'+ user1.photo1 + '" alt="Imagen"/>' +
+                        '<img src="' + user1.photo1 + '" alt="Imagen"/>' +
                         '</div>' +
                         '</div>'
-
                     );
-                    tags1.forEach(function (tag){
+                    tags1.forEach(function (tag) {
                         propuestaUser1.append(
-                            '<span class="label label-default tag-margin">'+tag.name+'</span>'
+                            '<span class="label label-default tag-margin">' + tag.name + '</span>'
                         )
                     });
                 },
@@ -388,14 +391,14 @@
                 }
             });
             propuestaUser1items.html("");
-            itemsUser1.forEach(function(item){
+            itemsUser1.forEach(function (item) {
                 propuestaUser1items.append(
                     '<tr>' +
                     '<td>' +
                     '<div class="cui-ecommerce--dashboard--list--img avatar">' +
                     '<img src="' + item.photo1 + '" alt="Imagen"/>' +
                     '</div>' +
-                    '<p>'+ item.name +'</p>' +
+                    '<p>' + item.name + '</p>' +
                     '</td>' +
                     '</tr>'
                 );
@@ -403,7 +406,7 @@
             $.ajax({
                 type: "GET",
                 url: "/user/" + idUser2,
-                contentType : "application/json",
+                contentType: "application/json",
                 async: false,
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader(header, token);
@@ -415,15 +418,15 @@
                     propuestaUser2.html("");
                     propuestaUser2.append(
                         '<div>' +
-                        '<h5>'+user2.fullName +'</h5>' +
+                        '<h5>' + user2.fullName + '</h5>' +
                         '<div class="avatar">' +
-                        '<img src="'+ user2.photo1 + '" alt="Imagen"/>' +
+                        '<img src="' + user2.photo1 + '" alt="Imagen"/>' +
                         '</div>' +
                         '</div>'
                     );
-                    tags2.forEach(function (tag){
+                    tags2.forEach(function (tag) {
                         propuestaUser2.append(
-                            '<span class="label label-default tag-margin">'+tag.name+'</span>'
+                            '<span class="label label-default tag-margin">' + tag.name + '</span>'
                         )
                     });
                 },
@@ -433,14 +436,14 @@
             });
             var propuestaUser2items = $('#propuesta-user2items');
             propuestaUser2items.html("");
-            itemsUser2.forEach(function(item){
+            itemsUser2.forEach(function (item) {
                 propuestaUser2items.append(
                     '<tr>' +
                     '<td>' +
                     '<div class="cui-ecommerce--dashboard--list--img avatar">' +
                     '<img src="' + item.photo1 + '" alt="Imagen"/>' +
                     '</div>' +
-                    '<p>'+ item.name +'</p>' +
+                    '<p>' + item.name + '</p>' +
                     '</td>' +
                     '</tr>'
                 );
@@ -448,7 +451,7 @@
             $.ajax({
                 type: "GET",
                 url: "/user/" + idUser3,
-                contentType : "application/json",
+                contentType: "application/json",
                 async: false,
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader(header, token);
@@ -460,16 +463,16 @@
                     propuestaUser3.html("");
                     propuestaUser3.append(
                         '<div>' +
-                        '<h5>'+user3.fullName +'</h5>' +
+                        '<h5>' + user3.fullName + '</h5>' +
                         '<div class="avatar">' +
-                        '<img src="'+ user3.photo1 + '" alt="Imagen"/>' +
+                        '<img src="' + user3.photo1 + '" alt="Imagen"/>' +
                         '</div>' +
                         '</div>'
                     );
-                    tags3.forEach(function (tag){
-                       propuestaUser3.append(
-                        '<span class="label label-default tag-margin">'+tag.name+'</span>'
-                       )
+                    tags3.forEach(function (tag) {
+                        propuestaUser3.append(
+                            '<span class="label label-default tag-margin">' + tag.name + '</span>'
+                        )
                     });
                 },
                 error: function (e) {
@@ -478,14 +481,14 @@
             });
             var propuestaUser3items = $('#propuesta-user3items');
             propuestaUser3items.html("");
-            itemsUser3.forEach(function(item){
+            itemsUser3.forEach(function (item) {
                 propuestaUser3items.append(
                     '<tr>' +
                     '<td>' +
                     '<div class="cui-ecommerce--dashboard--list--img avatar">' +
                     '<img src="' + item.photo1 + '" alt="Imagen"/>' +
                     '</div>' +
-                    '<p>'+ item.name +'</p>' +
+                    '<p>' + item.name + '</p>' +
                     '</td>' +
                     '</tr>'
                 );

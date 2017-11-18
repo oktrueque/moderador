@@ -86,7 +86,7 @@ public class TruequeServiceImpl implements TruequeService {
     }
 
     private UserTrueque createUserTrueque(Trueque truequeSaved, User user, Integer orden) {
-        UserTrueque userTrueque = new UserTrueque(new UserTruequeId(truequeSaved, user), orden, 0);
+        UserTrueque userTrueque = new UserTrueque(new UserTruequeId(truequeSaved, user), orden, 0,true);
         return userTrueque;
     }
 
@@ -108,7 +108,7 @@ public class TruequeServiceImpl implements TruequeService {
         model.put("userApellidoOfertante", userOfertante.getLastName());
         model.put("itemsPropuestos", itemsPropuestos);
         model.put("itemsDemandados", itemsDemandados);
-        model.put("uri_confirm",urlServer + "trueques/"+trueque.getId()+"/confirm");
+        model.put("uri_confirm",urlServer + "profile/trueques/"+trueque.getId());
         email.setModel(model);
         emailService.sendMail(email,"truequeRequest.ftl");
 

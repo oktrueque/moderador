@@ -21,8 +21,7 @@ public interface ItemRepository extends CrudRepository<Item, Long> {
     List<Item> findById(Long id);
     List<Item> findAllByUser_IdAndTagsIn(Long id, List<Tag> tags);
     Integer countItemByStatus(int status);
-//    Integer countItemByCreationDateBetween(Date dateStart,Date dateEnd);
- //   Integer countItemByCreationDate_Month(int month);
+    List<Item> findTop3ByUser_IdAndTagsIn(Long id, List<Tag> tags);
     void deleteAllByUserId(Long userId);
 
     @Query(nativeQuery = true, value= "select count(*) from items i where month(creation_date) = ?1 and year(creation_date)=?2")
