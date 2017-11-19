@@ -25,4 +25,12 @@ public interface ReportService {
 
     Report denunciasPorTipos();
 
+    Report nuevosUsuarios();
+
+    Report cantidadTotalUsuarios();
+
+    Report denunciasSinModerar();
+
+    Report itemsSinModerar();
+
 }

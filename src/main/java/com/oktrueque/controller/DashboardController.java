@@ -34,6 +34,10 @@ public class DashboardController {
         Report truequesPorEstadoReport = reportService.truequesPorEstado();
         Report usuariosPorScoreReport = reportService.usuariosPorScore();
         Report denunciasPorTiposReport = reportService.denunciasPorTipos();
+        Report nuevosUsuariosReport = reportService.nuevosUsuarios();
+        Report cantidadTotalUsuariosReport = reportService.cantidadTotalUsuarios();
+        Report denunciasSinModerarReport = reportService.denunciasSinModerar();
+        Report itemsSinModerarReport = reportService.itemsSinModerar();
 
 //        List<Report> reportes = new ArrayList<>();
 //        reportes.add(itemsPorMesReport);
@@ -56,6 +60,10 @@ public class DashboardController {
         model.addAttribute("truequesPorEstadoReport",truequesPorEstadoReport);
         model.addAttribute("usuariosPorScoreReport",usuariosPorScoreReport);
         model.addAttribute("denunciasPorTiposReport",denunciasPorTiposReport);
+        model.addAttribute("nuevosUsuariosReport",nuevosUsuariosReport);
+        model.addAttribute("cantidadTotalUsuariosReport",cantidadTotalUsuariosReport);
+        model.addAttribute("denunciasSinModerarReport",denunciasSinModerarReport);
+        model.addAttribute("itemsSinModerarReport",itemsSinModerarReport);
         return "home";
     }
 }

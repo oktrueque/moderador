@@ -318,6 +318,65 @@ public class ReportServiceImpl implements  ReportService {
         return report;
     }
 
+    @Override
+    public Report nuevosUsuarios(){
+        Report report = new Report("nuevosUsuarios","","Nuevos usuarios");
+        Dataset firstDataset = new Dataset();
+        DateTime dateTime = new DateTime();
+        Integer actualMonth = dateTime.getMonthOfYear();
+        Integer actualYear = dateTime.getYear();
+        Calendar calendar = Calendar.getInstance();
+        calendar.getActualMinimum(Calendar.DAY_OF_MONTH);
+        calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        calendar.set(actualYear,actualMonth-1,calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+        Date primerDiaDelMes = calendar.getTime();
+        calendar.set(actualYear,actualMonth-1,calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        Date ultimoDiaDelMes = calendar.getTime();
+        Integer nuevosUsuarios = userRepository.countAllByRegisterDateBetween(primerDiaDelMes,ultimoDiaDelMes);
+        ArrayList<Integer> data = new ArrayList<>();
+        data.add(nuevosUsuarios);
+        firstDataset.setData(data);
+        firstDataset.setLabel("Nuevos usuarios");
+        report.setFirstDataset(firstDataset);
+        return report;
+    }
+
+    @Override
+    public Report cantidadTotalUsuarios(){
+        Report report = new Report("cantTotalUsuarios","","Usuarios");
+        Dataset dataset = new Dataset();
+        Integer cantidad = userRepository.countAllByStatus(Constants.USER_STATUS_ACTIVE);
+        ArrayList<Integer> data = new ArrayList<>();
+        data.add(cantidad);
+        dataset.setData(data);
+        report.setFirstDataset(dataset);
+        return report;
+    }
+
+    @Override
+    public Report denunciasSinModerar(){
+        Report report = new Report("denunciasSinModerar","","Denuncias: "+Constants.COMPLAINT_STATUS_NAME_PENDING);
+        Dataset dataset = new Dataset();
+        ArrayList<Integer> data = new ArrayList<>();
+        Integer denuncias = complaintRepository.countAllByStatus(Constants.COMPLAINT_STATUS_PROCESSING);
+        data.add(denuncias);
+        dataset.setData(data);
+        report.setFirstDataset(dataset);
+        return  report;
+    }
+
+    @Override
+    public Report itemsSinModerar(){
+        Report report = new Report("itemsSinModerar","","ITEMS: "+Constants.ITEM_STATUS_NAME_PENDING);
+        Dataset dataset = new Dataset();
+        ArrayList<Integer> data = new ArrayList<>();
+        Integer items = itemRepository.countAllByStatus(Constants.ITEM_STATUS_PENDING);
+        data.add(items);
+        dataset.setData(data);
+        report.setFirstDataset(dataset);
+        return report;
+    }
+
 
 
 }

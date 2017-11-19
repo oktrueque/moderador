@@ -15,4 +15,5 @@ public interface ComplaintRepository extends CrudRepository<Complaint, Long> {
 
         Integer countAllByComplaintType_Id(Long id);
 
+        Integer countAllByStatus(int status);
     }
