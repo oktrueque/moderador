@@ -85,7 +85,7 @@ public class EmailServiceImpl implements EmailService {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @Scheduled(cron = "0 21 * * mon,wed,fri,sat") //Todos los lun, mie, vie, dom a las 21hs.
+    @Scheduled(cron = "0 0 21 * * mon,wed,fri,sat") //Todos los lun, mie, vie, dom a las 21hs.
     @Override
     public void notifyTrueques() {
         List<User> usuarios = userRepository.usersWithPendingTrueques(4,0,3);
