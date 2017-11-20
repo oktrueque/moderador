@@ -90,7 +90,7 @@ public class ServiceConfig {
 
     @Bean
     public EmailService emailService(){
-        return new EmailServiceImpl(javaMailSender);
+        return new EmailServiceImpl(javaMailSender, userRepository, truequeRepository, userTruequeRepository);
     }
 
     @Bean

@@ -26,4 +26,15 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     Integer countAllByRegisterDateBetween(Date date1, Date date2);
 
+    @Query(nativeQuery = true,
+            value="SELECT u.*" +
+            "  FROM users u" +
+            "  JOIN users_trueques on u.id = users_trueques.id_user" +
+            "  JOIN trueques t on users_trueques.id_trueque = t.id" +
+            "  WHERE" +
+            "    t.ending_date IS NOT NULL" +
+            "    AND t.status = ?1" +
+            "    AND DATEDIFF(now(),t.ending_date) BETWEEN ?2 AND ?3")
+    List<User> usersWithPendingTrueques(int activeStatus, int limiteInferior, int limiteSuperior);
+
 }

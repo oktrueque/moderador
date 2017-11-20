@@ -10,4 +10,6 @@ public interface EmailService {
 
     void sendMail(Email email, String template);
 
+    void notifyTrueques();
+
 }
