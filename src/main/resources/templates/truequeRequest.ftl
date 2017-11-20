@@ -22,51 +22,47 @@
                             <p>Teniendo en cuenta tus preferencias, esta propuesta de trueque te podría interesar.</p>
                 </table>
                 <br/>
-                <h5 style="margin-bottom: 20px; color: #24222f; font-weight: 600">Propuesta</h5>
+                <h5 style="margin-bottom: 20px; color: #24222f; font-weight: 600">Items Propuestos</h5>
                 <h5 style="margin-bottom: 20px; color: #7c8780; font-weight: 600">Recibiras los siguientes items del
                     usuario ${userNombreOfertante} ${userApellidoOfertante}</h5>
                 <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
                 <#list itemsPropuestos>
-                    <tr>
-                        <#items as itemPropuesto>
-                            <td>
-                                <img src="${itemPropuesto.photo1}" alt="Imagen"
-                                     style="border-style: double; height: 65%; float: left;margin: 0.5em"/>
+                    <#items as itemPropuesto>
+                        <tr>
+                            <td style="text-align: left; padding: 10px 10px 10px 0px; border-top: 1px solid #d9d7e0; white-space: nowrap; vertical-align: top">
+                            ${itemPropuesto.name}
                             </td>
-                            <#--<td>-->
-                                <#--<h2>${itemPropuesto.name}</h2></br>-->
-                                <#--<h3>${itemPropuesto.description}</h3></br>-->
-                                <#--<h3>${itemPropuesto.category.name}</h3>-->
-                            <#--</td>-->
-                        </#items>
-                    </tr>
+                            <td style="width: 50%;padding: 10px 0px 10px 10px; border-top: 1px solid #d9d7e0;">
+                            ${itemPropuesto.description}
+                                <br/>
+                            ${itemPropuesto.category.name}
+                            </td>
+                        </tr>
+                    </#items>
                 </#list>
                 </table>
                 <h5 style="margin-bottom: 20px; color: #24222f; font-weight: 600">Tus Items</h5>
-                <h5 style="margin-bottom: 20px; color: #7c8780; font-weight: 600">Entregarías los siguientes items al
-                    usuario ${userNombreDestino} ${userApellidoDestino}</h5>
+                <h5 style="margin-bottom: 20px; color: #7c8780; font-weight: 600">Recibiras los siguientes items del
+                    usuario ${userNombreOfertante} ${userApellidoOfertante}</h5>
                 <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
-                    <tbody>
-                    <#list itemsDemandados>
+                <#list itemsDemandados>
+                    <#items as itemDemandado>
                     <tr>
-                        <#items as itemDemandado>
-                            <td>
-                                <img src="${itemDemandado.photo1}" alt="Imagen"
-                                     style="border-style: double; height: 65%; float: left;margin: 0.5em"/>
-                            </td>
-                            <#--<td>-->
-                                <#--<h2>${itemDemandado.name}</h2></br>-->
-                                <#--<h3>${itemDemandado.description}</h3></br>-->
-                                <#--<h3>${itemDemandado.category.name}</h3>-->
-                            <#--</td>-->
-                        </#items>
-                    </tr>
-                    </#list>
-                    </tbody>
+                        <td style="text-align: left; padding: 10px 10px 10px 0px; border-top: 1px solid #d9d7e0; white-space: nowrap; vertical-align: top">
+                        ${itemDemandado.name}
+                        </td>
+                    <td style="width: 50%;padding: 10px 0px 10px 10px; border-top: 1px solid #d9d7e0;">
+                    ${itemDemandado.description}
+                        <br/>
+                    ${itemDemandado.category.name}
+                    </#items>
+                </td>
+                </tr>
+                </#list>
                 </table>
                 <a href="${uri_confirm}"
                    style="display: inline-block; padding: 11px 30px; margin: 20px 0px 30px; font-size: 15px; color: #fff; background: #01a8fe; border-radius: 5px">
-                    Ver Detalle del Trueque
+                    Ver detalle del Trueque
                 </a>
                 </td>
                 </tr>
