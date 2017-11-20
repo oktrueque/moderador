@@ -91,71 +91,78 @@
                     </button>
                     <h4 class="modal-title" id="myModalLabel">Propuesta de Trueque</h4>
                 </div>
-                <section class="row">
-                    <div class="col-lg-4">
-                        <section class="panel">
-                            <div class="panel-heading" id="propuesta-user1">
+                <div class="col-lg-4" style="padding: 1em;">
+                    <section class="panel">
+                        <div class="messaging-list">
+                            <div class="messaging-list-item" id="propuesta-user1"
+                                 style="padding: 20px 15px;border-bottom: 1px solid #eceff4;">
 
                             </div>
-                            <div class="panel-body">
-                                <div class="margin-bottom-50">
-                                    <table class="table table-hover nowrap" width="100%">
-                                        <thead>
-                                        <tr>
-                                            <th>Items</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="propuesta-user1items">
+                        </div>
+                        <div class="panel-body">
+                            <div class="margin-bottom-50">
+                                <table class="table table-hover nowrap" width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th>Items</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="propuesta-user1items">
 
-                                        </tbody>
-                                    </table>
-                                </div>
+                                    </tbody>
+                                </table>
                             </div>
-                        </section>
-                    </div>
-                    <div class="col-lg-4">
-                        <section class="panel">
-                            <div class="panel-heading" id="propuesta-user2">
-
-                            </div>
-                            <div class="panel-body">
-                                <div class="margin-bottom-50">
-                                    <table class="table table-hover nowrap" width="100%">
-                                        <thead>
-                                        <tr>
-                                            <th>Items</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="propuesta-user2items">
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                    <div class="col-lg-4">
-                        <section class="panel">
-                            <div class="panel-heading" id="propuesta-user3">
+                        </div>
+                    </section>
+                </div>
+                <div class="col-lg-4" style="padding: 1em;">
+                    <section class="panel">
+                        <div class="messaging-list">
+                            <div class="messaging-list-item" id="propuesta-user2"
+                                 style="padding: 20px 15px;border-bottom: 1px solid #eceff4;">
 
                             </div>
-                            <div class="panel-body">
-                                <div class="margin-bottom-50">
-                                    <table class="table table-hover nowrap" width="100%">
-                                        <thead>
-                                        <tr>
-                                            <th>Items</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="propuesta-user3items">
+                        </div>
+                        <div class="panel-body">
+                            <div class="margin-bottom-50">
+                                <table class="table table-hover nowrap" width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th>Items</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="propuesta-user2items">
 
-                                        </tbody>
-                                    </table>
-                                </div>
+                                    </tbody>
+                                </table>
                             </div>
-                        </section>
-                    </div>
-                </section>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-lg-4" style="padding: 1em;">
+                    <section class="panel">
+                        <div class="messaging-list">
+                            <div class="messaging-list-item" id="propuesta-user3"
+                                 style="padding: 20px 15px;border-bottom: 1px solid #eceff4;">
+
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="margin-bottom-50">
+                                <table class="table table-hover nowrap" width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th>Items</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="propuesta-user3items">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" id="enviarPropuesta">Enviar</button>
                 </div>
@@ -373,18 +380,21 @@
                     var propuestaUser1 = $('#propuesta-user1');
                     propuestaUser1.html("");
                     propuestaUser1.append(
-                        '<div>' +
-                        '<h5>' + user1.fullName + '</h5>' +
-                        '<div class="avatar">' +
+                        '<div class="s1">' +
+                        '<a class="avatar">' +
                         '<img src="' + user1.photo1 + '" alt="Imagen"/>' +
+                        '</a>' +
                         '</div>' +
-                        '</div>'
+                        '<div class="s2">' +
+                        '<div class="messaging-list-title-name">' + user1.fullName + '</div>'
                     );
                     tags1.forEach(function (tag) {
                         propuestaUser1.append(
+//                            '<div class="messaging-list-title-last color-default">' + tag.name + '</div>'
                             '<span class="label label-default tag-margin">' + tag.name + '</span>'
                         )
                     });
+                    propuestaUser1.append('</div>')
                 },
                 error: function (e) {
                     console.log(e);
@@ -417,18 +427,21 @@
                     var propuestaUser2 = $('#propuesta-user2');
                     propuestaUser2.html("");
                     propuestaUser2.append(
-                        '<div>' +
-                        '<h5>' + user2.fullName + '</h5>' +
-                        '<div class="avatar">' +
+                        '<div class="s1">' +
+                        '<a class="avatar">' +
                         '<img src="' + user2.photo1 + '" alt="Imagen"/>' +
+                        '</a>' +
                         '</div>' +
-                        '</div>'
+                        '<div class="s2">' +
+                        '<div class="messaging-list-title-name">' + user2.fullName + '</div>'
                     );
                     tags2.forEach(function (tag) {
                         propuestaUser2.append(
+//                            '<div class="messaging-list-title-last color-default">' + tag.name + '</div>'
                             '<span class="label label-default tag-margin">' + tag.name + '</span>'
                         )
                     });
+                    propuestaUser2.append('</div>')
                 },
                 error: function (e) {
                     console.log(e);
@@ -462,18 +475,21 @@
                     var propuestaUser3 = $('#propuesta-user3');
                     propuestaUser3.html("");
                     propuestaUser3.append(
-                        '<div>' +
-                        '<h5>' + user3.fullName + '</h5>' +
-                        '<div class="avatar">' +
+                        '<div class="s1">' +
+                        '<a class="avatar">' +
                         '<img src="' + user3.photo1 + '" alt="Imagen"/>' +
+                        '</a>' +
                         '</div>' +
-                        '</div>'
+                        '<div class="s2">' +
+                        '<div class="messaging-list-title-name">' + user3.fullName + '</div>'
                     );
                     tags3.forEach(function (tag) {
                         propuestaUser3.append(
+//                            '<div class="messaging-list-title-last color-default">' + tag.name + '</div>'
                             '<span class="label label-default tag-margin">' + tag.name + '</span>'
                         )
                     });
+                    propuestaUser3.append('</div>')
                 },
                 error: function (e) {
                     console.log(e);
