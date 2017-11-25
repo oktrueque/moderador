@@ -101,8 +101,6 @@
 
     <!-- Page Scripts -->
     <script th:inline="javascript">
-        var token = [[${_csrf.token}]];
-        var header = [[${_csrf.headerName}]];
         var table;
 
         $(function () {
@@ -146,9 +144,6 @@
             $.ajax({
                 type: 'DELETE',
                 url: '/comments/' + commentId,
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
                 success: function () {
                     l.stop();
                     table.row(btn.parents('tr')).remove().draw();

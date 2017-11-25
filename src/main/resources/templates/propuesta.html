@@ -172,8 +172,6 @@
 
 
     <script th:inline="javascript">
-        var token = [[${_csrf.token}]];
-        var header = [[${_csrf.headerName}]];
         var idUser1 = -1;
         var idUser2 = -1;
         var idUser3 = -1;
@@ -206,9 +204,6 @@
                     url: "/propuesta/paso2",
                     contentType: "application/json",
                     data: JSON.stringify(user),
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader(header, token);
-                    },
                     success: function (data) {
                         displayUsersLevel2(data.users);
                     },
@@ -238,9 +233,6 @@
                     url: "/propuesta/paso3/" + idUser1,
                     contentType: "application/json",
                     data: JSON.stringify(user),
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader(header, token);
-                    },
                     success: function (data) {
                         displayUsersLevel3(data.users);
                         itemsUser2 = data.itemsUser2;
@@ -271,9 +263,6 @@
                     url: "/propuesta/paso4/" + idUser1 + "/" + idUser2,
                     contentType: "application/json",
                     data: JSON.stringify(user),
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader(header, token);
-                    },
                     success: function (data) {
                         itemsUser3 = data.itemsUser3;
                         itemsUser1 = data.itemsUser1;
@@ -301,9 +290,6 @@
                     url: "/enviarPropuesta/" + idUser1 + "/" + idUser2 + "/" + idUser3,
                     contentType: "application/json",
                     data: JSON.stringify(items),
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader(header, token);
-                    },
                     success: function (data) {
                         swal({
                             title: "Propuesta Enviada",
@@ -371,9 +357,6 @@
                 url: "/user/" + idUser1,
                 contentType: "application/json",
                 async: false,
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
                 success: function (data) {
                     var user1 = data.user;
                     var tags1 = data.tags;
@@ -418,9 +401,6 @@
                 url: "/user/" + idUser2,
                 contentType: "application/json",
                 async: false,
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
                 success: function (data) {
                     var user2 = data.user;
                     var tags2 = data.tags;
@@ -466,9 +446,6 @@
                 url: "/user/" + idUser3,
                 contentType: "application/json",
                 async: false,
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
                 success: function (data) {
                     var user3 = data.user;
                     var tags3 = data.tags;
