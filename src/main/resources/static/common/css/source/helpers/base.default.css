@@ -2342,3 +2342,60 @@ body.theme-blue .cwt__footer {
     padding-right: 20px !important;
     margin-bottom: 30px;
 }
+
+.size-1k{
+    width: 1000px !important;
+}
+
+.margin-horizontal-5-obligatory{
+    margin: 2px 3px 2px 3px !important;
+}
+
+.font-size-4em{
+    font-size: 4em !important;
+}
+
+.rotate-315-deg{
+    transform: rotate(45deg);
+}
+
+.rotate-135-deg{
+    transform: rotate(135deg);
+}
+
+.no-vertical-padding{
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.green-font{
+    color: seagreen;
+}
+
+.grey-background{
+    background-color: #f2f4f8 !important;
+}
+
+.no-padding-right-left-bot{
+    padding-bottom: 0px !important;
+    padding-right: 0px !important;
+    padding-top: 15px !important;
+    padding-left: 10px !important;
+}
+
+.min-height-50{
+    min-height: 50px !important;
+}
+
+.position-relative{
+    position: relative !important;
+}
+
+.no-position{
+    bottom: 0px !important;
+    right: 0px !important;
+}
+
+.font-size-15{
+    font-size: 15px !important;
+}
