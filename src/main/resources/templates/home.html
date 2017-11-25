@@ -4,11 +4,6 @@
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"/>
-    <style>
-        .widget-seven .counter-count {
-            right: 110px;
-        }
-    </style>
 </head>
 <th:block layout:fragment="content">
     <section class="page-content">
@@ -24,52 +19,84 @@
                                         <div class="row">
                                             <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">
                                                 <div class="widget widget-seven background-warning">
-                                                    <div class="widget-body">
+                                                    <div class="widget-body no-padding-right-left-bot">
                                                         <div class="widget-body-inner">
-                                                            <h5 th:text="${nuevosUsuariosReport.reportTitle}" class="text-uppercase"></h5>
-                                                            <i class="counter-icon icmn-users"></i>
-                                                            <span class="counter-count"><span class="counter-init"
+                                                            <div class="col-lg-12">
+                                                            <h5 th:text="${nuevosUsuariosReport.reportTitle}" class="text-uppercase font-size-15"></h5>
+                                                            </div>
+                                                            <div class="col-lg-12 min-height-50">
+                                                            <div class="col-lg-6">
+                                                            <i class="counter-icon icmn-users position-relative"></i>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                            <span class="counter-count position-relative no-position"><span class="counter-init"
                                                                                               data-from="0"
                                                                                               data-to="99" th:text="${nuevosUsuariosReport.firstDataset.data}"></span></span>
+                                                            </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">
                                                 <div class="widget widget-seven background-danger">
-                                                    <div class="widget-body">
+                                                    <div class="widget-body no-padding-right-left-bot">
                                                         <div class="widget-body-inner">
-                                                            <h5 th:text="${cantidadTotalUsuariosReport.reportTitle}" class="text-uppercase"></h5>
-                                                            <i class="counter-icon icmn-users"></i>
-                                                            <span class="counter-count">
+                                                            <div class="col-lg-12">
+                                                            <h5 th:text="${cantidadTotalUsuariosReport.reportTitle}" class="text-uppercase font-size-15"></h5>
+                                                            </div>
+                                                            <div class="col-lg-12 min-height-50">
+                                                                <div class="col-lg-6">
+                                                            <i class="col-lg-6 counter-icon icmn-users position-relative"></i>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                            <span class="counter-count position-relative no-position">
                                     <span class="counter-init" data-from="0" data-to="99" th:text="${cantidadTotalUsuariosReport.firstDataset.data}"></span>
                             </span>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">
                                                 <div class="widget widget-seven  background-warning">
-                                                    <div class="widget-body">
+                                                    <div class="widget-body no-padding-right-left-bot">
                                                         <div class="widget-body-inner">
-                                                            <h5 th:text="${denunciasSinModerarReport.reportTitle}" class="text-uppercase"></h5>
-                                                            <i class="counter-icon icmn-users"></i>
-                                                            <span class="counter-count">
+                                                            <div class="col-lg-12">
+                                                            <h5 th:text="${denunciasSinModerarReport.reportTitle}" class="text-uppercase font-size-15"></h5>
+                                                            </div>
+                                                            <div class="col-lg-12 min-height-50">
+                                                                <div class="col-lg-6">
+                                                            <i class="counter-icon icmn-users position-relative"></i>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                            <span class="counter-count position-relative no-position">
                                         <span class="counter-init" data-from="0" data-to="356" th:text="${denunciasSinModerarReport.firstDataset.data}"></span>
                                     </span>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">
                                                 <div class="widget widget-seven  background-danger">
-                                                    <div class="widget-body">
+                                                    <div class="widget-body no-padding-right-left-bot">
                                                         <div class="widget-body-inner">
-                                                            <h5 class="text-uppercase" th:text="${itemsSinModerarReport.reportTitle}"></h5>
-                                                            <i class="counter-icon icmn-users"></i>
-                                                            <span class="counter-count">
+                                                            <div class="col-lg-12">
+                                                            <h5 class="text-uppercase font-size-15" th:text="${itemsSinModerarReport.reportTitle}"></h5>
+                                                            </div>
+                                                            <div class="col-lg-12 min-height-50">
+                                                                <div class="col-lg-6">
+                                                            <i class="counter-icon icmn-users position-relative"></i>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                            <span class="counter-count position-relative no-position">
                                         <span class="counter-init" data-from="0" data-to="356" th:text="${itemsSinModerarReport.firstDataset.data}"></span>
                                     </span>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
