@@ -14,8 +14,8 @@ public interface ItemRepository extends CrudRepository<Item, Long> {
     List<Item> findByCategory_Id(int id);
     List<Item> findByStatus(int status);
     List<Item> findByUser_Username(String username, Pageable pageable);
-    List<Item> findAllByIdIn(List<Long> ids);
-    List<Item> findById(Long id);
+    List<Item> findAllByIdInAndStatus(List<Long> ids, Integer idStatus);
+    List<Item> findByIdAndStatus(Long id,Integer idStatus);
     List<Item> findTop3ByUser_IdAndTagsInAndStatus(Long id, List<Tag> tags,Integer idStatus);
     void deleteAllByUserId(Long userId);
     @Query(nativeQuery = true, value= "select count(*) from items i where month(creation_date) = ?1 and year(creation_date)=?2")
