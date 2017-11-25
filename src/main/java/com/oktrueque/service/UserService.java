@@ -59,9 +59,13 @@ public class UserService {
         return userPartial;
     }
 
+    @Transactional
     public void updateUser(User user){
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        User userStored = userRepository.findOne(user.getId());
+        userStored.setName(user.getName());
+        userStored.setLastName(user.getLastName());
+        userStored.setStatus(user.getStatus());
+        userRepository.save(userStored);
     }
 
     @Transactional

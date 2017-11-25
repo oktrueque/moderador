@@ -86,8 +86,6 @@
     </script>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        var token = [[${_csrf.token}]];
-        var header = [[${_csrf.headerName}]];
 
         $(function () {
             $(".btn-delete-item").on("click", function () {
@@ -110,9 +108,6 @@
                                 type: 'DELETE',
                                 url: '/items/' + itemId,
                                 contentType: 'application/json',
-                                beforeSend: function (xhr) {
-                                    xhr.setRequestHeader(header, token);
-                                },
                                 success: function (data) {
                                     l.stop();
                                     table.row(btn.parents('tr')).remove().draw();
