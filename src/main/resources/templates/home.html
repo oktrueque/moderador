@@ -202,20 +202,26 @@
             return finalColors;
         }
 
+        var data1 =  truequesConcretadosVsIniciadosReport.firstDataset.data;
+        var type = truequesConcretadosVsIniciadosReport.reportType;
+        var data2 = truequesConcretadosVsIniciadosReport.secondDataset.data;
+        var labels = truequesConcretadosVsIniciadosReport.labels;
+        var title = truequesConcretadosVsIniciadosReport.reportTitle;
+
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
-            type: truequesConcretadosVsIniciadosReport.reportType,
+            type: type,
             data: {
                 datasets: [
                     {
-                        data: truequesConcretadosVsIniciadosReport.firstDataset.data,
+                        data:data1,
                         label: 'Concretados',
                         borderColor: '#6d6d6d',
                         backgroundColor: '#ee8300'
 
                     },
                     {
-                        data: truequesConcretadosVsIniciadosReport.secondDataset.data,
+                        data: data2,
                         label: 'Iniciados',
                         borderColor: '#6d6d6d',
                         backgroundColor: '#e22207'
@@ -223,7 +229,7 @@
 
 
                 ],
-                labels: truequesConcretadosVsIniciadosReport.labels
+                labels: labels
             },
             options: {
                 scales: {
@@ -235,7 +241,7 @@
                 },
                 title: {
                     display: true,
-                    text: truequesConcretadosVsIniciadosReport.reportTitle,
+                    text: title,
                     fontStyle: 'bold',
                     fontSize: 16
                 }
@@ -449,8 +455,9 @@
                 auxArray = array;
                 auxArray.splice(0,12-months);
                 return auxArray;
-            } else if(months === 12){
-                return reportObject.firstDataset.data;}
+            } else {
+                return reportObject.firstDataset.data;
+            }
         }
         function updateReportLabels(labels,months,reportObject) {
             var auxLabels = [];
@@ -458,8 +465,10 @@
                 auxLabels = labels;
                 auxLabels.splice(0,12-months);
                 return auxLabels;
-            } else if(months === 12){
-                return reportObject.labels;}
+            } else {
+
+                return reportObject.labels;
+            }
         }
         document.addEventListener("DOMContentLoaded", function () {
             $('#selectMonthChart').on('change',function () {
@@ -468,9 +477,9 @@
                 console.log('Dataset 0: '+ myChart.data.datasets[0].data);
                 console.log('Dataset 1: '+ myChart.data.datasets[1].data);
                 console.log('Labels: '+ myChart.data.labels);
-                myChart.data.datasets[0].data = [updateReportData(truequesConcretadosVsIniciadosReport.firstDataset.data,comboboxVal,truequesConcretadosVsIniciadosReport)];
-                myChart.data.datasets[1].data = [updateReportData(truequesConcretadosVsIniciadosReport.secondDataset.data,comboboxVal,truequesConcretadosVsIniciadosReport)];
-                myChart.labels = [updateReportLabels(truequesConcretadosVsIniciadosReport.labels,comboboxVal,truequesConcretadosVsIniciadosReport)];
+                myChart.data.datasets[0].data = updateReportData(myChart.data.datasets[0].data,comboboxVal,truequesConcretadosVsIniciadosReport);
+                myChart.data.datasets[1].data = updateReportData(myChart.data.datasets[1].data,comboboxVal,truequesConcretadosVsIniciadosReport);
+                myChart.labels = [updateReportLabels(myChart.data.labels,comboboxVal,truequesConcretadosVsIniciadosReport)];
                 myChart.update();
                 console.log('DESPUES');
                 console.log('Dataset 0: '+ myChart.data.datasets[0].data);
