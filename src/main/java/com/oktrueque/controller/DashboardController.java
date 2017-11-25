@@ -38,6 +38,7 @@ public class DashboardController {
         Report cantidadTotalUsuariosReport = reportService.cantidadTotalUsuarios();
         Report denunciasSinModerarReport = reportService.denunciasSinModerar();
         Report itemsSinModerarReport = reportService.itemsSinModerar();
+        Report usuariosActivosPorMesReport = reportService.usuariosActivosPorMes();
 
 //        List<Report> reportes = new ArrayList<>();
 //        reportes.add(itemsPorMesReport);
@@ -64,6 +65,7 @@ public class DashboardController {
         model.addAttribute("cantidadTotalUsuariosReport",cantidadTotalUsuariosReport);
         model.addAttribute("denunciasSinModerarReport",denunciasSinModerarReport);
         model.addAttribute("itemsSinModerarReport",itemsSinModerarReport);
+        model.addAttribute("usuariosActivosPorMesReport",usuariosActivosPorMesReport);
         return "home";
     }
 }

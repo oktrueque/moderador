@@ -377,6 +377,37 @@ public class ReportServiceImpl implements  ReportService {
         return report;
     }
 
+    @Override
+    public Report usuariosActivosPorMes(){
+        Report report = new Report("usuariosActivosPorMes","bar","Usuarios activos por mes");
+        Calendar calendar = Calendar.getInstance();
+        Dataset dataset = new Dataset();
+        ArrayList<String> mesesList = new ArrayList<>();
+        for(int x=0;x<12;x++){
+            mesesList.add(getMonthForInt(x));
+        }
+        List<User> usuariosActivos = userRepository.findByStatus(Constants.USER_STATUS_ACTIVE);
+        report.setLabels(mesesList);
+        int mes = -1;
+        if(usuariosActivos.size()==0){
+            ArrayList<Integer> aux = new ArrayList<>();
+            aux.add(0);
+            dataset.setData(aux);
+        }
+        ArrayList<Integer> meses = new ArrayList<>();
+        for (User us:usuariosActivos){
+            if(us.getRegisterDate()!=null){
+                calendar.setTime(us.getRegisterDate());
+                mes = calendar.get(Calendar.MONTH);
+                meses.add(mes);
+            }
+        }
+        dataset = setDatasetDataForMonths(meses);
+        dataset.setLabel("Usuarios");
+        report.setFirstDataset(dataset);
+        return report;
+    }
+
 
 
 }

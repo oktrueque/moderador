@@ -133,12 +133,12 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="col-lg-6 form-group">
-                                        <!--<label for="selectMonthChart3">Meses</label>-->
-                                        <!--<select id="selectMonthChart3" class="form-control">-->
-                                            <!--<option value="12">12</option>-->
-                                            <!--<option value="6">6</option>-->
-                                            <!--<option value="3">3</option>-->
-                                        <!--</select>-->
+                                        <label for="selectMonthChart10">Ver los ultimos N meses</label>
+                                        <select id="selectMonthChart10" class="form-control">
+                                            <option value="12">12</option>
+                                            <option value="6">6</option>
+                                            <option value="3">3</option>
+                                        </select>
                                     </div>
                                     <div class="col-lg-6 form-group">
                                         <label for="selectMonthChart4">Ver los ultimos N meses</label>
@@ -150,8 +150,8 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
-                                    <div class="col-lg-6" id="myChart3Container">
-                                        <canvas id="myChart3"></canvas>
+                                    <div class="col-lg-6" id="myChart10Container">
+                                        <canvas id="myChart10"></canvas>
                                     </div>
                                     <div class="col-lg-6" id="myChart4Container">
                                         <canvas id="myChart4"></canvas>
@@ -178,7 +178,7 @@
                                         <canvas id="myChart9"></canvas>
                                     </div>
                                     <div class="col-lg-6">
-                                        <canvas id="myChart10"></canvas>
+                                        <canvas id="myChart3"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -204,6 +204,7 @@
         var truequesPorEstadoReport = [[${truequesPorEstadoReport}]];
         var usuariosPorScoreReport = [[${usuariosPorScoreReport}]];
         var denunciasPorTiposReport = [[${denunciasPorTiposReport}]];
+        var usuariosActivosPorMesReport = [[${usuariosActivosPorMesReport}]];
 
         function getColorForEachOne(array) {
 
@@ -481,6 +482,34 @@
             }
         });
 
+        var data10 = usuariosActivosPorMesReport.firstDataset.data.slice();
+        var labels10 = usuariosActivosPorMesReport.labels.slice();
+
+        var ctx10 = document.getElementById('myChart10').getContext('2d');
+        var myChart10 = new Chart(ctx10, {
+            type: usuariosActivosPorMesReport.reportType,
+            data: {
+                datasets: [
+                    {
+                        data: data10,
+                        backgroundColor: "#ee8300",
+                        borderColor: '#6d6d6d',
+                        label:usuariosActivosPorMesReport.firstDataset.label
+                    }
+
+                ],
+                labels: labels10
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: usuariosActivosPorMesReport.reportTitle,
+                    fontStyle: 'bold',
+                    fontSize: 16
+                }
+            }
+        });
+
         function updateReportData(array,months,reportDataset) {
             if(months < array.length){
                 var auxArray = array;
@@ -521,27 +550,22 @@
             });
             $('#selectMonthChart2').on('change',function () {
                 let comboBoxVal = parseInt($('#selectMonthChart2').val());
-//                console.log('ANTES');
-//                console.log('Dataset 0: '+ myChart2.data.datasets[0].data);
-//                console.log('Labels: '+ myChart2.data.labels);
                 myChart2.data.datasets[0].data = updateReportData(myChart2.data.datasets[0].data,comboBoxVal,itemsPorMesReport.firstDataset);
                 myChart2.data.labels = updateReportLabels(myChart2.data.labels,comboBoxVal,itemsPorMesReport.labels);
                 myChart2.update();
-//                console.log('DESPUES');
-//                console.log('Dataset 0: '+ myChart2.data.datasets[0].data);
-//                console.log('Labels: '+ myChart2.data.labels);
+
             });
             $('#selectMonthChart4').on('change',function () {
                 let comboBoxVal = parseInt($('#selectMonthChart4').val());
-//                console.log('ANTES');
-//                console.log('Dataset 0: '+ myChart4.data.datasets[0].data);
-//                console.log('Labels: '+ myChart4.data.labels);
                 myChart4.data.datasets[0].data = updateReportData(myChart4.data.datasets[0].data,comboBoxVal,denunciasPorMesReport.firstDataset);
                 myChart4.data.labels = updateReportLabels(myChart4.data.labels,comboBoxVal,denunciasPorMesReport.labels);
                 myChart4.update();
-//                console.log('DESPUES');
-//                console.log('Dataset 0: '+ myChart4.data.datasets[0].data);
-//                console.log('Labels: '+ myChart4.data.labels);
+            });
+            $('#selectMonthChart10').on('change',function () {
+                let comboBoxVal = parseInt($('#selectMonthChart10').val());
+                myChart10.data.datasets[0].data = updateReportData(myChart10.data.datasets[0].data,comboBoxVal,usuariosActivosPorMesReport.firstDataset);
+                myChart10.data.labels = updateReportLabels(myChart10.data.labels,comboBoxVal,usuariosActivosPorMesReport.labels);
+                myChart10.update();
             });
         });
 
