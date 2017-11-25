@@ -165,6 +165,7 @@ public class Item {
             case 1: return "Activo";
             case 2: return "Eliminado";
             case 3: return "Bloqueado";
+            case 4: return "Trocado";
             default: return "Sin definir";
         }
     }
