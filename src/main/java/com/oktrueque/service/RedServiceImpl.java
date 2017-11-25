@@ -2,6 +2,7 @@ package com.oktrueque.service;
 
 import com.oktrueque.model.*;
 import com.oktrueque.repository.*;
+import com.oktrueque.utils.Constants;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -88,7 +89,7 @@ public class RedServiceImpl implements RedService{
     @Override
     public List<Item> getItemsToUser(Long id, Long idUserSelected) {
         List<Tag> tags = userRepository.findOne(idUserSelected).getTags();
-        return itemRepository.findTop3ByUser_IdAndTagsIn(id,tags).stream().distinct().collect(Collectors.toList());
+        return itemRepository.findTop3ByUser_IdAndTagsInAndStatus(id,tags, Constants.ITEM_STATUS_ACTIVE).stream().distinct().collect(Collectors.toList());
     }
 
 

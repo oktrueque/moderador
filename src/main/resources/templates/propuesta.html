@@ -205,6 +205,7 @@
                 $('#user1-' + id).css('background-color', '#eceff4');
                 idUser1 = parseInt(id);
                 var user = getUser(id);
+                $('#verPropuesta').prop("disabled", true);
                 $.ajax({
                     type: "POST",
                     url: "/propuesta/paso2",
@@ -233,7 +234,7 @@
                 $('#user2-' + id).css('background-color', '#eceff4');
                 idUser2 = parseInt(id);
                 var user = getUser(id);
-
+                $('#verPropuesta').prop("disabled", true);
                 $.ajax({
                     type: "POST",
                     url: "/propuesta/paso3/" + idUser1,
