@@ -448,31 +448,22 @@
         function updateReportData(array,months,reportObject) {
             var auxArray = [];
             if(months < array.length) {
-                for (var i = months; i > -1; i--) {
-                    auxArray.push(array[i]);
-                }
+                auxArray = array;
+                auxArray.splice(0,12-months);
                 return auxArray;
             } else if(months === 12){
-                return reportObject.firstDataset.data;
-            }
+                return reportObject.firstDataset.data;}
         }
-
         function updateReportLabels(labels,months,reportObject) {
             var auxLabels = [];
             if(months < labels.length){
-                for(var i = months; i > -1; i--){
-                        auxLabels.push(labels[i]);
-                }
+                auxLabels = labels;
+                auxLabels.splice(0,12-months);
                 return auxLabels;
             } else if(months === 12){
-                return reportObject.labels;
-            }
+                return reportObject.labels;}
         }
-
-
-
         document.addEventListener("DOMContentLoaded", function () {
-
             $('#selectMonthChart').on('change',function () {
                 let comboboxVal = parseInt($('#selectMonthChart').val());
                 console.log('ANTES');
@@ -488,7 +479,6 @@
                 console.log('Dataset 1: '+ myChart.data.datasets[1].data);
                 console.log('Labels: '+ myChart.data.labels);
             });
-
         });
 
         /*]]>*/
