@@ -35,7 +35,7 @@ public class RedServiceImpl implements RedService{
         userRepository.findAll().forEach(t -> {
             if(!t.getItems().isEmpty() && !t.getTags().isEmpty()){
                 t.getItems().forEach(i -> {
-                    if(!i.getTags().isEmpty()){
+                    if(!i.getTags().isEmpty() && i.getStatus().equals(Constants.ITEM_STATUS_ACTIVE)){
                         usersWithTags.add(t);
                     }
                 });
@@ -59,7 +59,8 @@ public class RedServiceImpl implements RedService{
             idItems.add(t.getId().getItemId());
         });
         List<Item> items = (idItems.size()!= 1) ?
-                itemRepository.findAllByIdIn(idItems) : itemRepository.findById(idItems.get(0));
+                itemRepository.findAllByIdInAndStatus(idItems,Constants.ITEM_STATUS_ACTIVE)
+                : itemRepository.findByIdAndStatus(idItems.get(0),Constants.ITEM_STATUS_ACTIVE);
         items.forEach(t ->{
             if(t.getUser().getId() != id){
                 usersWithItemsByPreferences.add(t.getUser());

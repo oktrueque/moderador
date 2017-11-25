@@ -42,8 +42,7 @@
                 </#list>
                 </table>
                 <h5 style="margin-bottom: 20px; color: #24222f; font-weight: 600">Tus Items</h5>
-                <h5 style="margin-bottom: 20px; color: #7c8780; font-weight: 600">Recibiras los siguientes items del
-                    usuario ${userNombreOfertante} ${userApellidoOfertante}</h5>
+                <h5 style="margin-bottom: 20px; color: #7c8780; font-weight: 600">Entregaras los siguientes items al usuario ${userNombreDestino} ${userApellidoDestino}</h5>
                 <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
                 <#list itemsDemandados>
                     <#items as itemDemandado>
