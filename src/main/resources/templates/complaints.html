@@ -183,9 +183,6 @@
                 url: '/complaints/' + cmplId,
                 type: 'PUT',
                 data: "status=" + status,
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
                 success: function(newStatus) {
                     switch (newStatus){
                         case 1 :
@@ -218,9 +215,6 @@
             $.ajax({
                 type: 'DELETE',
                 url: '/complaints/' + cmplId,
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
                 success: function () {
                     l.stop();
                     table.row(btn.parents('tr')).remove().draw();
