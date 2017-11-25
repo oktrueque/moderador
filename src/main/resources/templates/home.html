@@ -78,28 +78,63 @@
                                     </div>
 
                                 </section>
-
                                 <div class="col-lg-12">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6 form-group">
+                                        <label for="selectMonthChart">Meses</label>
+                                        <select id="selectMonthChart" class="form-control">
+                                            <option value="3">3</option>
+                                            <option value="6">6</option>
+                                            <option value="12">12</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label for="selectMonthChart2">Meses</label>
+                                        <select id="selectMonthChart2" class="form-control">
+                                            <option value="3">3</option>
+                                            <option value="6">6</option>
+                                            <option value="12">12</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="col-lg-6" id="myChartContainer">
                                         <canvas id="myChart"></canvas>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6" id="myChart2Container">
                                         <canvas id="myChart2"></canvas>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6 form-group">
+                                        <label for="selectMonthChart3">Meses</label>
+                                        <select id="selectMonthChart3" class="form-control">
+                                            <option value="3">3</option>
+                                            <option value="6">6</option>
+                                            <option value="12">12</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label for="selectMonthChart4">Meses</label>
+                                        <select id="selectMonthChart4" class="form-control">
+                                            <option value="3">3</option>
+                                            <option value="6">6</option>
+                                            <option value="12">12</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="col-lg-6" id="myChart3Container">
                                         <canvas id="myChart3"></canvas>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6" id="myChart4Container">
                                         <canvas id="myChart4"></canvas>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6" id="myChart5Container">
                                         <canvas id="myChart5"></canvas>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6" id="myChart6Container">
                                         <canvas id="myChart6"></canvas>
                                     </div>
                                 </div>
@@ -211,7 +246,7 @@
 
 
         var ctx = document.getElementById('myChart2').getContext('2d');
-        var myChart = new Chart(ctx, {
+        var myChart1 = new Chart(ctx, {
             type: itemsPorMesReport.reportType,
             data: {
                 datasets: [
@@ -246,7 +281,7 @@
 
 
         var ctx = document.getElementById('myChart3').getContext('2d');
-        var myChart = new Chart(ctx, {
+        var myChart2 = new Chart(ctx, {
             type: itemsPorCategoriaReport.reportType,
             data: {
                 datasets: [
@@ -271,7 +306,7 @@
 
 
         var ctx = document.getElementById('myChart4').getContext('2d');
-        var myChart = new Chart(ctx, {
+        var myChart3 = new Chart(ctx, {
             type: denunciasPorMesReport.reportType,
             data: {
                 datasets: [
@@ -295,7 +330,7 @@
         });
 
         var ctx = document.getElementById('myChart5').getContext('2d');
-        var myChart = new Chart(ctx, {
+        var myChart4 = new Chart(ctx, {
             type: itemsPorEstadoReport.reportType,
             data: {
                 datasets: [
@@ -318,7 +353,7 @@
         });
 
         var ctx = document.getElementById('myChart6').getContext('2d');
-        var myChart = new Chart(ctx, {
+        var myChart5 = new Chart(ctx, {
             type: usuariosPorEstadoReport.reportType,
             data: {
                 datasets: [
@@ -342,7 +377,7 @@
         });
 
         var ctx = document.getElementById('myChart7').getContext('2d');
-        var myChart = new Chart(ctx, {
+        var myChart6 = new Chart(ctx, {
             type: truequesPorEstadoReport.reportType,
             data: {
                 datasets: [
@@ -365,7 +400,7 @@
         });
 
         var ctx = document.getElementById('myChart8').getContext('2d');
-        var myChart = new Chart(ctx, {
+        var myChart7 = new Chart(ctx, {
             type: usuariosPorScoreReport.reportType,
             data: {
                 datasets: [
@@ -388,7 +423,7 @@
         });
 
         var ctx = document.getElementById('myChart9').getContext('2d');
-        var myChart = new Chart(ctx, {
+        var myChart8 = new Chart(ctx, {
             type: denunciasPorTiposReport.reportType,
             data: {
                 datasets: [
@@ -409,6 +444,137 @@
                 }
             }
         });
+
+        function updateReportData(array,months,reportObject) {
+            let auxArray = [];
+            if(months < array.length) { //RECORTA
+                for (i = 0; i < months + 1; i++) {
+                    auxArray.push(array.get(i));
+                }
+                return auxArray;
+            } else if(months > array.length && months === 6){  //AMPLIFICA
+                for (i = 0; i < months + 1; i++) {
+                    auxArray.push(reportObject.firstDataset.data.get(i));
+                }
+                return auxArray;
+            } else if(months === 12){
+                return reportObject.firstDataset.data;
+            }
+        }
+
+        function updateReportLabels(labels,months,reportName) {
+            let auxLabels = [];
+            if(months < labels.length){
+            for(i = 0; i < months+1; i++){
+                    auxLabels.push(labels.get(i));
+                }
+                return auxLabels;
+            } else if(months > labels.length && months === 6){
+                for (i = 0; i < months + 1; i++) {
+                    auxLabels.push(reportObject.firstDataset.data.get(i));
+                }
+                return auxLabels;
+            } else if(months === 12){
+                return reportName.labels;
+            }
+        }
+
+
+//        function fillReportChart(chart, labels, data, months) {
+//            for(i = 0; i < months+1; i++){
+//                chart.data.labels.push(labels.get[i]);
+//            }
+//            chart.data.datasets.forEach((dataset) => {
+//                for(i = 0; i < months+1; i++){
+//                    dataset.data.push(data.get[i])
+//                }
+//            });
+//            chart.update();
+//        }
+//
+//        function clearReportChart(chart,report,elementId,containerId) {
+//            chart.destroy();
+//            createChartAgain(report,elementId,containerId);
+//        }
+//
+//        function createChartAgain(report,elementId,containerId) {
+//            document.getElementById(elementId).remove();// this is my <canvas> element
+//            document.getElementById(containerId).innerHTML = '<canvas id="aux"></canvas>';
+//            document.getElementById('aux').setAttribute('id',elementId);
+//            canvas = document.getElementById(elementId);
+//            ctx = canvas.getContext('2d');
+//      //      ctx.canvas.width = $('#graph').width(); // resize to parent width
+//        //    ctx.canvas.height = $('#graph').height(); // resize to parent height
+//            var x = canvas.width/2;
+//            var y = canvas.height/2;
+//            ctx.font = '10pt Verdana';
+//            ctx.textAlign = 'center';
+//            ctx.fillText(report.reportTitle, x, y);
+//        }
+
+//        function create(){
+//            $('#results-graph').remove(); // this is my <canvas> element
+//            $('#graph-container').append('<canvas id="results-graph"><canvas>');
+//            canvas = document.querySelector('#results-graph');
+//            ctx = canvas.getContext('2d');
+//            ctx.canvas.width = $('#graph').width(); // resize to parent width
+//            ctx.canvas.height = $('#graph').height(); // resize to parent height
+//            var x = canvas.width/2;
+//            var y = canvas.height/2;
+//            ctx.font = '10pt Verdana';
+//            ctx.textAlign = 'center';
+//            ctx.fillText('This text is centered on the canvas', x, y);
+//        };
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            $('#selectMonthChart').on('change',function () {
+//                clearReportChart(myChart,truequesConcretadosVsIniciadosReport,'myChart','myChartContainer');
+//                fillReportChart(
+//                    myChart,
+//                    truequesConcretadosVsIniciadosReport.labels,
+//                    truequesConcretadosVsIniciadosReport.firstDataset.data,
+//                    $('#selectMonthChart').value
+//                );
+
+                updateReportData(truequesConcretadosVsIniciadosReport.firstDataset.data,$('#selectMonthChart').value,truequesConcretadosVsIniciadosReport);
+                updateReportData(truequesConcretadosVsIniciadosReport.secondDataset.data,$('#selectMonthChart').value,truequesConcretadosVsIniciadosReport);
+                updateReportLabels(truequesConcretadosVsIniciadosReport.labels,$('#selectMonthChart').value,truequesConcretadosVsIniciadosReport);
+                myChart.update();
+            });
+
+//            $('#selectMonthChart2').on('change',function () {
+//                clearReportChart(myChart2,itemsPorMesReport);
+//                fillReportChart(
+//                    myChart2,
+//                    itemsPorMesReport.labels,
+//                    itemsPorMesReport.firstDataset.data,
+//                    $('#selectMonthChart2').value
+//                );
+//            });
+//
+//            $('#selectMonthChart3').on('change',function () {
+//                clearReportChart(myChart3);
+//                fillReportChart(
+//                    myChart3,
+//                    itemsPorCategoriaReport.labels,
+//                    itemsPorCategoriaReport.firstDataset.data,
+//                    $('#selectMonthChart3').value
+//                );
+//            });
+//
+//            $('#selectMonthChart4').on('change',function () {
+//                clearReportChart(myChart4);
+//                fillReportChart(
+//                    myChart4,
+//                    denunciasPorMesReport.labels,
+//                    denunciasPorMesReport.firstDataset.data,
+//                    $('#selectMonthChart4').value
+//                );
+//            });
+//
+        });
+
         /*]]>*/
     </script>
 
