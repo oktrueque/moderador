@@ -320,7 +320,7 @@ public class ReportServiceImpl implements  ReportService {
 
     @Override
     public Report nuevosUsuarios(){
-        Report report = new Report("nuevosUsuarios","","Nuevos usuarios");
+        Report report = new Report("nuevosUsuarios","","Nuevos Usuarios:mes actual");
         Dataset firstDataset = new Dataset();
         DateTime dateTime = new DateTime();
         Integer actualMonth = dateTime.getMonthOfYear();
@@ -358,7 +358,7 @@ public class ReportServiceImpl implements  ReportService {
         Report report = new Report("denunciasSinModerar","","Denuncias: "+Constants.COMPLAINT_STATUS_NAME_PENDING);
         Dataset dataset = new Dataset();
         ArrayList<Integer> data = new ArrayList<>();
-        Integer denuncias = complaintRepository.countAllByStatus(Constants.COMPLAINT_STATUS_PROCESSING);
+        Integer denuncias = complaintRepository.countAllByStatus(Constants.COMPLAINT_STATUS_PENDING);
         data.add(denuncias);
         dataset.setData(data);
         report.setFirstDataset(dataset);
