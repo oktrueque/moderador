@@ -91,8 +91,12 @@
                             contentType: 'application/json',
                             success: function (data) {
                                 l.stop();
-                                table.row(btn.parents('tr')).remove().draw();
-                                swal("Eliminado", "El item ha sido correctamente eliminado", "success");
+                                if(data){
+                                    table.row(btn.parents('tr')).remove().draw();
+                                    swal("Eliminado", "El item ha sido correctamente eliminado", "success");
+                                }else{
+                                    swal("Error", "No es posible eliminar una item que está en un trueque", "error");
+                                }
                             },
                             error: function (e) {
                                 console.log(e);

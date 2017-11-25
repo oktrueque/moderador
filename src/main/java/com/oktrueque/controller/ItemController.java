@@ -84,9 +84,13 @@ public class ItemController {
     }
 
     @RequestMapping(method= RequestMethod.DELETE, value="/items/{id}")
-    public ResponseEntity deleteItem(@PathVariable Long id){
-        itemService.deleteItemAlone(id);
-        return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity<Boolean> deleteItem(@PathVariable Long id){
+        try{
+            itemService.deleteItemAlone(id);
+        }catch(Exception e){
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/items/{id}/approve")
