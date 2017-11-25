@@ -107,7 +107,7 @@
                                 </section>
                                 <div class="col-lg-12">
                                     <div class="col-lg-6 form-group">
-                                        <label for="selectMonthChart">Meses</label>
+                                        <label for="selectMonthChart">Ver los ultimos N meses</label>
                                         <select id="selectMonthChart" class="form-control">
                                             <option value="12">12</option>
                                             <option value="6">6</option>
@@ -115,7 +115,7 @@
                                         </select>
                                     </div>
                                     <div class="col-lg-6 form-group">
-                                        <label for="selectMonthChart2">Meses</label>
+                                        <label for="selectMonthChart2">Ver los ultimos N meses</label>
                                         <select id="selectMonthChart2" class="form-control">
                                             <option value="12">12</option>
                                             <option value="6">6</option>
@@ -133,15 +133,15 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="col-lg-6 form-group">
-                                        <label for="selectMonthChart3">Meses</label>
-                                        <select id="selectMonthChart3" class="form-control">
-                                            <option value="12">12</option>
-                                            <option value="6">6</option>
-                                            <option value="3">3</option>
-                                        </select>
+                                        <!--<label for="selectMonthChart3">Meses</label>-->
+                                        <!--<select id="selectMonthChart3" class="form-control">-->
+                                            <!--<option value="12">12</option>-->
+                                            <!--<option value="6">6</option>-->
+                                            <!--<option value="3">3</option>-->
+                                        <!--</select>-->
                                     </div>
                                     <div class="col-lg-6 form-group">
-                                        <label for="selectMonthChart4">Meses</label>
+                                        <label for="selectMonthChart4">Ver los ultimos N meses</label>
                                         <select id="selectMonthChart4" class="form-control">
                                             <option value="12">12</option>
                                             <option value="6">6</option>
@@ -229,10 +229,10 @@
             return finalColors;
         }
 
-        var data1 =  truequesConcretadosVsIniciadosReport.firstDataset.data;
+        var data1 =  truequesConcretadosVsIniciadosReport.firstDataset.data.slice();
         var type = truequesConcretadosVsIniciadosReport.reportType;
-        var data2 = truequesConcretadosVsIniciadosReport.secondDataset.data;
-        var labels = truequesConcretadosVsIniciadosReport.labels;
+        var data11 = truequesConcretadosVsIniciadosReport.secondDataset.data.slice();
+        var labels = truequesConcretadosVsIniciadosReport.labels.slice();
         var title = truequesConcretadosVsIniciadosReport.reportTitle;
 
         var ctx = document.getElementById('myChart').getContext('2d');
@@ -248,7 +248,7 @@
 
                     },
                     {
-                        data: data2,
+                        data: data11,
                         label: 'Iniciados',
                         borderColor: '#6d6d6d',
                         backgroundColor: '#e22207'
@@ -276,13 +276,16 @@
         });
 
 
+        var data2 = itemsPorMesReport.firstDataset.data.slice();
+        var labels2 = itemsPorMesReport.labels.slice();
+
         var ctx2 = document.getElementById('myChart2').getContext('2d');
         var myChart2 = new Chart(ctx2, {
             type: itemsPorMesReport.reportType,
             data: {
                 datasets: [
                     {
-                        data: itemsPorMesReport.firstDataset.data,
+                        data: data2,
                         label: itemsPorMesReport.firstDataset.label,
                         backgroundColor: '#e22207',
                         borderColor: '#000000'
@@ -290,7 +293,7 @@
                     }
 
                 ],
-                labels: itemsPorMesReport.labels
+                labels: labels2
             },
             options: {
                 scales: {
@@ -335,6 +338,8 @@
             }
         });
 
+        var data4 = denunciasPorMesReport.firstDataset.data.slice();
+        var labels4 = denunciasPorMesReport.labels.slice();
 
         var ctx4 = document.getElementById('myChart4').getContext('2d');
         var myChart4 = new Chart(ctx4, {
@@ -342,13 +347,13 @@
             data: {
                 datasets: [
                     {
-                        data: denunciasPorMesReport.firstDataset.data,
+                        data: data4,
                         label: denunciasPorMesReport.firstDataset.label,
                         backgroundColor: "#ee8300",
                         borderColor: '#6d6d6d'
                     }
                 ],
-                labels: denunciasPorMesReport.labels
+                labels: labels4
             },
             options: {
                 title: {
@@ -476,42 +481,67 @@
             }
         });
 
-        function updateReportData(array,months,reportObject) {
-            var auxArray = [];
-            if(months < array.length) {
-                auxArray = array;
-                auxArray.splice(0,12-months);
+        function updateReportData(array,months,reportDataset) {
+            if(months < array.length){
+                var auxArray = array;
+                auxArray.splice(0, array.length - months);
                 return auxArray;
             } else {
-                return reportObject.firstDataset.data;
+                var auxArray = reportDataset.data.slice();
+                auxArray.splice(0, 12-months);
+                return auxArray;
             }
         }
-        function updateReportLabels(labels,months,reportObject) {
-            var auxLabels = [];
-            if(months < labels.length){
-                auxLabels = labels;
-                auxLabels.splice(0,12-months);
+        function updateReportLabels(labels,months,reportLabels) {
+            if(months < labels.length) {
+                var auxLabels = labels;
+                auxLabels.splice(0, labels.length - months);
                 return auxLabels;
             } else {
-
-                return reportObject.labels;
+                var auxLabels = reportLabels.slice();
+                auxLabels.splice(0, 12-months);
+                return auxLabels;
             }
         }
         document.addEventListener("DOMContentLoaded", function () {
             $('#selectMonthChart').on('change',function () {
-                let comboboxVal = parseInt($('#selectMonthChart').val());
-                console.log('ANTES');
-                console.log('Dataset 0: '+ myChart.data.datasets[0].data);
-                console.log('Dataset 1: '+ myChart.data.datasets[1].data);
-                console.log('Labels: '+ myChart.data.labels);
-                myChart.data.datasets[0].data = updateReportData(myChart.data.datasets[0].data,comboboxVal,truequesConcretadosVsIniciadosReport);
-                myChart.data.datasets[1].data = updateReportData(myChart.data.datasets[1].data,comboboxVal,truequesConcretadosVsIniciadosReport);
-                myChart.labels = [updateReportLabels(myChart.data.labels,comboboxVal,truequesConcretadosVsIniciadosReport)];
+                let comboBoxVal = parseInt($('#selectMonthChart').val());
+//                console.log('ANTES');
+//                console.log('Dataset 0: '+ myChart.data.datasets[0].data);
+//                console.log('Dataset 1: '+ myChart.data.datasets[1].data);
+//                console.log('Labels: '+ myChart.data.labels);
+                myChart.data.datasets[0].data = updateReportData(myChart.data.datasets[0].data,comboBoxVal,truequesConcretadosVsIniciadosReport.firstDataset);
+                myChart.data.datasets[1].data = updateReportData(myChart.data.datasets[1].data,comboBoxVal,truequesConcretadosVsIniciadosReport.secondDataset);
+                myChart.data.labels = updateReportLabels(myChart.data.labels,comboBoxVal,truequesConcretadosVsIniciadosReport.labels);
                 myChart.update();
-                console.log('DESPUES');
-                console.log('Dataset 0: '+ myChart.data.datasets[0].data);
-                console.log('Dataset 1: '+ myChart.data.datasets[1].data);
-                console.log('Labels: '+ myChart.data.labels);
+//                console.log('DESPUES');
+//                console.log('Dataset 0: '+ myChart.data.datasets[0].data);
+//                console.log('Dataset 1: '+ myChart.data.datasets[1].data);
+//                console.log('Labels: '+ myChart.data.labels);
+            });
+            $('#selectMonthChart2').on('change',function () {
+                let comboBoxVal = parseInt($('#selectMonthChart2').val());
+//                console.log('ANTES');
+//                console.log('Dataset 0: '+ myChart2.data.datasets[0].data);
+//                console.log('Labels: '+ myChart2.data.labels);
+                myChart2.data.datasets[0].data = updateReportData(myChart2.data.datasets[0].data,comboBoxVal,itemsPorMesReport.firstDataset);
+                myChart2.data.labels = updateReportLabels(myChart2.data.labels,comboBoxVal,itemsPorMesReport.labels);
+                myChart2.update();
+//                console.log('DESPUES');
+//                console.log('Dataset 0: '+ myChart2.data.datasets[0].data);
+//                console.log('Labels: '+ myChart2.data.labels);
+            });
+            $('#selectMonthChart4').on('change',function () {
+                let comboBoxVal = parseInt($('#selectMonthChart4').val());
+//                console.log('ANTES');
+//                console.log('Dataset 0: '+ myChart4.data.datasets[0].data);
+//                console.log('Labels: '+ myChart4.data.labels);
+                myChart4.data.datasets[0].data = updateReportData(myChart4.data.datasets[0].data,comboBoxVal,denunciasPorMesReport.firstDataset);
+                myChart4.data.labels = updateReportLabels(myChart4.data.labels,comboBoxVal,denunciasPorMesReport.labels);
+                myChart4.update();
+//                console.log('DESPUES');
+//                console.log('Dataset 0: '+ myChart4.data.datasets[0].data);
+//                console.log('Labels: '+ myChart4.data.labels);
             });
         });
 

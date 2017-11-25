@@ -98,7 +98,7 @@ public class ReportServiceImpl implements  ReportService {
         report.setFirstDataset(firstDataset);
         report.setReportName("itemsPorMes");
         report.setReportType("bar");
-        report.setReportTitle("Items creados por mes, del año actual.");
+        report.setReportTitle("Items creados por mes.");
         return report;
     }
 
