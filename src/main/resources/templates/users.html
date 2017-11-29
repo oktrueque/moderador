@@ -48,7 +48,7 @@
                                         <td th:text="${user.score}">Score</td>
                                         <td th:text="${user.status}">Status</td>
                                         <td>
-                                            <a th:href="@{'/users/' + ${user.username}}" class="btn btn-success btn-xs btn-edit edit-item-btn">Editar</a>
+                                            <a th:href="@{'/users/' + ${user.username}}" class="btn btn-success btn-xs btn-edit edit-item-btn">Ver</a>
                                             <button type="button" class="btn btn-danger btn-xs btn-delete-user ladda-button" data-style="zoom-in" th:attr="data-id=${user.id}">Borrar</button>
                                         </td>
                                     </tr>
