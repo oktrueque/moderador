@@ -115,8 +115,11 @@
                     </section>
                 </div>
                 <div class="col-lg-12 no-vertical-padding" style="padding: 1em;">
-                    <div class="col-lg-5 col-lg-offset-3"><i class="fa fa-arrow-down font-size-4em rotate-315-deg green-font" aria-hidden="true"></i></div>
-                    <div class="col-lg-3"> <i class="fa fa-arrow-down font-size-4em rotate-135-deg green-font" aria-hidden="true"></i></div>
+                    <div class="col-lg-5 col-lg-offset-3"><i
+                            class="fa fa-arrow-down font-size-4em rotate-315-deg green-font" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-lg-3"><i class="fa fa-arrow-down font-size-4em rotate-135-deg green-font"
+                                             aria-hidden="true"></i></div>
                 </div>
                 <div class="col-lg-5" style="padding: 1em;">
                     <section class="panel">
@@ -143,7 +146,8 @@
                     </section>
                 </div>
                 <div class="col-lg-2 padding-top-20" style="padding: 1em;">
-                    <i class="fa fa-arrow-right font-size-4em margin-left-50 padding-top-30 green-font" aria-hidden="true"></i>
+                    <i class="fa fa-arrow-right font-size-4em margin-left-50 padding-top-30 green-font"
+                       aria-hidden="true"></i>
                 </div>
                 <div class="col-lg-5" style="padding: 1em;">
                     <section class="panel">
@@ -170,7 +174,7 @@
                     </section>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" id="enviarPropuesta">Enviar</button>
+                    <button type="submit" class="btn btn-primary" id="enviarPropuesta" onclick="enviarPropuesta()">Enviar</button>
                 </div>
             </div>
         </div>
@@ -189,15 +193,17 @@
             getUsersLevel2();
         });
 
-        var getUser = function (id) {
+        function getUser(id) {
             var user = {
                 id: id
             };
             return user;
         };
 
-        var getUsersLevel2 = function () {
+        function getUsersLevel2() {
             $('.user-level1').on('click', function () {
+                $('#users-level2').html("");
+                $('#users-level3').html("");
                 if (idUser1 != -1) {
                     $('#user1-' + idUser1).css('background-color', '#fcfffa');
                 }
@@ -225,8 +231,9 @@
             });
         }
 
-        var getUsersLevel3 = function () {
+        function getUsersLevel3() {
             $('.user-level2').on('click', function () {
+                $('#users-level3').html("");
                 if (idUser2 != -1) {
                     $('#user2-' + idUser2).css('background-color', '#fcfffa');
                 }
@@ -255,7 +262,7 @@
             });
         }
 
-        var finalizarTrueque = function () {
+        function finalizarTrueque() {
             $('.user-level3').on('click', function () {
                 if (idUser3 != -1) {
                     $('#user3-' + idUser3).css('background-color', '#fcfffa');
@@ -282,8 +289,9 @@
             });
         }
 
-        var enviarPropuesta = function () {
-            $('#enviarPropuesta').on('click', function () {
+        function enviarPropuesta() {
+                $('#users-level2').html("");
+                $('#users-level3').html("");
                 $('#user1-' + idUser1).css('background-color', '#fcfffa');
                 $('#user2-' + idUser2).css('background-color', '#fcfffa');
                 $('#user3-' + idUser3).css('background-color', '#fcfffa');
@@ -312,14 +320,11 @@
                     }
                 });
                 $('#new-Trueque').modal('hide');
-                $('#users-level2').html("");
-                $('#users-level3').html("");
-            });
-
         }
 
 
-        displayUsersLevel2 = function (datas) {
+        function displayUsersLevel2(datas) {
+            $('#users-level3').html("");
             var users = $('#users-level2');
             users.html("");
             datas.forEach(function (data) {
@@ -334,11 +339,10 @@
                     '</tr>'
                 );
             });
-            $('#users-level3').html("");
             getUsersLevel3();
         };
 
-        displayUsersLevel3 = function (datas) {
+        function displayUsersLevel3(datas) {
             var users = $('#users-level3');
             users.html("");
             datas.forEach(function (data) {
@@ -354,10 +358,9 @@
                 );
             });
             finalizarTrueque();
-            enviarPropuesta();
         };
 
-        displayPropuesta = function () {
+        function displayPropuesta() {
             var propuestaUser1items = $('#propuesta-user1items');
             $.ajax({
                 type: "GET",
