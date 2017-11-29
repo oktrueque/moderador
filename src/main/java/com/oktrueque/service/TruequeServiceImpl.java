@@ -57,8 +57,8 @@ public class TruequeServiceImpl implements TruequeService {
         truequeToSave.setPeopleCount(participants.size());
         Trueque truequeSaved = truequeRepository.save(truequeToSave);
         setUsers(participants,idUser1,1);
-        setUsers(participants,idUser2,2);
-        setUsers(participants,idUser3,3);
+        setUsers(participants,idUser3,2);
+        setUsers(participants,idUser2,3);
         saveItemsAndUsers(participants, truequeSaved);
         User user1 = userRepository.findOne(idUser1);
         User user2 = userRepository.findOne(idUser2);
