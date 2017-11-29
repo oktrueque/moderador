@@ -219,13 +219,19 @@
                 '#488286',
                 '#000f08',
                 '#3e2f5b',
-                '#093824'
+                '#093824',
+                '#9B8816',
+                '#623CEA',
+                '#BEA57D',
+                '#df77bc'
             ];
 
             var finalColors = [];
 
             array.forEach(function () {
-                finalColors.push(myColors[Math.floor((Math.random() * myColors.length))])
+                for(let i=0;i<myColors.length;i++){
+                    finalColors.push(myColors[i])
+                }
             });
             return finalColors;
         }
