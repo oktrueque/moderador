@@ -2356,11 +2356,11 @@ body.theme-blue .cwt__footer {
 }
 
 .rotate-315-deg{
-    transform: rotate(45deg);
+    transform: rotate(225deg);
 }
 
 .rotate-135-deg{
-    transform: rotate(135deg);
+    transform: rotate(315deg);
 }
 
 .no-vertical-padding{
@@ -2398,4 +2398,9 @@ body.theme-blue .cwt__footer {
 
 .font-size-15{
     font-size: 15px !important;
+}
+
+.line-separator{
+    border-top: 8px solid #e6e6e6;
+
 }
