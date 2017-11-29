@@ -107,7 +107,7 @@
                                 </section>
                                 <div class="col-lg-12">
                                     <div class="col-lg-6 form-group">
-                                        <label for="selectMonthChart">Ver los ultimos N meses</label>
+                                        <label for="selectMonthChart">Seleccionar cantidad de meses</label>
                                         <select id="selectMonthChart" class="form-control">
                                             <option value="12">12</option>
                                             <option value="6">6</option>
@@ -115,7 +115,7 @@
                                         </select>
                                     </div>
                                     <div class="col-lg-6 form-group">
-                                        <label for="selectMonthChart2">Ver los ultimos N meses</label>
+                                        <label for="selectMonthChart2">Seleccionar cantidad de meses</label>
                                         <select id="selectMonthChart2" class="form-control">
                                             <option value="12">12</option>
                                             <option value="6">6</option>
@@ -133,7 +133,7 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="col-lg-6 form-group">
-                                        <label for="selectMonthChart10">Ver los ultimos N meses</label>
+                                        <label for="selectMonthChart10">Seleccionar cantidad de meses</label>
                                         <select id="selectMonthChart10" class="form-control">
                                             <option value="12">12</option>
                                             <option value="6">6</option>
@@ -141,7 +141,7 @@
                                         </select>
                                     </div>
                                     <div class="col-lg-6 form-group">
-                                        <label for="selectMonthChart4">Ver los ultimos N meses</label>
+                                        <label for="selectMonthChart4">Seleccionar cantidad de meses</label>
                                         <select id="selectMonthChart4" class="form-control">
                                             <option value="12">12</option>
                                             <option value="6">6</option>
@@ -322,9 +322,8 @@
                 datasets: [
                     {
                         data: itemsPorCategoriaReport.firstDataset.data,
-                        backgroundColor: '#e22207',
-                        label: itemsPorCategoriaReport.firstDataset.label,
-                        borderColor: '#000000'
+                        backgroundColor: getColorForEachOne(itemsPorCategoriaReport.firstDataset.data),
+                        label: itemsPorCategoriaReport.firstDataset.label
                     }
                 ],
                 labels: itemsPorCategoriaReport.labels,

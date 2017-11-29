@@ -160,7 +160,7 @@ public class ReportServiceImpl implements  ReportService {
 
     @Override
     public Report itemPorCategoria(){
-        Report report = new Report("itemsPorCategoriaReport","bar","Items por categoria");
+        Report report = new Report("itemsPorCategoriaReport","doughnut","Items por categoria");
         Dataset dataset = new Dataset();
         List<Item> items = itemRepository.findByStatus(1);
         List<Category> categorias = categoryRepository.findAll();
