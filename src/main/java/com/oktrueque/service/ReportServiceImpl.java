@@ -140,9 +140,13 @@ public class ReportServiceImpl implements  ReportService {
         int mes = -1;
         ArrayList<Integer> meses1 = new ArrayList<>();
         for (Trueque Tc:concretados){
-                calendar.setTime(Tc.getEndingDate());
-                mes = calendar.get(Calendar.MONTH);
-                meses1.add(mes);
+                try {
+                    calendar.setTime(Tc.getEndingDate());
+                    mes = calendar.get(Calendar.MONTH);
+                    meses1.add(mes);
+                }catch(NullPointerException npe){
+
+                }
         }
         firstDataset = setDatasetDataForMonths(meses1);
 
@@ -282,11 +286,11 @@ public class ReportServiceImpl implements  ReportService {
     public Report usuariosPorScore(){
         Report report = new Report("usuariosPorScore","doughnut","Usuarios por Score");
         Dataset dataset = new Dataset();
-        Integer malos = userRepository.countAllByScore(1);
-        Integer regulares = userRepository.countAllByScore(2);
-        Integer buenos = userRepository.countAllByScore(3);
-        Integer muyBuenos = userRepository.countAllByScore(4);
-        Integer excelentes = userRepository.countAllByScore(5);
+        Integer malos = userRepository.countAllByScoreBetween(1,2);
+        Integer regulares = userRepository.countAllByScoreBetween(3,4);
+        Integer buenos = userRepository.countAllByScoreBetween(5,6);
+        Integer muyBuenos = userRepository.countAllByScoreBetween(7,8);
+        Integer excelentes = userRepository.countAllByScoreBetween(9,10);
         ArrayList<Integer> data = new ArrayList<>();
         ArrayList<String> labels = new ArrayList<>();
         data.add(malos);labels.add("Malos");

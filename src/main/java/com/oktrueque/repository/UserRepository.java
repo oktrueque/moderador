@@ -22,7 +22,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     Integer countAllByStatus(int status);
 
-    Integer countAllByScore(int score);
+    Integer countAllByScoreBetween(int score,int score2);
 
     Integer countAllByRegisterDateBetween(Date date1, Date date2);
 
