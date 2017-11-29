@@ -115,8 +115,8 @@ public class ReportServiceImpl implements  ReportService {
 
     @Override
     public Report getTruequesConcretadosVsIniciados(){
-        List<Trueque> concretados = truequeRepository.findByStatus(3);
-        List<Trueque> iniciados = truequeRepository.findByStatus(1);
+        List<Trueque> concretados = truequeRepository.findByStatus(Constants.TRUEQUE_STATUS_CONFIRMED);
+        List<Trueque> iniciados = truequeRepository.findByStatus(Constants.TRUEQUE_STATUS_ACTIVE);
         Report report = new Report("TruequesIniciadosVsConcretados","bar","Trueques Iniciados vs Concretados");
         Dataset firstDataset = new Dataset();
         firstDataset.setLabel("Concretados");
@@ -140,7 +140,7 @@ public class ReportServiceImpl implements  ReportService {
         int mes = -1;
         ArrayList<Integer> meses1 = new ArrayList<>();
         for (Trueque Tc:concretados){
-                calendar.setTime(Tc.getAcceptanceDate());
+                calendar.setTime(Tc.getEndingDate());
                 mes = calendar.get(Calendar.MONTH);
                 meses1.add(mes);
         }
