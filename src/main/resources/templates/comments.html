@@ -34,7 +34,7 @@
                                                 <a th:href="@{'/users/' + ${comment.userOrigin.username}}" th:text="${comment.userOrigin.fullName}"></a>
                                             </td>
                                             <td>
-                                                <a th:href="@{'/users/' + ${comment.userTarget.username}}" th:text="${comment.userTarget.name}"></a>
+                                                <a th:href="@{'/users/' + ${comment.userTarget.username}}" th:text="${comment.userTarget.fullName}"></a>
                                             </td>
                                             <td class="text-truncate" style="max-width: 150px;" th:text="${comment.description}">
                                             </td>
