@@ -89,7 +89,7 @@
                                                                         </thead>
                                                                         <tbody>
                                                                         <tr  th:each="item : ${user.getItems()}" class="item-row pointer" th:attr="data-id=${item.id}">
-                                                                            <td><a th:href="'/profile/items/' + ${item.id}">
+                                                                            <td><a th:href="'/items/' + ${item.id}">
                                                                                 <img width="100px" th:src="${item.photo1}"/>
                                                                             </a></td>
                                                                             <td th:text="${item.name}">Nombre</td>
